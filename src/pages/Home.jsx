@@ -1,137 +1,133 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 
-const features = [
-  { title: "School-First Architecture", body: "Schools are the primary entity. Students, teachers, and parents access school-specific apps while Acadryx provides the backbone." },
-  { title: "Unified Identity", body: "Student and school identity is permanent. Alumni stay connected. Records persist across sessions, terms, and years." },
-  { title: "Academic Management", body: "Classes, sections, arms, and terms structured for real school hierarchies. Automatic promotion workflows built-in." },
-  { title: "Results & Publications", body: "Weighted teacher-subject scoring with automatic result calculation. Read-only archival once terms close." },
-  { title: "Permanent Auditability", body: "Past sessions, terms, and results are immutable. Nothing is lost. Complete academic history preserved." },
-  { title: "Minimal Friction", body: "Code login by default. Fast onboarding. Efficient result entry. Predictable workflows for every role." },
+const FEATURES = [
+  { icon: "🏫", t: "School-First Architecture",  b: "Schools are the primary entity. Every portal is school-branded. Students never see Acadryx — they see their school." },
+  { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
+  { icon: "📊", t: "Results Engine",              b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
+  { icon: "📰", t: "Living Magazine",             b: "Events, achievements, galleries — published daily, not annually. No printing costs. Alumni stay connected." },
+  { icon: "🔒", t: "Permanent Records",           b: "Once a term closes, results are immutable and verifiable by any institution. Complete history, forever." },
+  { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
 ];
 
 export default function Home() {
   return (
-    <div className="container" style={{ paddingTop: "3rem" }}>
+    <>
       {/* HERO */}
-      <section style={{ textAlign: "center", marginBottom: "5rem", animation: "fadeUp 0.5s ease forwards" }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: "0.5rem",
-          padding: "0.5rem 1.2rem", background: "rgba(11,41,190,0.06)",
-          borderRadius: "40px", fontSize: "0.85rem", fontWeight: 600,
-          color: "var(--primary)", border: "1px solid rgba(11,41,190,0.12)",
-          marginBottom: "2rem",
-        }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "pulse 2.5s infinite", display: "inline-block" }} />
-          Version 0.1 — Now in Early Access
+      <section className="hero">
+        <div className="wrap">
+          <div className="hero-content">
+            <div className="eyebrow-pill anim">
+              <span className="dot" />
+              Version 0.1 · Early Access Open
+            </div>
+
+            <h1 className="anim d1">
+              The Infrastructure<br /><em>Schools Deserve</em>
+            </h1>
+
+            <p className="hero-sub anim d2">
+              One platform for students, teachers, parents, and alumni.
+              Built on permanence — not features. Your school runs on Acadryx
+              the way businesses run on AWS.
+            </p>
+
+            <div className="hero-btns anim d3">
+              <Link to="/contact" className="btn btn-white btn-lg">Get early access →</Link>
+              <Link to="/demo"    className="btn btn-ghost btn-lg">See the demo</Link>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <h1 style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", marginBottom: "1.5rem", lineHeight: 1.1, letterSpacing: "-0.02em", color: "var(--primary)" }}>
-          The Infrastructure<br />Schools Deserve
-        </h1>
-
-        <p style={{ fontSize: "1.2rem", color: "var(--text-soft)", maxWidth: 680, margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-          Acadryx provides identity, continuity, and community for schools. 
-          One platform for students, teachers, and parents — built on permanence, not features.
-        </p>
-
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
-          <Link to="/contact" className="btn btn-primary">Get early access →</Link>
-          <Link to="/features" className="btn btn-secondary">See what's inside →</Link>
-        </div>
-
-        <div style={{ display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap", color: "var(--accent)", fontWeight: 500, fontSize: "0.95rem" }}>
-          <span>🏫 School-First Philosophy</span>
-          <span>🔐 Identity Permanence</span>
-          <span>⚡ Minimal Friction</span>
+      {/* STATS */}
+      <section className="section-dark">
+        <div className="wrap">
+          <div className="stat-strip">
+            {[
+              { v: "5",    l: "Portals in one platform" },
+              { v: "₦1k",  l: "Per student per term" },
+              { v: "∞",   l: "Records stored forever" },
+              { v: "₦0",  l: "Upfront cost" },
+            ].map((s, i) => (
+              <div className="stat-item" key={i}>
+                <div className="stat-val">{s.v}</div>
+                <div className="stat-lbl">{s.l}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FEATURES */}
-      <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-        <h2 style={{ fontSize: "2rem", color: "var(--primary)", letterSpacing: "-0.01em" }}>Everything you need, nothing you don't</h2>
-      </div>
-      <p style={{ textAlign: "center", color: "var(--text-soft)", marginBottom: "1rem", fontSize: "1.1rem" }}>
-        A single, invisible layer that makes administration feel like it's 2030.
-      </p>
-      <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-        <h2 style={{ fontSize: "2rem", color: "var(--primary)", letterSpacing: "-0.01em" }}>Built for How Schools Actually Work</h2>
-      </div>
-      <p style={{ textAlign: "center", color: "var(--text-soft)", marginBottom: "3rem", fontSize: "1.1rem" }}>
-        Every feature designed around the reality of academic institutions — not retrofitted from consumer apps.
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "5rem" }}>
-        {features.map((f, i) => (
-          <div key={i} style={{
-            background: "var(--card-white)", padding: "2rem 1.8rem",
-            borderRadius: 24, border: "1px solid var(--border-light)",
-            transition: "all 0.2s", cursor: "default",
-          }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 12px 30px rgba(11,41,190,0.06)"; e.currentTarget.style.borderColor = "var(--accent)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; e.currentTarget.style.borderColor = "var(--border-light)"; }}
-          >
-            <h3 style={{ fontSize: "1.2rem", marginBottom: "0.8rem", color: "var(--primary)", fontFamily: "'Syne', sans-serif" }}>{f.title}</h3>
-            <p style={{ fontSize: "0.95rem", color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>{f.body}</p>
+      <section className="section">
+        <div className="wrap">
+          <div style={{ marginBottom: 56 }}>
+            <span className="eyebrow">Platform</span>
+            <h2 className="section-h" style={{ maxWidth: 520 }}>Built for how schools actually work</h2>
+            <p className="section-p">Every feature designed around the reality of K12 institutions — not retrofitted from consumer apps.</p>
           </div>
-        ))}
-      </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "var(--border)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", overflow: "hidden" }}>
+            {FEATURES.map((f, i) => (
+              <div key={i} style={{ background: "var(--white)", padding: "28px 24px" }}>
+                <div style={{ fontSize: 26, marginBottom: 12 }}>{f.icon}</div>
+                <h3 style={{ fontSize: "1rem", color: "var(--text)", marginBottom: 8 }}>{f.t}</h3>
+                <p style={{ fontSize: ".88rem", color: "var(--text-3)", lineHeight: 1.75, margin: 0 }}>{f.b}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* PRICING PREVIEW */}
-      <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-        <h2 style={{ fontSize: "2rem", color: "var(--primary)", letterSpacing: "-0.01em" }}>Fair, Minimal Pricing</h2>
-      </div>
-      <p style={{ textAlign: "center", color: "var(--text-soft)", marginBottom: "2.5rem", maxWidth: 600, margin: "0 auto 2.5rem", fontSize: "1.05rem" }}>
-        Teachers, parents, and school admins are always free. Minimal fees based on student count, calculated only when results publish.
-      </p>
+      <section className="section section-off">
+        <div className="wrap">
+          <div style={{ marginBottom: 48 }}>
+            <span className="eyebrow">Pricing</span>
+            <h2 className="section-h" style={{ maxWidth: 480 }}>Pay only when your school publishes</h2>
+            <p className="section-p">Teachers, parents, and admins are always free. A minimal per-student fee, only on result day.</p>
+          </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem", marginBottom: "2rem" }}>
-        <div style={{ background: "var(--primary)", padding: "2.5rem 2rem", borderRadius: 32, color: "white" }}>
-          <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.6rem", marginBottom: "0.5rem", color: "white" }}>School Plan</h3>
-          <p style={{ color: "rgba(255,255,255,0.8)", marginBottom: "1.5rem", fontSize: "0.9rem" }}>Based on active student count</p>
-          <div style={{ fontSize: "2.5rem", fontWeight: 700, marginBottom: "0.3rem" }}>Minimal</div>
-          <div style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", marginBottom: "2rem" }}>per publish — charged only on result day</div>
-          {["Full Acadryx infrastructure", "Permanent academic records", "Student identity management", "Result publication system", "Living magazine", "Alumni network access"].map((item, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.8rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.9)" }}>
-              <span style={{ fontWeight: 700 }}>✓</span>{item}
+          <div className="pricing-wrap">
+            <div className="price-grid">
+              <div className="price-col dark">
+                <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 14 }}>School Plan</div>
+                <div className="price-tag" style={{ color: "#fff" }}>#1000 termly</div>
+                <div className="price-note" style={{ color: "rgba(255,255,255,.5)" }}>per student · per term · only on result day</div>
+                <ul className="price-list">
+                  {["Full platform — every feature", "Permanent, verifiable records", "Student identity: admission to alumni", "One-click result publication", "Living magazine · no print costs", "Alumni network access", "All future features, forever"].map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+                <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Get early access →</Link>
+              </div>
+              <div className="price-col light">
+                <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 14 }}>Unlimited Free Add-On Features</div>
+                <div className="price-tag" style={{ color: "var(--blue)" }}>$0</div>
+                <div className="price-note" style={{ color: "var(--text-3)" }}>forever — not a single kobo, ever</div>
+                <ul className="price-list">
+                  {["Unlimited teacher accounts", "Parent access to student data", "Admin portal — full access", "Alumni network — permanent access", "Chat, announcements & events", "Magazine reading & submissions"].map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+                <Link to="/pricing" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>See full pricing →</Link>
+              </div>
             </div>
-          ))}
-          <Link to="/contact" style={{ display: "block", marginTop: "1.5rem", background: "white", color: "var(--primary)", padding: "0.8rem", borderRadius: 40, textAlign: "center", fontWeight: 600, textDecoration: "none", transition: "opacity 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-          >Get early access →</Link>
+          </div>
         </div>
-
-        <div style={{ background: "var(--card-white)", padding: "2.5rem 2rem", borderRadius: 32, border: "1px solid var(--border-light)" }}>
-          <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.6rem", marginBottom: "0.5rem", color: "var(--text-dark)" }}>Always Free</h3>
-          <p style={{ color: "var(--text-muted)", marginBottom: "1.5rem", fontSize: "0.9rem" }}>For teachers, parents, and administrators</p>
-          <div style={{ fontSize: "2.5rem", fontWeight: 700, color: "var(--primary)", marginBottom: "0.3rem" }}>₦0</div>
-          <div style={{ fontSize: "0.9rem", color: "var(--text-muted)", marginBottom: "2rem" }}>forever — not a single kobo</div>
-          {["Unlimited teacher accounts", "Parent access to student data", "Admin portal full access", "Event and resource management", "Result entry and viewing", "Community features"].map((item, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.8rem", fontSize: "0.9rem", color: "var(--text-dark)" }}>
-              <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>{item}
-            </div>
-          ))}
-          <Link to="/contact" style={{ display: "block", marginTop: "1.5rem", background: "transparent", color: "var(--primary)", padding: "0.8rem", borderRadius: 40, textAlign: "center", fontWeight: 600, textDecoration: "none", border: "1.5px solid var(--border-light)", transition: "all 0.2s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.background = "var(--accent-soft)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border-light)"; e.currentTarget.style.background = "transparent"; }}
-          >Get started →</Link>
-        </div>
-      </div>
+      </section>
 
       {/* CTA */}
-      <div style={{ background: "var(--primary)", color: "white", padding: "4rem 2.5rem", borderRadius: 40, textAlign: "center", margin: "5rem 0 3rem" }}>
-        <h2 style={{ color: "white", fontSize: "2rem", marginBottom: "1.5rem", fontFamily: "'Syne', sans-serif" }}>Ready to Transform Your School?</h2>
-        <p style={{ color: "rgba(255,255,255,0.9)", maxWidth: 600, margin: "0 auto 2rem", fontSize: "1.1rem" }}>
-          Join pilot schools already using Acadryx. Get early access today.
-        </p>
-        <Link to="/contact" style={{ background: "white", color: "var(--primary)", padding: "0.9rem 2.5rem", borderRadius: 40, fontWeight: 700, textDecoration: "none", fontSize: "1.05rem", display: "inline-block", transition: "opacity 0.2s" }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-        >Get early access →</Link>
-      </div>
+      <section className="section section-dark">
+        <div className="wrap" style={{ textAlign: "center" }}>
+          <span className="eyebrow white">Early Access</span>
+          <h2 className="section-h white" style={{ maxWidth: 540, margin: "0 auto 16px" }}>Ready to transform your school?</h2>
+          <p className="section-p white" style={{ margin: "0 auto 40px" }}>Join pilot schools already running on Acadryx. Free trial, no card required.</p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link to="/contact" className="btn btn-blue btn-lg">Get early access →</Link>
+            <Link to="/demo"    className="btn btn-ghost btn-lg">Interactive demo</Link>
+          </div>
+        </div>
+      </section>
 
       <Footer />
-    </div>
+    </>
   );
 }

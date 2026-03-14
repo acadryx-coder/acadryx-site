@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acadryx V1 — Interactive Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ACADRYX BRAND TOKENS — Two variables schools can swap
+   ============================================================ */
+:root {
+  --school-primary: green/*rgb(11, 41, 190)*/;
+  --school-accent:  purple/*rgb(13, 124, 150)*/;
+
+  /* Everything below is neutral — schools never touch these */
+  --bg:           #F4F5FF;
+  --bg-card:      #FFFFFF;
+  --bg-soft:      #ECEEFF;
+  --border:       #E0E2F5;
+  --text-dark:    #0F1B3D;
+  --text-mid:     #3B4878;
+  --text-muted:   #7A82B0;
+  --green:        #12B76A;
+  --red:          #F04438;
+  --amber:        #F79009;
+  --primary-soft: rgba(11,41,190,0.08);
+  --accent-soft:  rgba(13,124,150,0.10);
+  --shadow-sm:    0 1px 4px rgba(11,41,190,0.07);
+  --shadow-md:    0 4px 16px rgba(11,41,190,0.10);
+  --shadow-lg:    0 12px 40px rgba(11,41,190,0.14);
+  --radius-sm:    10px;
+  --radius-md:    16px;
+  --radius-lg:    24px;
+  --radius-xl:    32px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:#1A1A2E;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  color:var(--text-dark);
+}
+
+/* ============================================================
+   PHONE SHELL
+   ============================================================ */
+.phone{
+  width:393px;height:852px;
+  background:var(--bg);
+  border-radius:48px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 48px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08), inset 0 0 0 2px rgba(255,255,255,0.04);
+  flex-shrink:0;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  background:var(--bg);
+  overflow:hidden;
+}
+.screen.active{display:flex;}
+.screen.enter{animation:enter .3s cubic-bezier(.4,0,.2,1);}
+.screen.exit{animation:exit .3s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes enter{from{transform:translateX(100%);opacity:.6;}to{transform:translateX(0);opacity:1;}}
+@keyframes exit{from{transform:translateX(0);opacity:1;}to{transform:translateX(-60px);opacity:0;}}
+
+/* ============================================================
+   STATUS BAR
+   ============================================================ */
+.status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px 0;
+  font-size:12px;font-weight:600;color:var(--text-muted);
+  flex-shrink:0;
+}
+.status-icons{display:flex;align-items:center;gap:5px;}
+
+/* ============================================================
+   TOP NAVBAR
+   ============================================================ */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px 10px;
+  background:var(--bg-card);
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  position:relative;
+  z-index:10;
+}
+.topbar-logo{
+  display:flex;align-items:center;gap:6px;
+}
+.logo-wordmark{
+  font-size:20px;font-weight:800;
+  color:var(--school-primary);
+  text-decoration:underline wavy var(--school-accent);
+  text-underline-offset:4px;
+  text-decoration-thickness:2px;
+  letter-spacing:-0.5px;
+  display: none;
+}
+.school-name{
+  font-size:11px;font-weight:500;color:var(--text-muted);
+  max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar-right{display:flex;align-items:center;gap:8px;}
+.icon-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg-soft);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;
+  transition:background .15s;
+}
+.icon-btn:hover{background:var(--primary-soft);}
+.icon-btn svg{width:16px;height:16px;stroke:var(--text-mid);fill:none;stroke-width:2;stroke-linecap:round;}
+.notif-dot{
+  position:absolute;top:5px;right:5px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--red);border:2px solid var(--bg-card);
+}
+.avatar-sm{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:white;
+  background:linear-gradient(135deg,var(--school-primary),var(--school-accent));
+  cursor:pointer;flex-shrink:0;
+}
+
+/* ============================================================
+   SCROLL AREA
+   ============================================================ */
+.scroll{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:16px 18px 90px;
+  display:flex;flex-direction:column;gap:14px;
+  scrollbar-width:none;
+}
+.scroll::-webkit-scrollbar{display:none;}
+
+/* ============================================================
+   BOTTOM NAV (Instagram style)
+   ============================================================ */
+.bottom-nav{
+  position:absolute;bottom:0;left:0;right:0;
+  background:var(--bg-card);
+  border-top:1px solid var(--border);
+  display:flex;
+  padding:8px 0 24px;
+  z-index:20;
+  flex-shrink:0;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;gap:3px;
+  cursor:pointer;
+  color:var(--text-muted);
+  font-size:9px;font-weight:600;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  transition:color .15s;
+  padding:4px 0;
+}
+.nav-item.active{color:var(--school-primary);}
+.nav-item svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+.nav-item.active svg{stroke:var(--school-primary);}
+.nav-pip{width:4px;height:4px;border-radius:50%;background:var(--school-primary);margin-top:1px;}
+
+/* ============================================================
+   SHARED COMPONENTS
+   ============================================================ */
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm);
+}
+.card-pad{padding:18px;}
+
+.section-title{
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:10px;
+}
+
+.badge{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;border-radius:40px;
+  font-size:11px;font-weight:600;
+  letter-spacing:.02em;
+}
+.badge-primary{background:var(--primary-soft);color:var(--school-primary);}
+.badge-accent{background:var(--accent-soft);color:var(--school-accent);}
+.badge-green{background:rgba(18,183,106,.1);color:var(--green);}
+.badge-red{background:rgba(240,68,56,.1);color:var(--red);}
+.badge-amber{background:rgba(247,144,9,.1);color:var(--amber);}
+
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;}
+
+.row{display:flex;align-items:center;gap:10px;}
+.row-between{display:flex;align-items:center;justify-content:space-between;}
+
+.btn{
+  border:none;border-radius:var(--radius-md);
+  font-family:'Outfit',sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;
+  padding:13px 20px;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-primary{
+  background:var(--school-primary);color:white;width:100%;
+  box-shadow:0 4px 14px rgba(11,41,190,.3);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(11,41,190,.4);}
+.btn-accent{background:var(--school-accent);color:white;width:100%;}
+.btn-ghost{background:var(--bg-soft);color:var(--text-mid);border:1px solid var(--border);}
+.btn-danger{background:var(--red);color:white;width:100%;}
+
+.divider{height:1px;background:var(--border);margin:4px 0;}
+
+.back-row{
+  display:flex;align-items:center;gap:6px;
+  color:var(--school-primary);font-size:13px;font-weight:600;
+  cursor:pointer;margin-bottom:6px;padding:2px 0;
+}
+.back-row svg{width:16px;height:16px;stroke:var(--school-primary);fill:none;stroke-width:2.5;stroke-linecap:round;}
+
+/* ============================================================
+   HERO STAT CARD
+   ============================================================ */
+.hero-card{
+  background:linear-gradient(135deg, var(--school-primary) 0%, #1a3dcc 100%);
+  border-radius:var(--radius-xl);
+  padding:22px;color:white;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+}
+.hero-card::before{
+  content:'';position:absolute;
+  top:-40px;right:-40px;width:140px;height:140px;
+  border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.hero-card::after{
+  content:'';position:absolute;
+  bottom:-20px;left:40px;width:80px;height:80px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.hero-label{font-size:11px;font-weight:600;opacity:.7;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-value{font-family:'Lora',serif;font-size:48px;font-weight:600;line-height:1;margin-bottom:4px;}
+.hero-sub{font-size:13px;opacity:.75;}
+.hero-badge{
+  position:absolute;top:20px;right:20px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
+  color:white;
+  font-size:11px;font-weight:600;
+  padding:4px 10px;border-radius:20px;
+  backdrop-filter:blur(4px);
+}
+
+/* ============================================================
+   STAT GRID
+   ============================================================ */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:16px;
+  box-shadow:var(--shadow-sm);
+}
+.stat-icon{font-size:22px;margin-bottom:8px;}
+.stat-val{
+  font-family:'Lora',serif;font-size:28px;font-weight:600;
+  color:var(--text-dark);line-height:1;margin-bottom:3px;
+}
+.stat-val .unit{font-size:14px;font-family:'Outfit',sans-serif;color:var(--text-muted);font-weight:400;}
+.stat-lbl{font-size:11px;color:var(--text-muted);font-weight:500;}
+
+/* ============================================================
+   LIST ROWS
+   ============================================================ */
+.list-row{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.list-row:last-child{border-bottom:none;}
+.list-icon{
+  width:40px;height:40px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.list-info{flex:1;min-width:0;}
+.list-title{font-size:14px;font-weight:600;color:var(--text-dark);margin-bottom:1px;}
+.list-sub{font-size:12px;color:var(--text-muted);}
+.list-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+
+/* ============================================================
+   HORIZONTAL SCROLL
+   ============================================================ */
+.hscroll{
+  display:flex;gap:10px;
+  overflow-x:auto;padding-bottom:4px;
+  scrollbar-width:none;margin:0 -18px;padding:0 18px 4px;
+}
+.hscroll::-webkit-scrollbar{display:none;}
+
+/* Period card */
+.period-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:14px 14px;
+  min-width:100px;flex-shrink:0;
+}
+.period-card.now{
+  background:var(--school-primary);border-color:var(--school-primary);
+  color:white;
+}
+.period-card.now .period-time,.period-card.now .period-room{color:rgba(255,255,255,.65);}
+.period-time{font-size:10px;color:var(--text-muted);margin-bottom:5px;font-weight:500;}
+.period-subject{font-size:13px;font-weight:700;margin-bottom:2px;}
+.period-room{font-size:11px;color:var(--text-muted);}
+.period-live{font-size:10px;color:rgba(255,255,255,.8);margin-top:4px;font-weight:600;}
+
+/* ============================================================
+   ── SCREEN: LOGIN ──
+   ============================================================ */
+#s-login{background:white;}
+.login-bg{
+  background:linear-gradient(150deg, var(--school-primary) 0%, #0B29BE 50%, var(--school-accent) 100%);
+  height:220px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:28px;flex-shrink:0;
+  position:relative;overflow:hidden;
+}
+.login-bg::before{
+  content:'';position:absolute;
+  bottom:-60px;left:50%;transform:translateX(-50%);
+  width:320px;height:120px;border-radius:50%;
+  background:white;
+}
+.login-bg-logo{
+  font-size:32px;font-weight:800;color:white;letter-spacing:-1px;
+  text-decoration:underline wavy rgba(255,255,255,.4);
+  text-underline-offset:6px;text-decoration-thickness:2px;
+  z-index:1;
+}
+.login-bg-globe{font-size:22px;z-index:1;margin-top:4px;}
+.login-form{
+  flex:1;overflow-y:auto;padding:36px 24px 32px;
+  display:flex;flex-direction:column;gap:0;
+  scrollbar-width:none;
+}
+.login-form::-webkit-scrollbar{display:none;}
+.login-heading{
+  font-size:22px;font-weight:700;color:var(--text-dark);
+  margin-bottom:4px;
+}
+.login-sub{font-size:13px;color:var(--text-muted);margin-bottom:24px;}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.role-card{
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:var(--radius-md);padding:16px 14px;
+  cursor:pointer;transition:all .2s;
+}
+.role-card.selected{
+  border-color:var(--school-primary);
+  background:var(--primary-soft);
+  box-shadow:0 0 0 3px rgba(11,41,190,.1);
+}
+.role-card-icon{font-size:22px;margin-bottom:8px;}
+.role-card-name{font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+.role-card-desc{font-size:10px;color:var(--text-muted);line-height:1.3;}
+
+/* ============================================================
+   ── STUDENT HOME ──
+   ============================================================ */
+.greeting-block{margin-bottom:2px;}
+.greeting-line{font-size:13px;color:var(--text-muted);}
+.greeting-name{font-size:22px;font-weight:700;color:var(--text-dark);}
+
+/* Subject result row */
+.subj-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 0;border-bottom:1px solid var(--border);
+}
+.subj-row:last-child{border-bottom:none;}
+.subj-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.subj-name{font-size:13px;font-weight:600;flex:1;}
+.subj-teacher{font-size:11px;color:var(--text-muted);}
+.subj-grade{font-family:'Lora',serif;font-size:20px;font-weight:600;}
+.grade-a{color:var(--green);}
+.grade-b{color:var(--school-accent);}
+.grade-c{color:var(--amber);}
+
+/* ============================================================
+   ── RESULTS SCREEN ──
+   ============================================================ */
+.result-hero{
+  background:linear-gradient(135deg,var(--school-primary),#1a3dcc);
+  border-radius:var(--radius-xl);padding:22px;color:white;
+  text-align:center;
+}
+.result-pos{font-family:'Lora',serif;font-size:56px;font-weight:600;line-height:1;color:white;}
+.result-pos sup{font-size:22px;}
+.result-of{font-size:13px;opacity:.7;margin:4px 0 16px;}
+.result-stats{
+  display:flex;justify-content:space-around;
+  padding-top:16px;border-top:1px solid rgba(255,255,255,.15);
+}
+.result-stat-val{font-family:'Lora',serif;font-size:22px;font-weight:600;}
+.result-stat-lbl{font-size:10px;opacity:.65;margin-top:2px;}
+.sr-bar-wrap{height:4px;background:var(--bg-soft);border-radius:4px;margin-top:4px;width:80px;}
+.sr-bar{height:4px;border-radius:4px;}
+
+/* ============================================================
+   ── MAGAZINE ──
+   ============================================================ */
+.mag-cover{
+  background:linear-gradient(135deg,var(--school-primary),var(--school-accent));
+  border-radius:var(--radius-xl);padding:22px;color:white;
+  position:relative;overflow:hidden;
+}
+.mag-cover::after{
+  content:'📰';font-size:72px;opacity:.12;
+  position:absolute;right:-10px;bottom:-10px;
+  line-height:1;
+}
+.mag-vol{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:4px;}
+.mag-title{font-family:'Lora',serif;font-size:24px;font-weight:600;margin-bottom:4px;}
+.mag-savings{
+  margin-top:12px;background:rgba(255,255,255,.12);
+  border-radius:var(--radius-sm);padding:8px 12px;
+  font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;
+}
+
+.article-card{
+  display:flex;gap:14px;align-items:flex-start;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:14px;
+  cursor:pointer;
+}
+.article-emoji{font-size:28px;flex-shrink:0;line-height:1;margin-top:2px;}
+.article-cat{font-size:10px;color:var(--school-accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
+.article-title{font-size:14px;font-weight:600;color:var(--text-dark);line-height:1.3;margin-bottom:3px;}
+.article-meta{font-size:11px;color:var(--text-muted);}
+
+.submit-box{
+  background:var(--primary-soft);border:1.5px dashed rgba(11,41,190,.25);
+  border-radius:var(--radius-md);padding:16px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  text-align:center;cursor:pointer;
+}
+.submit-box-icon{font-size:28px;}
+.submit-box-title{font-size:14px;font-weight:600;color:var(--school-primary);}
+.submit-box-sub{font-size:12px;color:var(--text-muted);}
+
+/* ============================================================
+   ── TEACHER HOME ──
+   ============================================================ */
+.class-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:var(--shadow-sm);
+}
+.class-card:hover{border-color:var(--school-primary);box-shadow:var(--shadow-md);}
+
+/* CLASS TEACHER CARD — special */
+.class-teacher-card{
+  background:linear-gradient(135deg,var(--school-accent) 0%,#0a8fa8 100%);
+  border-radius:var(--radius-lg);padding:18px;color:white;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.class-teacher-card::before{
+  content:'🏫';font-size:60px;opacity:.1;
+  position:absolute;right:-8px;bottom:-8px;line-height:1;
+}
+.ct-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;font-weight:600;margin-bottom:4px;}
+.ct-class{font-size:20px;font-weight:700;margin-bottom:2px;}
+.ct-count{font-size:13px;opacity:.8;}
+.ct-chips{display:flex;gap:6px;margin-top:12px;}
+.ct-chip{
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.2);
+  border-radius:40px;padding:4px 12px;
+  font-size:11px;font-weight:600;color:white;cursor:pointer;
+}
+
+/* Score entry table */
+.score-table{width:100%;border-collapse:collapse;}
+.score-table th{
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:6px 8px;
+  border-bottom:1px solid var(--border);text-align:left;
+}
+.score-table td{
+  padding:10px 8px;border-bottom:1px solid var(--border);
+  font-size:13px;vertical-align:middle;
+}
+.score-table tr:last-child td{border-bottom:none;}
+.score-table tr:nth-child(even) td{background:var(--bg);}
+.score-input{
+  width:48px;padding:5px 6px;
+  border:1px solid var(--border);border-radius:6px;
+  font-family:'Outfit',sans-serif;font-size:13px;
+  text-align:center;background:var(--bg-card);color:var(--text-dark);
+}
+.score-input:focus{outline:none;border-color:var(--school-primary);}
+
+/* Attendance */
+.attend-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.attend-row:last-child{border-bottom:none;}
+.attend-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--bg-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--school-primary);flex-shrink:0;
+}
+.attend-name{flex:1;font-size:13px;font-weight:600;}
+.attend-toggle{display:flex;gap:6px;}
+.attend-btn{
+  padding:5px 12px;border-radius:20px;border:1.5px solid;
+  font-size:11px;font-weight:700;cursor:pointer;
+  font-family:'Outfit',sans-serif;transition:all .15s;
+}
+.attend-btn.present{
+  border-color:var(--green);color:var(--green);background:rgba(18,183,106,.07);
+}
+.attend-btn.absent{
+  border-color:var(--border);color:var(--text-muted);background:transparent;
+}
+.attend-btn.is-present{
+  background:var(--green);color:white;border-color:var(--green);
+}
+.attend-btn.is-absent{
+  background:var(--red);color:white;border-color:var(--red);
+}
+
+/* ============================================================
+   ── PARENT HOME ──
+   ============================================================ */
+.ward-hero{
+  background:linear-gradient(135deg,var(--school-primary),#1a3dcc);
+  border-radius:var(--radius-xl);padding:20px;color:white;
+  display:flex;align-items:center;gap:16px;
+}
+.ward-avatar-lg{
+  width:58px;height:58px;border-radius:50%;
+  background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:700;flex-shrink:0;
+}
+.ward-name{font-size:18px;font-weight:700;margin-bottom:2px;}
+.ward-class{font-size:12px;opacity:.75;margin-bottom:6px;}
+
+.fee-row{display:flex;gap:10px;}
+.fee-box{
+  flex:1;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:14px;
+}
+.fee-amount{font-family:'Lora',serif;font-size:26px;font-weight:600;line-height:1;margin:4px 0;}
+.fee-lbl{font-size:11px;color:var(--text-muted);}
+
+.event-row{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:13px 0;border-bottom:1px solid var(--border);
+}
+.event-row:last-child{border-bottom:none;}
+.event-date{
+  background:var(--primary-soft);border-radius:var(--radius-sm);
+  padding:8px 10px;text-align:center;flex-shrink:0;min-width:44px;
+}
+.event-day{font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--school-primary);line-height:1;}
+.event-mon{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;}
+.event-title{font-size:14px;font-weight:600;margin-bottom:3px;}
+.event-desc{font-size:12px;color:var(--text-muted);line-height:1.4;}
+
+/* ============================================================
+   ── ADMIN HOME ──
+   ============================================================ */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.metric-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:16px;box-shadow:var(--shadow-sm);
+}
+.metric-icon{font-size:22px;margin-bottom:10px;}
+.metric-val{font-family:'Lora',serif;font-size:28px;font-weight:600;line-height:1;margin-bottom:3px;}
+.metric-lbl{font-size:11px;color:var(--text-muted);}
+.metric-change{font-size:11px;margin-top:5px;font-weight:600;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.action-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:16px;
+  cursor:pointer;transition:all .2s;
+  display:flex;flex-direction:column;gap:8px;
+}
+.action-card:hover{border-color:var(--school-primary);background:var(--primary-soft);}
+.action-icon{font-size:24px;}
+.action-lbl{font-size:13px;font-weight:600;color:var(--text-dark);}
+
+/* Billing banner */
+.billing-banner{
+  background:var(--bg-card);border:1.5px solid var(--amber);
+  border-radius:var(--radius-lg);padding:16px;
+}
+.billing-title{font-size:14px;font-weight:700;color:var(--amber);margin-bottom:4px;}
+.billing-amount{font-family:'Lora',serif;font-size:32px;font-weight:600;color:var(--text-dark);margin:4px 0;}
+.billing-sub{font-size:12px;color:var(--text-muted);line-height:1.4;}
+
+/* ============================================================
+   ── ADMIN RESULT REVIEW ──
+   ============================================================ */
+.review-filter-row{
+  display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;margin:0 -18px;padding:0 18px 2px;
+}
+.review-filter-row::-webkit-scrollbar{display:none;}
+.filter-chip{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;
+  border:1.5px solid var(--border);color:var(--text-muted);
+  background:var(--bg-card);white-space:nowrap;cursor:pointer;flex-shrink:0;
+  transition:all .15s;
+}
+.filter-chip.active{
+  border-color:var(--school-primary);
+  background:var(--primary-soft);color:var(--school-primary);
+}
+
+.review-class-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;
+  cursor:pointer;transition:all .2s;
+}
+.review-class-card:hover{border-color:var(--school-primary);}
+.review-class-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.review-class-name{font-size:15px;font-weight:700;color:var(--text-dark);}
+.review-progress{height:6px;background:var(--bg-soft);border-radius:4px;margin-bottom:6px;}
+.review-progress-bar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--school-primary),var(--school-accent));}
+.review-counts{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);}
+
+.publish-btn-big{
+  background:linear-gradient(135deg,var(--school-primary),#1a3dcc);
+  border:none;border-radius:var(--radius-lg);
+  color:white;font-family:'Outfit',sans-serif;
+  font-size:16px;font-weight:700;
+  padding:18px;width:100%;cursor:pointer;
+  box-shadow:0 6px 20px rgba(11,41,190,.3);
+  transition:all .2s;display:flex;
+  align-items:center;justify-content:center;gap:10px;
+}
+.publish-btn-big:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(11,41,190,.4);}
+
+/* ============================================================
+   ── ALUMNI ──
+   ============================================================ */
+.alumni-hero{
+  background:linear-gradient(135deg,#0F1B3D,var(--school-primary));
+  border-radius:var(--radius-xl);padding:22px;color:white;
+  text-align:center;
+}
+.alumni-year{font-size:13px;opacity:.65;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.alumni-class{font-family:'Lora',serif;font-size:26px;font-weight:600;}
+.alumni-count{font-size:13px;opacity:.7;margin-top:4px;}
+
+/* ============================================================
+   PROTO BADGE
+   ============================================================ */
+.proto-badge{
+  position:fixed;bottom:20px;right:20px;
+  background:rgba(11,41,190,.9);backdrop-filter:blur(8px);
+  color:white;font-size:11px;font-weight:700;
+  padding:6px 14px;border-radius:20px;
+  letter-spacing:.06em;text-transform:uppercase;
+  z-index:1000;box-shadow:0 4px 16px rgba(11,41,190,.4);
+}
+
+/* ============================================================
+   ROLE SWITCHER (demo helper)
+   ============================================================ */
+.role-switcher{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,.95);backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:40px;
+  display:flex;padding:4px;gap:2px;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  z-index:1000;
+}
+.rs-btn{
+  padding:6px 12px;border-radius:36px;border:none;
+  font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;
+  cursor:pointer;background:transparent;color:var(--text-muted);
+  transition:all .15s;white-space:nowrap;
+}
+.rs-btn.active{background:var(--school-primary);color:white;}
+
+/* ============================================================
+   CHAT SCREEN
+   ============================================================ */
+.chat-list .list-row{cursor:pointer;}
+.unread-count{
+  background:var(--school-primary);color:white;
+  width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;
+}
+.online-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--green);
+  border:2px solid var(--bg-card);
+  position:absolute;bottom:0;right:0;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ROLE SWITCHER -->
+<div class="role-switcher">
+  <button class="rs-btn active" onclick="switchRole('student')">Student</button>
+  <button class="rs-btn" onclick="switchRole('teacher')">Teacher</button>
+  <button class="rs-btn" onclick="switchRole('parent')">Parent</button>
+  <button class="rs-btn" onclick="switchRole('admin')">Admin</button>
+  <button class="rs-btn" onclick="switchRole('alumni')">Alumni</button>
+</div>
+
+<div class="phone">
+
+<!-- ════════════════════════════════════════
+     LOGIN
+════════════════════════════════════════ -->
+<div class="screen active" id="s-login">
+  <div class="login-bg">
+    <div class="login-bg-logo">Acadryx 🌍</div>
+  </div>
+  <div class="login-form">
+    <div class="login-heading">Welcome back</div>
+    <div class="login-sub">Choose your role to continue</div>
+
+    <div class="role-grid">
+      <div class="role-card selected" onclick="selectRole(this,'student')">
+        <div class="role-card-icon">🎒</div>
+        <div class="role-card-name">Student</div>
+        <div class="role-card-desc">Results, timetable, magazine</div>
+      </div>
+      <div class="role-card" onclick="selectRole(this,'parent')">
+        <div class="role-card-icon">👨‍👩‍👧</div>
+        <div class="role-card-name">Parent</div>
+        <div class="role-card-desc">Ward progress & fees</div>
+      </div>
+      <div class="role-card" onclick="selectRole(this,'teacher')">
+        <div class="role-card-icon">📋</div>
+        <div class="role-card-name">Teacher</div>
+        <div class="role-card-desc">Classes, scores, attendance</div>
+      </div>
+      <div class="role-card" onclick="selectRole(this,'admin')">
+        <div class="role-card-icon">⚙️</div>
+        <div class="role-card-name">Admin</div>
+        <div class="role-card-desc">Full school management</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:500;">School Code</div>
+      <input style="width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-md);font-family:'Outfit',sans-serif;font-size:15px;background:var(--bg);color:var(--text-dark);outline:none;" placeholder="e.g. KIS-24A7-B3" onfocus="this.style.borderColor='rgb(11,41,190)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <button class="btn btn-primary" onclick="goToDash()" style="margin-bottom:16px;">Continue →</button>
+    <div style="text-align:center;font-size:12px;color:var(--text-muted);">No code? <span style="color:var(--school-primary);font-weight:600;cursor:pointer;">Contact your school</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STUDENT — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s-student-home">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div class="topbar-logo">
+      <div>
+        <div class="school-name">Kogbodi Intl. School</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="icon-btn" onclick="navigate('s-student-chat')">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="avatar-sm" onclick="">CE</div>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="greeting-block">
+      <div class="greeting-line">Good morning,</div>
+      <div class="greeting-name">Chukwuemeka 👋</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">SSS 2A · Tuesday, 3rd March</div>
+    </div>
+
+    <!-- Results Hero -->
+    <div class="hero-card" onclick="navigate('s-student-results')">
+      <div class="hero-label">2nd Term Average · 2024/25</div>
+      <div class="hero-value">78.4<span style="font-size:20px;opacity:.6">%</span></div>
+      <div class="hero-sub">Position: <strong>3rd</strong> of 42 students</div>
+      <div class="hero-badge">↑ +4.2 pts</div>
+      <div style="display:flex;gap:3px;margin-top:14px;">
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.6)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.6)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.6)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.6)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.25)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1)"></div>
+        <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1)"></div>
+      </div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-icon">📅</div>
+        <div class="stat-val" style="color:var(--green)">94<span class="unit">%</span></div>
+        <div class="stat-lbl">Attendance this term</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">📚</div>
+        <div class="stat-val">9</div>
+        <div class="stat-lbl">Subjects registered</div>
+      </div>
+    </div>
+
+    <!-- Timetable today -->
+    <div>
+      <div class="section-title">Today's Classes</div>
+      <div class="hscroll">
+        <div class="period-card">
+          <div class="period-time">7:30 – 8:20</div>
+          <div class="period-subject">Mathematics</div>
+          <div class="period-room">Room 12</div>
+        </div>
+        <div class="period-card now">
+          <div class="period-time">8:20 – 9:10</div>
+          <div class="period-subject">English</div>
+          <div class="period-room">Room 14</div>
+          <div class="period-live">● Now</div>
+        </div>
+        <div class="period-card">
+          <div class="period-time">9:10 – 10:00</div>
+          <div class="period-subject">Chemistry</div>
+          <div class="period-room">Lab A</div>
+        </div>
+        <div class="period-card">
+          <div class="period-time">10:20 – 11:10</div>
+          <div class="period-subject">Physics</div>
+          <div class="period-room">Lab B</div>
+        </div>
+        <div class="period-card">
+          <div class="period-time">11:10 – 12:00</div>
+          <div class="period-subject">Economics</div>
+          <div class="period-room">Room 7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subjects -->
+    <div class="card card-pad">
+      <div class="row-between" style="margin-bottom:12px;">
+        <div class="section-title" style="margin:0">Subjects</div>
+        <span style="font-size:12px;color:var(--school-primary);font-weight:600;cursor:pointer;" onclick="navigate('s-student-results')">See results →</span>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(18,183,106,.1)">➕</div>
+        <div style="flex:1"><div class="subj-name">Mathematics</div><div class="subj-teacher">Mr. Adewale O.</div></div>
+        <div class="subj-grade grade-a">A</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(13,124,150,.1)">📖</div>
+        <div style="flex:1"><div class="subj-name">English Language</div><div class="subj-teacher">Mrs. Okonkwo F.</div></div>
+        <div class="subj-grade grade-a">A</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(247,144,9,.1)">⚗️</div>
+        <div style="flex:1"><div class="subj-name">Chemistry</div><div class="subj-teacher">Mr. Emeka B.</div></div>
+        <div class="subj-grade grade-b">B</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(11,41,190,.08)">🔭</div>
+        <div style="flex:1"><div class="subj-name">Physics</div><div class="subj-teacher">Dr. Yusuf A.</div></div>
+        <div class="subj-grade grade-b">B</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(240,68,56,.08)">📊</div>
+        <div style="flex:1"><div class="subj-name">Economics</div><div class="subj-teacher">Mrs. Bello I.</div></div>
+        <div class="subj-grade grade-c">C</div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="card card-pad">
+      <div class="section-title">School Notifications</div>
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--primary-soft);font-size:20px;">📢</div>
+        <div class="list-info">
+          <div class="list-title">2nd Term Exams start March 3rd</div>
+          <div class="list-sub">From Admin · 2 hours ago</div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:rgba(18,183,106,.1);font-size:20px;">✅</div>
+        <div class="list-info">
+          <div class="list-title">Your magazine article was approved!</div>
+          <div class="list-sub">Magazine Editor · Yesterday</div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:rgba(247,144,9,.1);font-size:20px;">⚽</div>
+        <div class="list-info">
+          <div class="list-title">Inter-house sports: Feb 14th</div>
+          <div class="list-sub">Events · 3 days ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav: Student -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="navigate('s-student-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-results')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg>
+      Results
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-magazine')">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Magazine
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-chat')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Chat
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STUDENT — RESULTS
+════════════════════════════════════════ -->
+<div class="screen" id="s-student-results">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div class="back-row" onclick="goBack()" style="margin:0">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </div>
+    <div style="font-weight:700;font-size:15px;color:var(--text-dark);">My Results</div>
+    <div style="width:60px;display:flex;justify-content:flex-end;">
+      <span class="badge badge-primary">2nd Term</span>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="result-hero">
+      <div style="font-size:11px;opacity:.65;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Class Position</div>
+      <div class="result-pos">3<sup>rd</sup></div>
+      <div class="result-of">of 42 students in SSS 2A</div>
+      <div class="result-stats">
+        <div style="text-align:center"><div class="result-stat-val">78.4</div><div class="result-stat-lbl">Average %</div></div>
+        <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+        <div style="text-align:center"><div class="result-stat-val">A</div><div class="result-stat-lbl">Best Grade</div></div>
+        <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+        <div style="text-align:center"><div class="result-stat-val">9</div><div class="result-stat-lbl">Subjects</div></div>
+      </div>
+    </div>
+
+    <!-- Subject breakdown -->
+    <div class="card card-pad">
+      <div class="section-title">Subject Scores</div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(18,183,106,.1)">➕</div>
+        <div style="flex:1">
+          <div class="subj-name">Mathematics</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:88%;background:var(--green)"></div></div>
+        </div>
+        <div class="subj-grade grade-a">88</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(13,124,150,.1)">📖</div>
+        <div style="flex:1">
+          <div class="subj-name">English Language</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:84%;background:var(--green)"></div></div>
+        </div>
+        <div class="subj-grade grade-a">84</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(247,144,9,.1)">⚗️</div>
+        <div style="flex:1">
+          <div class="subj-name">Chemistry</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:79%;background:var(--school-accent)"></div></div>
+        </div>
+        <div class="subj-grade grade-b">79</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(11,41,190,.08)">🔭</div>
+        <div style="flex:1">
+          <div class="subj-name">Physics</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:76%;background:var(--school-accent)"></div></div>
+        </div>
+        <div class="subj-grade grade-b">76</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(240,68,56,.08)">📊</div>
+        <div style="flex:1">
+          <div class="subj-name">Economics</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:72%;background:var(--amber)"></div></div>
+        </div>
+        <div class="subj-grade grade-c">72</div>
+      </div>
+      <div class="subj-row">
+        <div class="subj-icon" style="background:rgba(18,183,106,.1)">💻</div>
+        <div style="flex:1">
+          <div class="subj-name">Data Processing</div>
+          <div class="sr-bar-wrap"><div class="sr-bar" style="width:82%;background:var(--green)"></div></div>
+        </div>
+        <div class="subj-grade grade-a">82</div>
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="card card-pad">
+      <div class="section-title">Form Teacher's Comment</div>
+      <div style="font-size:13px;line-height:1.6;color:var(--text-mid);font-style:italic;">"Chukwuemeka has demonstrated consistent effort throughout the term. His performance in Mathematics is commendable. He should focus on improving his Economics."</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">— Mrs. Adeyemi J., Form Teacher</div>
+    </div>
+
+    <!-- Verified badge -->
+    <div style="background:rgba(18,183,106,.06);border:1.5px solid rgba(18,183,106,.2);border-radius:var(--radius-md);padding:14px;display:flex;gap:12px;align-items:center;">
+      <div style="font-size:24px">🔒</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--green)">Verified Academic Record</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Permanently stored. Verifiable by any institution.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-student-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+    </div>
+    <div class="nav-item active" onclick="navigate('s-student-results')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg>
+      Results<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-magazine')">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Magazine
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-chat')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STUDENT — MAGAZINE
+════════════════════════════════════════ -->
+<div class="screen" id="s-student-magazine">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Magazine</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="avatar-sm">CE</div>
+  </div>
+  <div class="scroll">
+    <div class="mag-cover">
+      <div class="mag-vol">Volume XIV · Issue 2 · 2024/25</div>
+      <div class="mag-title">The Kogbodi Times</div>
+      <div style="font-size:12px;opacity:.7">1,247 readers · Published Jan 2025</div>
+      <div class="mag-savings">💰 Saved ₦490,000 vs print this year</div>
+    </div>
+
+    <div class="submit-box" onclick="">
+      <div class="submit-box-icon">✍️</div>
+      <div class="submit-box-title">Submit Your Article</div>
+      <div class="submit-box-sub">Articles, poems, drawings, photos — all accepted. Everyone gets published.</div>
+    </div>
+
+    <div class="section-title">Latest Articles</div>
+    <div class="article-card">
+      <div class="article-emoji">🏆</div>
+      <div><div class="article-cat">Achievement</div><div class="article-title">We Won the National Science Olympiad</div><div class="article-meta">By Chidi Eze · Jan 14</div></div>
+    </div>
+    <div class="article-card">
+      <div class="article-emoji">🎨</div>
+      <div><div class="article-cat">Culture</div><div class="article-title">Art Exhibition 2025: Colours of Tomorrow</div><div class="article-meta">By Amaka Obi · Jan 10</div></div>
+    </div>
+    <div class="article-card">
+      <div class="article-emoji">🔬</div>
+      <div><div class="article-cat">Science</div><div class="article-title">A Tour of Our New Chemistry Lab</div><div class="article-meta">By Staff · Jan 8</div></div>
+    </div>
+    <div class="article-card">
+      <div class="article-emoji">✏️</div>
+      <div><div class="article-cat">Poem</div><div class="article-title">The River Knows My Name</div><div class="article-meta">By Fatima Musa · Jan 6</div></div>
+    </div>
+    <div class="article-card">
+      <div class="article-emoji">⚽</div>
+      <div><div class="article-cat">Sports</div><div class="article-title">Football Season Recap: A Historic Year</div><div class="article-meta">By Taiwo Adamu · Jan 5</div></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-student-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-results')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg>Results
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Magazine<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-chat')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STUDENT — CHAT
+════════════════════════════════════════ -->
+<div class="screen" id="s-student-chat">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Chats</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="avatar-sm">CE</div>
+  </div>
+  <div class="scroll chat-list">
+    <div class="section-title">School Channels</div>
+    <div class="card card-pad">
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--primary-soft);font-size:20px;position:relative">📢<div class="online-dot"></div></div>
+        <div class="list-info"><div class="list-title">School Announcements</div><div class="list-sub">Admin: Exams start Monday. Be prepared.</div></div>
+        <div class="list-right"><div style="font-size:10px;color:var(--text-muted)">2h</div><div class="unread-count">3</div></div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--accent-soft);font-size:20px">🏫</div>
+        <div class="list-info"><div class="list-title">SSS 2A Class Chat</div><div class="list-sub">Emeka: Who has the chemistry notes?</div></div>
+        <div class="list-right"><div style="font-size:10px;color:var(--text-muted)">30m</div><div class="unread-count">12</div></div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:rgba(247,144,9,.1);font-size:20px">📅</div>
+        <div class="list-info"><div class="list-title">Events Feed</div><div class="list-sub">New event: Inter-house Sports — Feb 14</div></div>
+        <div class="list-right"><div style="font-size:10px;color:var(--text-muted)">3d</div></div>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:4px">Direct Messages</div>
+    <div class="card card-pad">
+      <div class="list-row">
+        <div style="position:relative;flex-shrink:0">
+          <div class="avatar-sm" style="width:40px;height:40px;font-size:14px">AO</div>
+          <div class="online-dot"></div>
+        </div>
+        <div class="list-info"><div class="list-title">Mr. Adewale (Maths)</div><div class="list-sub">Good work on your CA score!</div></div>
+        <div style="font-size:10px;color:var(--text-muted)">1d</div>
+      </div>
+      <div class="list-row">
+        <div style="position:relative;flex-shrink:0">
+          <div class="avatar-sm" style="width:40px;height:40px;font-size:14px;background:linear-gradient(135deg,var(--school-accent),#0a8fa8)">FK</div>
+        </div>
+        <div class="list-info"><div class="list-title">Fatima Kalu (SSS2A)</div><div class="list-sub">Are you coming to the library?</div></div>
+        <div style="font-size:10px;color:var(--text-muted)">2d</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-student-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-results')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg>Results
+    </div>
+    <div class="nav-item" onclick="navigate('s-student-magazine')">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Magazine
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Chat<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TEACHER — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s-teacher-home">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Acadryx</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="topbar-right">
+      <div class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="notif-dot"></div></div>
+      <div class="avatar-sm" style="background:linear-gradient(135deg,var(--school-accent),#0a8fa8)">AO</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="greeting-block">
+      <div class="greeting-line">Good morning,</div>
+      <div class="greeting-name">Mr. Adewale 📋</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Mathematics · Tuesday, 3rd March</div>
+    </div>
+
+    <!-- CLASS TEACHER CARD — stacked on top, different colour -->
+    <div class="class-teacher-card" onclick="navigate('s-teacher-attendance')">
+      <div class="ct-label">Class Teacher Assignment</div>
+      <div class="ct-class">SSS 2A</div>
+      <div class="ct-count">42 students · Kogbodi Main Campus</div>
+      <div class="ct-chips">
+        <div class="ct-chip" onclick="event.stopPropagation();navigate('s-teacher-attendance')">📅 Attendance</div>
+        <div class="ct-chip">📋 Class List</div>
+        <div class="ct-chip">📢 Notice</div>
+      </div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-icon">👥</div>
+        <div class="stat-val">167</div>
+        <div class="stat-lbl">Total students across classes</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">📝</div>
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">Open score entries</div>
+      </div>
+    </div>
+
+    <!-- Subject classes -->
+    <div class="section-title">My Subject Classes</div>
+    <div class="class-card" onclick="navigate('s-teacher-scores')">
+      <div style="width:44px;height:44px;border-radius:12px;background:rgba(18,183,106,.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">➕</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700">Mathematics — SSS 2A</div>
+        <div style="font-size:12px;color:var(--text-muted)">42 students · CA2 scores open</div>
+      </div>
+      <span class="badge badge-amber">Open</span>
+    </div>
+    <div class="class-card" onclick="navigate('s-teacher-scores')">
+      <div style="width:44px;height:44px;border-radius:12px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">➕</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700">Mathematics — SSS 2B</div>
+        <div style="font-size:12px;color:var(--text-muted)">38 students · CA2 scores open</div>
+      </div>
+      <span class="badge badge-amber">Open</span>
+    </div>
+    <div class="class-card">
+      <div style="width:44px;height:44px;border-radius:12px;background:rgba(18,183,106,.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">➕</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700">Mathematics — SSS 1A</div>
+        <div style="font-size:12px;color:var(--text-muted)">40 students · Submitted</div>
+      </div>
+      <span class="badge badge-green">Done</span>
+    </div>
+    <div class="class-card">
+      <div style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔬</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700">Basic Science — JSS 3A</div>
+        <div style="font-size:12px;color:var(--text-muted)">47 students · Exam scores open</div>
+      </div>
+      <span class="badge badge-amber">Open</span>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="navigate('s-teacher-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item" onclick="navigate('s-teacher-scores')">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Scores
+    </div>
+    <div class="nav-item" onclick="navigate('s-teacher-attendance')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Attend.
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Chat
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TEACHER — SCORE ENTRY
+════════════════════════════════════════ -->
+<div class="screen" id="s-teacher-scores">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div class="back-row" onclick="goBack()" style="margin:0"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back</div>
+    <div style="font-weight:700;font-size:14px;color:var(--text-dark);text-align:center;flex:1">Score Entry</div>
+    <div style="width:50px"></div>
+  </div>
+  <div style="padding:10px 18px;background:var(--bg-card);border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:14px;font-weight:700;color:var(--text-dark)">Mathematics — SSS 2A</div>
+    <div style="display:flex;gap:8px;margin-top:6px;align-items:center;">
+      <span class="badge badge-amber">CA2 · 20pts max</span>
+      <span style="font-size:11px;color:var(--text-muted)">42 students · Auto-saves</span>
+    </div>
+  </div>
+
+  <div class="scroll" style="padding:12px 18px 90px;">
+    <div style="overflow-x:auto;">
+      <table class="score-table" style="min-width:280px;">
+        <thead>
+          <tr>
+            <th style="min-width:130px">Student</th>
+            <th>CA1</th>
+            <th>CA2</th>
+            <th>Exam</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight:600">Adeyemi, Blessing</td><td><input class="score-input" value="18" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Chukwuemeka, Obi</td><td><input class="score-input" value="17" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Dankwa, Emeka</td><td><input class="score-input" value="14" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Fagbemi, Ife</td><td><input class="score-input" value="12" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Garba, Aminu</td><td><input class="score-input" value="16" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Hassan, Fatima</td><td><input class="score-input" value="19" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Ibrahim, Yusuf</td><td><input class="score-input" value="15" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+          <tr><td style="font-weight:600">Johnson, Kemi</td><td><input class="score-input" value="13" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td><td><input class="score-input" placeholder="—" type="number"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;">
+      <button class="btn btn-ghost" style="flex:1">Save Draft</button>
+      <button class="btn btn-primary" style="flex:1">Submit for Approval</button>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--green);margin-top:8px;">✓ Auto-saved 2 minutes ago</div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-teacher-home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Scores<div class="nav-pip"></div>
+    </div>
+    <div class="nav-item" onclick="navigate('s-teacher-attendance')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Attend.
+    </div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TEACHER — ATTENDANCE
+════════════════════════════════════════ -->
+<div class="screen" id="s-teacher-attendance">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div class="back-row" onclick="goBack()" style="margin:0"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back</div>
+    <div style="font-weight:700;font-size:14px;color:var(--text-dark);text-align:center;flex:1">Attendance</div>
+    <div style="width:50px"></div>
+  </div>
+  <div style="padding:10px 18px;background:var(--bg-card);border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:14px;font-weight:700">SSS 2A — Tuesday, 3 March 2026</div>
+    <div style="display:flex;gap:10px;margin-top:6px;font-size:12px;">
+      <span style="color:var(--green);font-weight:600">✓ 36 Present</span>
+      <span style="color:var(--red);font-weight:600">✗ 4 Absent</span>
+      <span style="color:var(--text-muted)">2 Unmarked</span>
+    </div>
+  </div>
+  <div class="scroll" style="padding:12px 18px 90px;">
+    <div style="background:rgba(247,144,9,.08);border:1px solid rgba(247,144,9,.2);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--amber);font-weight:600;margin-bottom:4px;">📶 Offline mode — will sync when connected</div>
+    <div class="card card-pad">
+      <div class="attend-row">
+        <div class="attend-avatar">AD</div>
+        <div class="attend-name">Adeyemi, Blessing</div>
+        <div class="attend-toggle">
+          <button class="attend-btn is-present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+      <div class="attend-row">
+        <div class="attend-avatar">CE</div>
+        <div class="attend-name">Chukwuemeka, Obi</div>
+        <div class="attend-toggle">
+          <button class="attend-btn is-present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+      <div class="attend-row">
+        <div class="attend-avatar">DE</div>
+        <div class="attend-name">Dankwa, Emeka</div>
+        <div class="attend-toggle">
+          <button class="attend-btn present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn is-absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+      <div class="attend-row">
+        <div class="attend-avatar">FI</div>
+        <div class="attend-name">Fagbemi, Ife</div>
+        <div class="attend-toggle">
+          <button class="attend-btn present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+      <div class="attend-row">
+        <div class="attend-avatar">GA</div>
+        <div class="attend-name">Garba, Aminu</div>
+        <div class="attend-toggle">
+          <button class="attend-btn is-present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+      <div class="attend-row">
+        <div class="attend-avatar">HF</div>
+        <div class="attend-name">Hassan, Fatima</div>
+        <div class="attend-toggle">
+          <button class="attend-btn is-present" onclick="toggleAttend(this,'P')">P</button>
+          <button class="attend-btn absent" onclick="toggleAttend(this,'A')">A</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:8px;">Submit Attendance</button>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-teacher-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</div>
+    <div class="nav-item" onclick="navigate('s-teacher-scores')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Scores</div>
+    <div class="nav-item active"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Attend.<div class="nav-pip"></div></div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PARENT — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s-parent-home">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Acadryx</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="topbar-right">
+      <div class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="notif-dot"></div></div>
+      <div class="avatar-sm" style="background:linear-gradient(135deg,#0F1B3D,var(--school-primary))">MO</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="greeting-block">
+      <div class="greeting-line">Good morning,</div>
+      <div class="greeting-name">Mrs. Obi 👋</div>
+    </div>
+
+    <!-- Ward Hero -->
+    <div class="ward-hero">
+      <div class="ward-avatar-lg">CE</div>
+      <div>
+        <div class="ward-name">Chukwuemeka Obi</div>
+        <div class="ward-class">SSS 2A · Kogbodi Main Campus</div>
+        <span class="badge" style="background:rgba(255,255,255,.15);color:white;font-size:11px;">🏆 3rd Position</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-icon">📈</div>
+        <div class="stat-val" style="color:var(--school-primary)">78.4<span class="unit">%</span></div>
+        <div class="stat-lbl">Term Average</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">📅</div>
+        <div class="stat-val" style="color:var(--green)">94<span class="unit">%</span></div>
+        <div class="stat-lbl">Attendance</div>
+      </div>
+    </div>
+
+    <!-- Fees -->
+    <div class="card card-pad">
+      <div class="section-title">School Fees — 2nd Term</div>
+      <div class="fee-row">
+        <div class="fee-box">
+          <div class="fee-lbl">Total Due</div>
+          <div class="fee-amount" style="color:var(--red)">₦85,000</div>
+        </div>
+        <div class="fee-box">
+          <div class="fee-lbl">Paid</div>
+          <div class="fee-amount" style="color:var(--green)">₦60,000</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg-soft);border-radius:6px;height:6px;">
+        <div style="width:70%;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--green),#0d9e52)"></div>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Balance: <strong style="color:var(--red)">₦25,000</strong> due Jan 20</div>
+      <button class="btn btn-primary" style="margin-top:12px;">Pay via Flutterwave →</button>
+    </div>
+
+    <!-- Events -->
+    <div class="card card-pad">
+      <div class="section-title">School Events</div>
+      <div class="event-row">
+        <div class="event-date"><div class="event-day">20</div><div class="event-mon">Jan</div></div>
+        <div><div class="event-title">Fee Payment Deadline</div><div class="event-desc">Final day for 2nd term fees. Pay online or visit bursar.</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="event-day">28</div><div class="event-mon">Jan</div></div>
+        <div><div class="event-title">Parent-Teacher Meeting</div><div class="event-desc">SSS 2 parents — discuss ward performance with teachers.</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="event-day">14</div><div class="event-mon">Feb</div></div>
+        <div><div class="event-title">Inter-house Sports</div><div class="event-desc">Annual sports day. Parents welcome. 9AM start.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="navigate('s-parent-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home<div class="nav-pip"></div></div>
+    <div class="nav-item" onclick="navigate('s-student-results')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg>Results</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Fees</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>PTA Chat</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ADMIN — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s-admin-home">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Acadryx</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="topbar-right">
+      <div class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="notif-dot"></div></div>
+      <div class="avatar-sm" style="background:linear-gradient(135deg,#0F1B3D,var(--school-primary))">DO</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="greeting-block">
+      <div class="greeting-line">School Overview</div>
+      <div class="greeting-name">Kogbodi Intl. 🏫</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">2nd Term · 2024/2025 Session</div>
+    </div>
+
+    <!-- Billing banner (amber, not yet critical) -->
+    <div class="billing-banner">
+      <div class="billing-title">⚠️ Outstanding Balance</div>
+      <div class="billing-amount">₦247,000</div>
+      <div class="billing-sub">From result publication (247 students × ₦1,000). Must clear before opening a new term. Expires in <strong>284 days.</strong></div>
+      <button class="btn btn-ghost" style="margin-top:12px;border-color:var(--amber);color:var(--amber);">Pay via Flutterwave →</button>
+    </div>
+
+    <!-- Metrics -->
+    <div class="section-title">School Metrics</div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-icon">👨‍🎓</div>
+        <div class="metric-val">1,247</div>
+        <div class="metric-lbl">Total Students</div>
+        <div class="metric-change up">↑ +34 this term</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">👩‍🏫</div>
+        <div class="metric-val">68</div>
+        <div class="metric-lbl">Teaching Staff</div>
+        <div class="metric-change up">↑ +3 new</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📅</div>
+        <div class="metric-val" style="color:var(--green)">91<span style="font-size:14px;font-family:'Outfit',sans-serif">%</span></div>
+        <div class="metric-lbl">Avg Attendance</div>
+        <div class="metric-change dn">↓ -2% vs last term</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📝</div>
+        <div class="metric-val">8</div>
+        <div class="metric-lbl">Pending Approvals</div>
+        <div class="metric-change" style="color:var(--school-primary);cursor:pointer;" onclick="navigate('s-admin-results')">Review now →</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section-title">Quick Actions</div>
+    <div class="action-grid">
+      <div class="action-card" onclick="navigate('s-admin-results')">
+        <div class="action-icon">📊</div>
+        <div class="action-lbl">Review & Publish Results</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">📰</div>
+        <div class="action-lbl">Approve Magazine</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">👤</div>
+        <div class="action-lbl">Create New User</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">📢</div>
+        <div class="action-lbl">Launch New Event</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">📅</div>
+        <div class="action-lbl">Configure Timetable</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">⚙️</div>
+        <div class="action-lbl">School Settings</div>
+      </div>
+    </div>
+
+    <!-- Magazine savings -->
+    <div style="background:rgba(18,183,106,.06);border:1.5px solid rgba(18,183,106,.2);border-radius:var(--radius-lg);padding:16px;">
+      <div style="font-size:11px;color:var(--green);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">💡 Acadryx Insight</div>
+      <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Save ₦490,000/year</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Switch to the Acadryx digital magazine. Same quality, zero printing cost.</div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="navigate('s-admin-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home<div class="nav-pip"></div></div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Students</div>
+    <div class="nav-item" onclick="navigate('s-admin-results')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Results</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Magazine</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>Settings</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ADMIN — RESULT REVIEW & PUBLISH
+════════════════════════════════════════ -->
+<div class="screen" id="s-admin-results">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div class="back-row" onclick="goBack()" style="margin:0"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back</div>
+    <div style="font-weight:700;font-size:14px;color:var(--text-dark);text-align:center;flex:1">Result Review</div>
+    <div style="width:50px"></div>
+  </div>
+
+  <div style="padding:10px 18px;background:var(--bg-card);border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:13px;font-weight:600;color:var(--text-dark);margin-bottom:8px;">2nd Term · 2024/25 · Filter by:</div>
+    <div class="review-filter-row">
+      <div class="filter-chip active">All Classes</div>
+      <div class="filter-chip">SSS</div>
+      <div class="filter-chip">JSS</div>
+      <div class="filter-chip">Primary</div>
+      <div class="filter-chip">Ready</div>
+      <div class="filter-chip">Pending</div>
+      <div class="filter-chip">Incomplete</div>
+    </div>
+  </div>
+
+  <div class="scroll" style="padding:14px 18px 90px;gap:10px;">
+    <!-- Publish all CTA -->
+    <div style="background:var(--primary-soft);border:1.5px solid rgba(11,41,190,.2);border-radius:var(--radius-lg);padding:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--school-primary);margin-bottom:4px;">8 classes ready to publish</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">1,047 students · ₦1,047,000 will be charged on publish</div>
+      <button class="publish-btn-big" onclick="showPublishConfirm()">🚀 Publish All Ready Classes</button>
+    </div>
+
+    <!-- Class cards -->
+    <div class="review-class-card" onclick="">
+      <div class="review-class-top">
+        <div class="review-class-name">SSS 2A — All Subjects</div>
+        <span class="badge badge-green">Ready</span>
+      </div>
+      <div class="review-progress"><div class="review-progress-bar" style="width:100%"></div></div>
+      <div class="review-counts"><span>42/42 scores entered</span><span>9 subjects complete</span></div>
+    </div>
+
+    <div class="review-class-card">
+      <div class="review-class-top">
+        <div class="review-class-name">SSS 2B — All Subjects</div>
+        <span class="badge badge-green">Ready</span>
+      </div>
+      <div class="review-progress"><div class="review-progress-bar" style="width:100%"></div></div>
+      <div class="review-counts"><span>38/38 scores entered</span><span>9 subjects complete</span></div>
+    </div>
+
+    <div class="review-class-card">
+      <div class="review-class-top">
+        <div class="review-class-name">SSS 1A — All Subjects</div>
+        <span class="badge badge-amber">Pending</span>
+      </div>
+      <div class="review-progress"><div class="review-progress-bar" style="width:78%"></div></div>
+      <div class="review-counts"><span>40/40 scores entered</span><span>7/9 subjects complete</span></div>
+    </div>
+
+    <div class="review-class-card">
+      <div class="review-class-top">
+        <div class="review-class-name">JSS 3A — All Subjects</div>
+        <span class="badge badge-red">Incomplete</span>
+      </div>
+      <div class="review-progress"><div class="review-progress-bar" style="width:40%;background:var(--red)"></div></div>
+      <div class="review-counts"><span>47/47 students</span><span>4/9 subjects entered</span></div>
+    </div>
+
+    <div class="review-class-card">
+      <div class="review-class-top">
+        <div class="review-class-name">JSS 2A — All Subjects</div>
+        <span class="badge badge-green">Ready</span>
+      </div>
+      <div class="review-progress"><div class="review-progress-bar" style="width:100%"></div></div>
+      <div class="review-counts"><span>44/44 scores entered</span><span>8 subjects complete</span></div>
+    </div>
+  </div>
+
+  <!-- Publish confirm modal -->
+  <div id="publish-modal" style="display:none;position:absolute;inset:0;background:rgba(15,27,61,.6);backdrop-filter:blur(4px);z-index:50;align-items:flex-end;">
+    <div style="background:var(--bg-card);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:28px 24px 40px;width:100%;">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Confirm Publication</div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:20px;">You are about to publish results for <strong>8 classes</strong> and <strong>1,047 students</strong>.<br><br>This will add <strong style="color:var(--amber)">₦1,047,000</strong> to your Acadryx balance, payable within 1 year. Results become permanently immutable.</div>
+      <button class="btn btn-primary" onclick="confirmPublish()" style="margin-bottom:10px;">Publish Now — ₦1,047,000</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navigate('s-admin-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Students</div>
+    <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Results<div class="nav-pip"></div></div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Magazine</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>Settings</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ALUMNI — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s-alumni-home">
+  <div class="status"><span>9:41</span><div class="status-icons"><span>▲</span><span>🔋</span></div></div>
+  <div class="topbar">
+    <div><div class="logo-wordmark">Acadryx</div><div class="school-name">Kogbodi Intl. School</div></div>
+    <div class="topbar-right">
+      <div class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+      <div class="avatar-sm" style="background:linear-gradient(135deg,#0F1B3D,var(--school-accent))">TK</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="greeting-block">
+      <div class="greeting-line">Welcome back,</div>
+      <div class="greeting-name">Taiwo Kalu 🎓</div>
+    </div>
+
+    <div class="alumni-hero">
+      <div class="alumni-year">Alumnus · Class of</div>
+      <div class="alumni-class">2020</div>
+      <div class="alumni-count">Kogbodi International School · 312 alumni connected</div>
+    </div>
+
+    <!-- Live school feed -->
+    <div class="section-title">Live School Feed</div>
+    <div class="card card-pad">
+      <div class="list-row">
+        <div class="list-icon" style="background:rgba(18,183,106,.1);font-size:20px">🏆</div>
+        <div class="list-info"><div class="list-title">Science Olympiad Win — 2025</div><div class="list-sub">Your alma mater just won national. 🔥</div></div>
+        <div style="font-size:10px;color:var(--text-muted)">2h</div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--primary-soft);font-size:20px">📰</div>
+        <div class="list-info"><div class="list-title">New magazine: The Kogbodi Times Vol XIV</div><div class="list-sub">Published Jan 2025 · Read now</div></div>
+        <div style="font-size:10px;color:var(--text-muted)">3d</div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:rgba(247,144,9,.1);font-size:20px">⚽</div>
+        <div class="list-info"><div class="list-title">Inter-house Sports: Feb 14th</div><div class="list-sub">Alumni invited. Come back home.</div></div>
+        <div style="font-size:10px;color:var(--text-muted)">5d</div>
+      </div>
+    </div>
+
+    <!-- Alumni donate -->
+    <div style="background:linear-gradient(135deg,var(--school-primary),var(--school-accent));border-radius:var(--radius-lg);padding:18px;color:white;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Support Your School</div>
+      <div style="font-size:12px;opacity:.8;margin-bottom:14px;">Donate to the Alumni Fund. Scholarships, infrastructure, legacy.</div>
+      <button style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:var(--radius-sm);padding:10px 20px;color:white;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Donate via Flutterwave →</button>
+    </div>
+
+    <!-- Class chat -->
+    <div class="section-title">Alumni Chats</div>
+    <div class="card card-pad">
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--primary-soft);font-size:20px">🎓</div>
+        <div class="list-info"><div class="list-title">Class of 2020 Chat</div><div class="list-sub">Emeka: Reunion this December?</div></div>
+        <div class="list-right"><div style="font-size:10px;color:var(--text-muted)">1h</div><div class="unread-count">5</div></div>
+      </div>
+      <div class="list-row">
+        <div class="list-icon" style="background:var(--accent-soft);font-size:20px">🌍</div>
+        <div class="list-info"><div class="list-title">Global Alumni — Kogbodi</div><div class="list-sub">312 members · Active now</div></div>
+        <div class="list-right"><div style="font-size:10px;color:var(--text-muted)">4h</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home<div class="nav-pip"></div></div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Magazine</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chats</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Donate</div>
+    <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+  </div>
+</div>
+
+</div><!-- /phone -->
+
+<div class="proto-badge">V1 Mockup</div>
+
+<script>
+let history = [];
+let currentScreen = 's-login';
+let selectedRole = 'student';
+
+const roleMap = {
+  student: 's-student-home',
+  teacher: 's-teacher-home',
+  parent:  's-parent-home',
+  admin:   's-admin-home',
+  alumni:  's-alumni-home'
+};
+
+function navigate(id) {
+  if (currentScreen === id) return;
+  const cur = document.getElementById(currentScreen);
+  const nxt = document.getElementById(id);
+  if (!nxt) return;
+  history.push(currentScreen);
+  cur.classList.remove('active');
+  nxt.classList.add('active','enter');
+  setTimeout(()=>nxt.classList.remove('enter'), 350);
+  currentScreen = id;
+}
+
+function goBack() {
+  if (!history.length) return;
+  const prev = history.pop();
+  const cur = document.getElementById(currentScreen);
+  const nxt = document.getElementById(prev);
+  cur.classList.remove('active');
+  nxt.classList.add('active');
+  currentScreen = prev;
+}
+
+function selectRole(el, role) {
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRole = role;
+}
+
+function goToDash() {
+  navigate(roleMap[selectedRole]);
+}
+
+function switchRole(role) {
+  document.querySelectorAll('.rs-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  history = [];
+  const cur = document.getElementById(currentScreen);
+  const nxt = document.getElementById(roleMap[role]);
+  if (!nxt || currentScreen === roleMap[role]) return;
+  cur.classList.remove('active');
+  nxt.classList.add('active');
+  currentScreen = roleMap[role];
+}
+
+function toggleAttend(btn, type) {
+  const row = btn.closest('.attend-toggle');
+  const btns = row.querySelectorAll('.attend-btn');
+  btns.forEach(b => {
+    b.classList.remove('is-present','is-absent');
+    if (b.textContent==='P') b.classList.add('present');
+    else b.classList.add('absent');
+  });
+  if (type==='P') {
+    btn.classList.remove('present');
+    btn.classList.add('is-present');
+    row.querySelector('[onclick*="A"]').classList.remove('absent');
+    row.querySelector('[onclick*="A"]').classList.add('absent');
+  } else {
+    btn.classList.remove('absent');
+    btn.classList.add('is-absent');
+    row.querySelector('[onclick*="P"]').classList.remove('present');
+    row.querySelector('[onclick*="P"]').classList.add('present');
+  }
+}
+
+function showPublishConfirm() {
+  const m = document.getElementById('publish-modal');
+  m.style.display = 'flex';
+}
+function closeModal() {
+  document.getElementById('publish-modal').style.display = 'none';
+}
+function confirmPublish() {
+  closeModal();
+  alert('✅ Results published! 1,047 students can now view their results.\n\n₦1,047,000 added to your balance.');
+}
+</script>
+</body>
+</html>

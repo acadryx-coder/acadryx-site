@@ -46,8 +46,8 @@ export default function Pricing() {
             <div className="price-grid">
               <div className="price-col dark">
                 <div style={{ fontSize: ".68rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 16 }}>School Plan</div>
-                <div className="price-tag" style={{ color: "#fff" }}>#1000</div>
-                <div className="price-note" style={{ color: "rgba(255,255,255,.45)" }}>per student · per term · on result day only</div>
+                <div className="price-tag" style={{ color: "#fff" }}>₦1,000+</div>
+                <div className="price-note" style={{ color: "rgba(255,255,255,.45)" }}>per student · per term · per country · on result day only</div>
                 <ul className="price-list">
                   {["Full platform — every single feature","Permanent, verifiable academic records","Student identity: admission through alumni","One-click result publication","Living magazine · zero printing costs","Alumni network access","Priority support","All future features, forever"].map((x,i)=><li key={i}>{x}</li>)}
                 </ul>
@@ -76,8 +76,8 @@ export default function Pricing() {
             <h3 style={{ fontSize: "1.3rem", marginBottom: 12 }}>A quick comparison</h3>
             <p style={{ color: "var(--text-2)", lineHeight: 1.8, maxWidth: 580, margin: "0 auto" }}>
               Most school software charges <strong>$200 to $500 upfront</strong> plus annual fees. 
-              Acadryx charges <strong>₦1,000 per student when you publish results</strong>. 
-              A 500-student school pays ₦500,000 per term — no upfront, no annual contract, just results.
+              Acadryx charges a small per-student fee when you publish results (amount varies by country). 
+              A 500-student Nigerian school pays ₦500,000 per term — no upfront, no annual contract, just results.
             </p>
           </div>
         </div>

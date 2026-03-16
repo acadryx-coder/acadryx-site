@@ -1,24 +1,80 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav.jsx";
-import Home from "./pages/Home.jsx";
-import Features from "./pages/Features.jsx";
-import Pricing from "./pages/Pricing.jsx";
-import Contact from "./pages/Contact.jsx";
-import Demo from "./pages/Demo.jsx";
+// App.jsx
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { supabase } from './lib/supabase'
+
+// Marketing pages
+import Nav from './components/Nav.jsx'
+import Home from './pages/Home.jsx'
+import Features from './pages/Features.jsx'
+import Pricing from './pages/Pricing.jsx'
+import Contact from './pages/Contact.jsx'
+import Demo from './pages/Demo.jsx'
+
+// Auth pages
+import SignupPage from './pages/auth/SignupPage.jsx'
+import LoginPage from './pages/auth/LoginPage.jsx'
+import ForgotPassword from './pages/auth/ForgotPassword.jsx'
+
+// App pages
+import Dashboard from './pages/Dashboard.jsx'
+import OnboardingWizard from './pages/OnboardingWizard.jsx'
+import NotFound from './pages/NotFound.jsx'
+
+function useSession() {
+  const [session, setSession] = useState(undefined) // undefined = loading
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setSession(session))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setSession(s))
+    return () => subscription.unsubscribe()
+  }, [])
+  return session
+}
+
+function ProtectedRoute({ children }) {
+  const session = useSession()
+  if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
+  return session ? children : <Navigate to="/login" replace />
+}
+
+function PublicOnlyRoute({ children }) {
+  const session = useSession()
+  if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
+  return !session ? children : <Navigate to="/dashboard" replace />
+}
+
+function MarketingLayout({ children }) {
+  return (
+    <>
+      <Nav />
+      <div className="page">{children}</div>
+    </>
+  )
+}
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Nav />
-      <div className="page">
-        <Routes>
-          <Route path="/"         element={<Home />}     />
-          <Route path="/features" element={<Features />} />
-          <Route path="/pricing"  element={<Pricing />}  />
-          <Route path="/contact"  element={<Contact />}  />
-          <Route path="/demo"     element={<Demo />}     />
-        </Routes>
-      </div>
+      <Routes>
+        {/* Marketing */}
+        <Route path="/" element={<MarketingLayout><Home /></MarketingLayout>} />
+        <Route path="/features" element={<MarketingLayout><Features /></MarketingLayout>} />
+        <Route path="/pricing" element={<MarketingLayout><Pricing /></MarketingLayout>} />
+        <Route path="/contact" element={<MarketingLayout><Contact /></MarketingLayout>} />
+        <Route path="/demo" element={<MarketingLayout><Demo /></MarketingLayout>} />
+
+        {/* Auth (public only) */}
+        <Route path="/signup" element={<PublicOnlyRoute><SignupPage /></PublicOnlyRoute>} />
+        <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
+        <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPassword /></PublicOnlyRoute>} />
+
+        {/* Protected */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/onboarding" element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
-  );
+  )
 }

@@ -33,7 +33,7 @@ export default function Home() {
             </p>
 
             <div className="hero-btns anim d3">
-              <Link to="/contact" className="btn btn-white btn-lg">Get early access →</Link>
+              <Link to="/signup" className="btn btn-white btn-lg">Get Started →</Link>
               <Link to="/demo"    className="btn btn-ghost btn-lg">See the demo</Link>
             </div>
           </div>
@@ -46,9 +46,9 @@ export default function Home() {
           <div className="stat-strip">
             {[
               { v: "5",    l: "Portals in one platform" },
-              { v: "₦1k",  l: "Per student per term" },
+              { v: "Local",  l: "Per-student pricing by country" },
               { v: "∞",   l: "Records stored forever" },
-              { v: "₦0",  l: "Upfront cost" },
+              { v: "₦50k",  l: "One-time setup fee" },
             ].map((s, i) => (
               <div className="stat-item" key={i}>
                 <div className="stat-val">{s.v}</div>
@@ -121,7 +121,7 @@ export default function Home() {
           <h2 className="section-h white" style={{ maxWidth: 540, margin: "0 auto 16px" }}>Ready to transform your school?</h2>
           <p className="section-p white" style={{ margin: "0 auto 40px" }}>Join pilot schools already running on Acadryx. Free trial, no card required.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link to="/contact" className="btn btn-blue btn-lg">Get early access →</Link>
+            <Link to="/signup" className="btn btn-blue btn-lg">Get Started →</Link>
             <Link to="/demo"    className="btn btn-ghost btn-lg">Interactive demo</Link>
           </div>
         </div>

@@ -5,7 +5,7 @@ const FEATURES = [
   { icon: "🏫", t: "School-First Architecture",  b: "Schools are the primary entity. Every portal is school-branded. Students never see Acadryx — they see their school." },
   { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
   { icon: "📊", t: "Results Engine",              b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
-  { icon: "📰", t: "Living Magazine",             b: "Events, achievements, galleries — published daily, not annually. No printing costs. Alumni stay connected." },
+  { icon: "📰", t: "Living Magazine(Add-On)",             b: "Events, achievements, galleries — published daily, not annually. No printing costs. Alumni stay connected." },
   { icon: "🔒", t: "Permanent Records",           b: "Once a term closes, results are immutable and verifiable by any institution. Complete history, forever." },
   { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
 ];
@@ -28,7 +28,7 @@ export default function Home() {
 
             <p className="hero-sub anim d2">
               One platform for students, teachers, parents, and alumni.
-              Built on permanence — not features. Your school runs on Acadryx
+              Built on permanence - features are optional. Your school runs on Acadryx
               the way businesses run on AWS.
             </p>
 

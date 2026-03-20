@@ -49,7 +49,7 @@ function LoginMockup() {
         </div>
         <div style={{ background: "var(--g1)", borderRadius: 10, padding: "14px 16px", border: "1px solid var(--border)" }}>
           <div style={{ fontSize: ".72rem", color: "var(--text-3)", marginBottom: 6, textTransform: "uppercase", letterSpacing: ".08em" }}>Access code</div>
-          <div style={{ fontSize: "1.5rem", width: "100%", fontWeight: 800, wordBreak: "break-all", letterSpacing: ".1em", color: "var(--blue)" }}>STU·A3F8·K2PQ</div>
+          <div style={{ fontSize: "1.5rem", width: "100%", fontWeight: 800, wordBreak: "break-all", letterSpacing: ".1em", color: "var(--blue)" }}>STU083897</div>
           <div style={{ fontSize: ".78rem", color: "var(--text-3)", marginTop: 8 }}>One code. Dashboard loads. Done.</div>
         </div>
       </div>

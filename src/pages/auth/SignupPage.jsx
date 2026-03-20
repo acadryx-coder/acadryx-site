@@ -85,7 +85,7 @@ export default function SignupPage() {
             <div className="confirmation-icon">📧</div>
             <h2>Check Your Email</h2>
             <p>
-              We've sent a confirmation link to <strong>{formData.email}</strong>
+              {"We've sent a confirmation link to "}<strong>{formData.email}</strong>
             </p>
             <p>
               Click the link in the email to activate your account. It may take a few minutes to arrive.

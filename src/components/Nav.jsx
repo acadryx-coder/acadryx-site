@@ -27,7 +27,7 @@ export default function Nav() {
       <nav className="nav">
         <div className="wrap">
           <div className="nav-inner">
-            <Link to="/" className="nav-logo">Acadryx</Link>
+            <Link to="/" className="nav-logo">Acadryx 🌍</Link>
 
             {/* Desktop links */}
             <div className="nav-links">

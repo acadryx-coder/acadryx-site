@@ -24,22 +24,27 @@ import NotFound from './pages/NotFound.jsx'
 function useSession() {
   const [session, setSession] = useState(undefined) // undefined = loading
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session))
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setSession(s))
+    supabase.auth.getSession().then(response => {
+    	setSession(response.data.session);
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+    	setSession(session);
+    })
     return () => subscription.unsubscribe()
   }, [])
-  return session
+  return session;
 }
+
 
 function ProtectedRoute({ children }) {
   const session = useSession()
   if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
-  return session ? children : <Navigate to="/login" replace />
+  return session ? children : <Navigate to="/signup" replace />
 }
 
 function PublicOnlyRoute({ children }) {
   const session = useSession()
-  if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
+  if (session === undefined) return <div style={{ minHeight: '100vh', color: 'white', background: '#060d1f' }} />
   return !session ? children : <Navigate to="/dashboard" replace />
 }
 
@@ -78,3 +83,35 @@ export default function App() {
     </BrowserRouter>
   )
 }
+
+
+/*
+
+import { useState, useEffect } from "react"
+import { supabase } from "./lib/supabase.js";
+console.log(supabase)
+
+export default function App() {
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		getUsers();
+	}, []);
+
+	
+	async function getUsers() {
+		const { data, error, status, statusText } = await supabase
+						.schema('acadryx')
+						.from('users')
+						.select();
+		console.log('DATA', data)
+		setUsers(data || []);
+	}
+
+	return (
+		<ul>
+			{users && users.map(user => <li key={user.id}>{user.surname + ' ' + user.first_name}</li>)}
+		</ul>
+	)
+}
+*/

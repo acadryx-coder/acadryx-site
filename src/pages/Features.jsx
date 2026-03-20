@@ -4,33 +4,33 @@ import Footer from "../components/Footer.jsx";
 const FEATURES = [
   {
     num: "01", title: "Identity & Access",
-    tagline: "Code login. No emails. No passwords.",
-    body: "School generates access codes. Parents and students enter them once. The right dashboard loads — Admin, Teacher, Student, Parent, Alumni. Each role sees exactly what they need. Nothing else. A student's account follows them from Pre-KG to Senior Secondary. Never recreated. Never lost.",
-    pts: ["Five roles, one school — different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", "Optional Google auth — school decides what they allow"],
+    tagline: "One identity. From admission to alumni.",
+    body: "Every student gets a single profile that follows them from Pre-KG through graduation. Never recreated. Never lost. Schools generate access codes—no emails, no passwords. The right dashboard loads automatically for each role: Admin, Teacher, Student, Parent, Alumni.",
+    pts: ["Five roles, one school—different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", /*"Optional Google auth—school decides what they allow"*/],
     mockup: <LoginMockup />,
     flip: false,
   },
   {
     num: "02", title: "Academic Structure",
-    tagline: "Not hardcoded hierarchies. Templates you own.",
-    body: "Start with sensible defaults — Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-    pts: ["Pre-KG to Senior Secondary — every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Sessions, terms, and dates fully yours to set"],
+    tagline: "Your school. Your hierarchy. No vendor lock-in.",
+    body: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+    pts: ["Pre-KG to Senior Secondary—every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Divided subjects and optional vs mandatory subjects setting fully supported.", "Sessions, terms, and dates fully yours to set"],
     mockup: <StructureMockup />,
     flip: true,
   },
   {
     num: "03", title: "Results Engine",
     tagline: "What took weeks now takes one day.",
-    body: "Teachers enter scores per assessment component. Acadryx calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Every report card goes live in seconds. Results are permanently immutable from that moment — verifiable by any institution, forever.",
-    pts: ["Bulk score entry for entire classes", "Weighted scoring for multi-teacher subjects", "One-click publication for every report card in a class", "Immutable archives — published results lock forever"],
+    body: "Teachers enter scores per assessment component. Acadryx calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Every report card goes live in seconds. Results are permanently immutable from that moment—verifiable by any institution, forever.",
+    pts: ["Bulk score entry for entire classes", "Weighted scoring for multi-teacher subjects", "One-click publication for every report card in a class", "Immutable archives—published results lock forever"],
     mockup: <ResultsMockup />,
     flip: false,
   },
   {
-    num: "04", title: "Living Magazine",
-    tagline: "Your school's story, published daily.",
-    body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature",
-    pts: ["Familiar social-feed interface — fast adoption", "Alumni stay connected to the school they graduated from", "Prospective parents see a school that's alive, not a brochure", "Pay-per-publish funds the entire Acadryx platform"],
+    num: "04", title: "Upcoming => Living Magazine",
+    tagline: "Your school's story, published daily—not annually.",
+    body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature.",
+    pts: ["Familiar social-feed interface—fast adoption", "Alumni stay connected to the school they graduated from", "Prospective parents see a school that's alive, not a brochure", "Pay-per-publish funds the entire Acadryx platform"],
     mockup: <MagazineMockup />,
     flip: true,
   },
@@ -41,7 +41,7 @@ function LoginMockup() {
     <div className="mockup">
       <div className="mockup-bar"><span className="dot-r"/><span className="dot-y"/><span className="dot-g"/></div>
       <div style={{ background: "var(--white)", borderRadius: 12, padding: 20, border: "1px solid var(--border)" }}>
-        <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: ".95rem", marginBottom: 14 }}>Kogbodi International School</div>
+        <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: ".95rem", marginBottom: 14 }}>{"MyDemo Int'l School"}</div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
           {["Admin","Teacher","Parent","Student","Alumni"].map(r => (
             <span key={r} style={{ background: "var(--teal-soft)", color: "var(--teal)", padding: "4px 11px", borderRadius: 40, fontSize: ".75rem", fontWeight: 600 }}>{r}</span>
@@ -81,11 +81,11 @@ function StructureMockup() {
 
 function ResultsMockup() {
   const rows = [
-    { n: "Mathematics",  s: 88, c: "var(--green)" },
-    { n: "English",      s: 84, c: "var(--green)" },
-    { n: "Chemistry",    s: 79, c: "var(--teal)" },
-    { n: "Physics",      s: 76, c: "var(--teal)" },
-    { n: "Economics",    s: 69, c: "#f59e0b" },
+    { n: "Mathematics", s: 88, p: "88% ready", c: "var(--green)" },
+    { n: "English",     s: 84, p: "84% ready", c: "var(--green)" },
+    { n: "Chemistry",   s: 79, p: "79% ready", c: "var(--teal)" },
+    { n: "Physics",     s: 76, p: "76% ready", c: "var(--teal)" },
+    { n: "Economics",   s: 69, p: "69% ready", c: "#f59e0b" },
   ];
   return (
     <div className="mockup">
@@ -101,7 +101,7 @@ function ResultsMockup() {
             <div style={{ flex: 1, height: 5, background: "var(--g2)", borderRadius: 4 }}>
               <div style={{ height: "100%", width: `${r.s}%`, background: r.c, borderRadius: 4 }} />
             </div>
-            <div style={{ fontSize: ".85rem", fontWeight: 700, width: 26, textAlign: "right", flexShrink: 0 }}>{r.s}</div>
+            <div style={{ fontSize: ".85rem", fontWeight: 700, width: 26, textAlign: "right", flexShrink: 0 }}>{r.p}</div>
           </div>
         ))}
         <div style={{ marginTop: 16, background: "var(--blue)", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -119,10 +119,14 @@ function MagazineMockup() {
       <div className="mockup-bar"><span className="dot-r"/><span className="dot-y"/><span className="dot-g"/></div>
       <div style={{ background: "linear-gradient(135deg,var(--blue),var(--teal))", borderRadius: 12, padding: "16px 18px", color: "white", marginBottom: 12 }}>
         <div style={{ fontSize: ".65rem", opacity: .65, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 4 }}>VOL XIV · 2024/25</div>
-        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: "bold", fontSize: "1.1rem", marginBottom: 10 }}>{"Your School Digital Magazine"}</div>
-        <div style={{ fontSize: ".75rem", background: "rgba(255,255,255,.15)", borderRadius: 8, padding: "5px 10px", display: "inline-block" }}>💰 Saved ₦2,300,000 vs print this year</div>
+        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: "bold", fontSize: "1.1rem", marginBottom: 10 }}>{"Your School's Digital Magazine"}</div>
       </div>
-      {[["🏆","Achievement","We Won the National Science Olympiad"],["🎨","Culture","Art Exhibition 2025: Colours of Tomorrow"],["⚽","Sports","Football Season: A Historic Year"]].map(([icon,cat,title]) => (
+      {[
+      	["🏆","Achievement","We Won the National Science Quiz Competition"],
+      	["🎨","Culture","Art Exhibition 2025: Colours of Tomorrow"],
+      	["⚽","Sports","Football Season: A Historic Year"]
+      ]
+      .map(([icon,cat,title]) => (
         <div key={title} style={{ display: "flex", gap: 10, padding: "10px 0", borderBottom: "1px solid var(--border)", alignItems: "center" }}>
           <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
           <div>
@@ -131,6 +135,9 @@ function MagazineMockup() {
           </div>
         </div>
       ))}
+      <div>
+      	<button>See More</button>
+      </div>
     </div>
   );
 }
@@ -138,16 +145,16 @@ function MagazineMockup() {
 export default function Features() {
   return (
     <>
-      <section className="hero" style={{ padding: "88px 0 80px" }}>
-        <div className="wrap">
-          <div className="hero-content">
-            <span className="eyebrow-pill"><span className="dot" />Platform Overview</span>
-            <h1 style={{ fontSize: "clamp(2.4rem,5vw,4.2rem)", color: "#fff" }}>What Acadryx<br /><em>actually does</em></h1>
-            <p className="hero-sub">Not a list of modules. A description of what becomes possible when your school runs on proper infrastructure.</p>
-          </div>
-        </div>
-      </section>
-
+	  <section className="hero" style={{ padding: "88px 0 80px" }}>
+	    <div className="wrap">
+	      <div className="hero-content">
+	        <span className="eyebrow-pill"><span className="dot" />Platform Overview</span>
+	        <h1 style={{ fontSize: "clamp(2.4rem,5vw,4.2rem)", color: "#fff" }}>Built for how<br /><em>schools actually work</em></h1>
+	        <p className="hero-sub">Every feature designed around the reality of K12 institutions—not retrofitted from consumer apps. Schools that used paper for years go fully digital in one term.</p>
+	      </div>
+	    </div>
+	  </section>
+	  
       <section className="section">
         <div className="wrap">
           <div className="feat-rows">
@@ -162,7 +169,7 @@ export default function Features() {
                     {f.pts.map((p, j) => <li key={j}>{p}</li>)}
                   </ul>
                 </div>
-                <div style={{ order: f.flip ? 0 : 1 }}>{f.mockup}</div>
+                <div style={{order: 1}}>{f.mockup}</div>
               </div>
             ))}
           </div>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
+import ProfileAvatar from "../components/ProfileAvatar";
 
 const FEATURES = [
   {
@@ -32,6 +33,20 @@ const FEATURES = [
     body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature.",
     pts: ["Familiar social-feed interface—fast adoption", "Alumni see and engage with live events from their school", "No more 'Page limits' due to printing costs. Everyone's story get's published", "Print option for hardcopy lovers available"],
     mockup: <MagazineMockup />,
+    flip: true,
+  },
+  {
+    num: "05",
+    title: "Alumni & Legacy",
+    tagline: "Your school's greatest asset. Connected forever.",
+    body: "Most school software forgets students the moment they graduate. Acadryx doesn't. Every graduate keeps permanent access to their records, their network, and their school—for life. Principals call this their favorite feature. Because legacy matters.",
+    pts: [
+      "Lifetime access — graduates never lose their credentials, results, or portfolio",
+      "Alumni network — classmates stay connected; school stays in their lives",
+      "Career & mentorship — former students support current ones; employers find talent",
+      "Your school's legacy — every graduating class adds value to your institution forever"
+    ],
+    mockup: <AlumniMockup />,
     flip: true,
   },
 ];
@@ -141,6 +156,269 @@ function MagazineMockup() {
     </div>
   );
 }
+
+
+function AlumniMockup() {
+  return (
+    <div className="mockup" style={{ maxWidth: "100%", overflow: "hidden" }}>
+      <div className="mockup-bar">
+        <span className="dot-r" />
+        <span className="dot-y" />
+        <span className="dot-g" />
+      </div>
+      <div
+        style={{
+          background: "var(--white)",
+          borderRadius: 12,
+          border: "1px solid var(--border)",
+          overflow: "hidden",
+          width: "100%"
+        }}
+      >
+        {/* Header */}
+        <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border)" }}>
+          <div
+            style={{
+              fontWeight: 700,
+              color: "var(--blue)",
+              fontSize: ".9rem",
+              marginBottom: 12
+            }}
+          >
+            {"MyDemo Int'l Alumni"}
+          </div>
+
+          {/* Nav row 
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 12,
+              marginBottom: 14
+            }}
+          >
+            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>👥 Network</span>
+            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>💬 Chats</span>
+            <span style={{ fontSize: ".7rem", color: "var(--teal)", fontWeight: 500 }}>
+              🤝 Mentorship
+            </span>
+            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>❤️ Donate</span>
+            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>📄 Records</span>
+          </div>*/}
+
+          {/* Profile row */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: 10
+            }}
+          >
+            <ProfileAvatar
+              src="https://randomuser.me/api/portraits/women/68.jpg"
+              name="Adaeze Okafor"
+              size={36}
+            />
+            <div style={{ flex: 1, minWidth: 120 }}>
+              <div style={{ fontWeight: 600, fontSize: ".85rem" }}>Adaeze Okafor</div>
+              <div style={{ fontSize: ".65rem", color: "var(--text-3)" }}>
+                Class of 2022 · Product Designer
+              </div>
+            </div>
+            <div
+              style={{
+                fontSize: ".65rem",
+                background: "var(--green-soft)",
+                padding: "4px 10px",
+                borderRadius: 20,
+                color: "var(--green)",
+                whiteSpace: "nowrap"
+              }}
+            >
+              ✓ Verified
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable feed */}
+        <div
+          style={{
+            padding: "14px 16px",
+            background: "var(--g1)",
+            maxHeight: 320,
+            overflowY: "auto"
+          }}
+        >
+          {/* Post 1 - Mentorship */}
+          <div
+            style={{
+              background: "var(--white)",
+              borderRadius: 12,
+              padding: 12,
+              marginBottom: 12,
+              border: "1px solid var(--border)"
+            }}
+          >
+            <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
+              <ProfileAvatar
+                src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=32&h=32&fit=crop"
+                name="Mentorship Exchange"
+                size={32}
+              />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>
+                  Mentorship Exchange
+                </div>
+                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>
+                  2 hours ago
+                </div>
+              </div>
+            </div>
+            <div style={{ fontSize: ".75rem", marginBottom: 10, lineHeight: 1.4 }}>
+              🎓 Looking for mentors in Tech! Current SS3 students need career guidance. Any
+              alumni available for a 30-min chat?
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 12,
+                fontSize: ".65rem",
+                color: "var(--text-3)"
+              }}
+            >
+              <span>❤️ 24 interested</span>
+              <span>💬 8 responses</span>
+              <span style={{ color: "var(--teal)" }}>🤝 Volunteer →</span>
+            </div>
+          </div>
+
+          {/* Post 2 - Job Opportunity */}
+          <div
+            style={{
+              background: "var(--white)",
+              borderRadius: 12,
+              padding: 12,
+              marginBottom: 12,
+              border: "1px solid var(--border)"
+            }}
+          >
+            <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
+              <ProfileAvatar
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                name="James D."
+                size={32}
+              />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>
+                  James D. · Class of 2019
+                </div>
+                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>
+                  Software Engineer at Flutterwave
+                </div>
+              </div>
+            </div>
+            <div style={{ fontSize: ".75rem", marginBottom: 10 }}>
+              🚀 Flutterwave is hiring! 3 entry-level backend roles. DM if interested or know
+              someone from MyDemo.
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 12,
+                fontSize: ".65rem",
+                color: "var(--text-3)"
+              }}
+            >
+              <span>❤️ 47 likes</span>
+              <span>💬 12 comments</span>
+              <span>📌 5 shares</span>
+            </div>
+          </div>
+
+          {/* Post 3 - Donation Campaign */}
+          <div
+            style={{
+              background: "var(--teal-soft)",
+              borderRadius: 12,
+              padding: 12,
+              border: "1px solid var(--teal-light)"
+            }}
+          >
+            <div
+              style={{
+                fontSize: ".65rem",
+                textTransform: "uppercase",
+                color: "var(--teal)",
+                marginBottom: 6
+              }}
+            >
+              ❤️ Annual Giving
+            </div>
+            <div style={{ fontSize: ".8rem", fontWeight: 500, marginBottom: 6 }}>
+              Help build a new science lab!
+            </div>
+            <div style={{ fontSize: ".7rem", marginBottom: 8 }}>
+              ₦12.5M raised of ₦20M goal · 62%
+            </div>
+            <div
+              style={{
+                background: "var(--white)",
+                borderRadius: 20,
+                height: 6,
+                width: "100%",
+                marginBottom: 8
+              }}
+            >
+              <div
+                style={{
+                  background: "var(--teal)",
+                  borderRadius: 20,
+                  width: "62%",
+                  height: 6
+                }}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: ".65rem",
+                flexWrap: "wrap",
+                gap: 8
+              }}
+            >
+              <span>🤝 142 alumni donated</span>
+              <span style={{ fontWeight: 600, color: "var(--teal)" }}>Donate →</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom nav */}
+        <div
+          style={{
+            padding: "10px 12px",
+            borderTop: "1px solid var(--border)",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 16,
+            fontSize: ".65rem",
+            color: "var(--text-3)"
+          }}
+        >
+          <span style={{ color: "var(--blue)" }}>🏠 Feed</span>
+          <span>👥 Network</span>
+          <span>💬 Chats</span>
+          <span>🤝 Mentorship</span>
+          <span>❤️ Donate</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Features() {
   return (

@@ -15,6 +15,7 @@ import Demo from './pages/Demo.jsx'
 import SignupPage from './pages/auth/SignupPage.jsx'
 import LoginPage from './pages/auth/LoginPage.jsx'
 import ForgotPassword from './pages/auth/ForgotPassword.jsx'
+import ResetPassword from './pages/auth/ResetPassword.jsx';
 
 // App pages
 import Dashboard from './pages/Dashboard.jsx'
@@ -72,6 +73,7 @@ export default function App() {
         <Route path="/signup" element={<PublicOnlyRoute><SignupPage /></PublicOnlyRoute>} />
         <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
         <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPassword /></PublicOnlyRoute>} />
+        <Route path="/reset-password" element={<PublicOnlyRoute><ResetPassword /></PublicOnlyRoute>} />
 
         {/* Protected */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

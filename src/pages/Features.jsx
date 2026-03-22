@@ -30,7 +30,7 @@ const FEATURES = [
     num: "04", title: "Upcoming => Living Magazine",
     tagline: "Your school's story, published daily—not annually.",
     body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature.",
-    pts: ["Familiar social-feed interface—fast adoption", "Alumni stay connected to the school they graduated from", "No more 'Page limits' due to printing costs. Everyone's story get's published", "Print option for hardcopy lovers available"],
+    pts: ["Familiar social-feed interface—fast adoption", "Alumni see and engage with live events from their school", "No more 'Page limits' due to printing costs. Everyone's story get's published", "Print option for hardcopy lovers available"],
     mockup: <MagazineMockup />,
     flip: true,
   },

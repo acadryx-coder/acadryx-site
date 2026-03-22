@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 
 const FEATURES = [
-  { icon: "🏫", t: "School-First Architecture",  b: "Schools are the primary entity. Every portal is school-branded. Students never see Acadryx — they see their school." },
+  { icon: "🏫", t: "Your Own School App",  b: "Every school gets a dedicated, branded web app at your-school.acadryx.com. Students see your school, not us. You own the experience — we power the infrastructure." },
   { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
   { icon: "📊", t: "Results Engine",              b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
   { icon: "📰", t: "Living Magazine(Add-On)",             b: "Events, achievements, galleries — published daily, not annually. No printing costs. Alumni stay connected." },
@@ -27,9 +27,9 @@ export default function Home() {
             </h1>
 
             <p className="hero-sub anim d2">
-              One platform for students, teachers, parents, and alumni.
-              Built on permanence - features are optional. Your school runs on Acadryx
-              the way businesses run on AWS.
+              <strong>Your school gets its own branded web app</strong> — not just another login. 
+              Students, teachers, parents, and alumni each get their own portal. 
+              Your school runs on Acadryx the way businesses run on AWS.
             </p>
 
             <div className="hero-btns anim d3">
@@ -94,7 +94,7 @@ export default function Home() {
 	          {/* CORE — ALL PORTALS */}
 	          <div className="price-col dark">
 	            <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 14 }}>
-	              Core — All Portals
+	              Core — Your School App
 	            </div>
 	            <div className="price-tag" style={{ color: "#fff" }}>₦1000 (NG)</div>
 	            <div className="price-note" style={{ color: "rgba(255,255,255,.5)" }}>per active student · per term</div>
@@ -117,7 +117,7 @@ export default function Home() {
 	            </div>
 	            <div className="price-tag" style={{ color: "var(--blue)" }}>Under Development</div>
 	            <div className="price-note" style={{ color: "var(--text-3)" }}>Add-on tools that serve your users — launching after pilot schools</div>
-	            <ul className="price-list">
+	            <ul className="price-list" >
 	              <li>🤖 AI Lesson Note Assistant — for teachers</li>
 	              <li>🧠 Acadryx Exam Driller — for students</li>
 	              <li>📷 Lifetime Event Photo Storage — for school</li>

@@ -6,8 +6,8 @@ const FEATURES = [
   {
     num: "01", title: "Identity & Access",
     tagline: "One identity. From admission to alumni.",
-    body: "Every student gets a single profile that follows them from Pre-KG through graduation. Never recreated. Never lost. Schools generate access codes—no emails, no passwords. The right dashboard loads automatically for each role: Admin, Teacher, Student, Parent, Alumni.",
-    pts: ["Five roles, one school—different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", /*"Optional Google auth—school decides what they allow"*/],
+    body: "Every school gets its own branded web app. Every student gets a single profile that follows them from Pre-KG through graduation — never recreated, never lost. Schools generate access codes — no emails, no passwords. The right dashboard loads automatically for each role: Admin, Teacher, Student, Parent, Alumni.",
+    pts: ["Five roles, one school—different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", "Your school. Your brand. Your own app."],
     mockup: <LoginMockup />,
     flip: false,
   },
@@ -15,20 +15,20 @@ const FEATURES = [
     num: "02", title: "Academic Structure",
     tagline: "Your school. Your hierarchy. No vendor lock-in.",
     body: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-    pts: ["Pre-KG to Senior Secondary—every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Divided subjects and optional vs mandatory subjects setting fully supported.", "Sessions, terms, and dates fully yours to set"],
+    pts: ["Pre-KG to Senior Secondary—every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Divided subjects and optional vs mandatory subjects setting fully supported.", "Sessions, terms, and dates fully yours to set", "Your school's hierarchy, your school's app — no vendor lock-in"],
     mockup: <StructureMockup />,
     flip: true,
   },
   {
     num: "03", title: "Results Engine",
     tagline: "What took weeks now takes one day.",
-    body: "Teachers enter scores per assessment component. Acadryx calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Every report card goes live in seconds. Results are permanently immutable from that moment—verifiable by any institution, forever.",
+    body: "Teachers enter scores per assessment. Acadryx in-built result engine calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Every report card goes live in seconds. Results are permanently immutable from that moment—verifiable by any institution, forever.",
     pts: ["Bulk score entry for entire classes", "Weighted scoring for multi-teacher subjects", "One-click publication for every report card in a class", "Immutable archives—published results lock forever"],
     mockup: <ResultsMockup />,
     flip: false,
   },
   {
-    num: "04", title: "Upcoming => Living Magazine",
+    num: "04", title: "Living Magazine (Upcoming)",
     tagline: "Your school's story, published daily—not annually.",
     body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature.",
     pts: ["Familiar social-feed interface—fast adoption", "Alumni see and engage with live events from their school", "No more 'Page limits' due to printing costs. Everyone's story get's published", "Print option for hardcopy lovers available"],
@@ -37,7 +37,7 @@ const FEATURES = [
   },
   {
     num: "05",
-    title: "Alumni & Legacy",
+    title: "Alumni & Legacy (Latest)",
     tagline: "Your school's greatest asset. Connected forever.",
     body: "Most school software forgets students the moment they graduate. Acadryx doesn't. Every graduate keeps permanent access to their records, their network, and their school—for life. Principals call this their favorite feature. Because legacy matters.",
     pts: [

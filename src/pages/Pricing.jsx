@@ -3,7 +3,8 @@ import Footer from "../components/Footer.jsx";
 
 const FAQ = [
   { q: "When do we pay?",     a: "You pay for active student accounts. Pay anytime within the term. Disable accounts for fee defaulters instantly—their data stays intact. Re-enable when fees are settled." },
-  { q: "What about teachers and parents?",     a: "Always free. Unlimited teachers. Unlimited parents. You pay only for active student accounts." },
+  { q: "Do we get our own branded app?", a: "Yes. Every school gets its own dedicated web app at your-school.acadryx.com. Your students, teachers, and parents never see 'Acadryx' — they see your school. Your logo. Your colors. Your domain. We're the infrastructure; you own the experience." },
+  { q: "What about teachers and parents?", a: "Always free. Unlimited teachers. Unlimited parents. They each get their own portal within your school's branded app — no extra cost. You pay only for active student accounts." },
   { q: "How do add-on features work?",     a: "The Core platform includes all five portals. Add-ons from our marketplace are priced per role count—meaning you pay based on how many users (students, teachers, parents, or alumni) will actually use that specific feature. Only pay for what your school needs." },
   { q: "Will the price ever increase?",        a: "No. We guarantee per-student pricing will never increase. It will only decrease as Acadryx grows. We're building infrastructure, not extracting maximum revenue." },
   { q: "What if we have multiple campuses?",   a: "Each  campus can have its own school instance—own branding, own admin, own control. You pay per campus, only for active student accounts and any add-ons you choose." },
@@ -48,11 +49,12 @@ export default function Pricing() {
           <div className="pricing-wrap" style={{ maxWidth: 860, margin: "0 auto" }}>
             <div className="price-grid">
               <div className="price-col dark">
-                <div style={{ fontSize: ".68rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 16 }}>Core — All Portals</div>
+                <div style={{ fontSize: ".68rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 16 }}>Core — Your School App</div>
                 <div className="price-tag" style={{ color: "#fff" }}>{"₦1000 (NG)"}</div>
                 <div className="price-note" style={{ color: "rgba(255,255,255,.45)" }}>per student · per term · by country</div>
                 <ul className="price-list">
-                  {["One-click school-wide digital result generation and publication",
+                  {["Your school's own branded web app — fully customizable",
+                    "One-click school-wide digital result generation and publication",
                   	"Student Portal — results, records, portfolio",
                   	"Parent Portal — access to child's data and live notifications",
                   	"Teacher Portal — grading, attendance, classes",
@@ -68,7 +70,14 @@ export default function Pricing() {
                 <div className="price-tag" style={{ color: "var(--blue)" }}>Upcoming</div>
                 <div className="price-note" style={{ color: "var(--text-3)" }}>Add-on tools that serve your users — launching after pilot schools</div>
                 <ul className="price-list">
-                  {["AI Lesson Note Assistant — for teachers","Acadryx Exam Driller — for students","Lifetime Event Photo Storage — for school","Advanced Career Advancement Features — for alumni","Events & Digital Magazine — for students","More, requested by schools like yours"].map((x,i)=><li key={i}>{x}</li>)}
+                  {[
+                    "AI Lesson Note Assistant — for teachers",
+                    "Acadryx Exam Driller — for students",
+                    "Lifetime Event Photo Storage — for school",
+                    "Advanced Career Advancement Features — for alumni",
+                    "Events & Digital Magazine — for students",
+                    "More, requested by schools like yours"
+                  ].map((feature ,index)=><li key={index}>{feature}</li>)}
                 </ul>
                 <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Join pilot → Get early access</Link>
               </div>

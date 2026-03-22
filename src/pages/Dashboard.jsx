@@ -2,17 +2,16 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import ProfileAvatar from '../components/ProfileAvatar.jsx'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [account, setAccount] = useState(null)
+  const [user, setUser] = useState(null)
   const [schools, setSchools] = useState([])
-  const [editingAccount, setEditingAccount] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-console.log(account)
   useEffect(() => { loadAll() }, [])
 
   async function loadAll() {

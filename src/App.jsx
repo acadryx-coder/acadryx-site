@@ -40,7 +40,7 @@ function useSession() {
 function ProtectedRoute({ children }) {
   const session = useSession()
   if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
-  return session ? children : <Navigate to="/signup" replace />
+  return session ? children : <Navigate to="/login" replace />
 }
 
 function PublicOnlyRoute({ children }) {

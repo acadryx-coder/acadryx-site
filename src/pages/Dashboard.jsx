@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+console.log(account)
   useEffect(() => { loadAll() }, [])
 
   async function loadAll() {

@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     setLoading(true)
     setError(null)
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/dashboard`,
+      redirectTo: `https://acadryx-site.vercel.app/reset-password`,
     })
     setLoading(false)
     if (error) { setError(error.message); return }
@@ -27,7 +27,7 @@ export default function ForgotPassword() {
       <div className="auth-box">
         <div className="auth-header">
           <h1>Reset your password</h1>
-          <p>We'll send a reset link to your email</p>
+          <p>{"We'll send a reset link to your email"}</p>
         </div>
 
         {sent ? (
@@ -36,9 +36,6 @@ export default function ForgotPassword() {
             <h2>Check your email</h2>
             <p>A password reset link has been sent to <strong>{email}</strong>.</p>
             <p>Click the link to set a new password. It expires in 1 hour.</p>
-            <Link to="/login" className="btn-secondary" style={{ marginTop: 20, display: 'inline-block' }}>
-              Back to Login
-            </Link>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="auth-form">
@@ -60,6 +57,7 @@ export default function ForgotPassword() {
             <button type="submit" disabled={loading} className="auth-button">
               {loading ? 'Sending…' : 'Send Reset Link'}
             </button>
+
           </form>
         )}
 

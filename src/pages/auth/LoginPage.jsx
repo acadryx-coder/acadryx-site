@@ -10,14 +10,17 @@ export default function LoginPage() {
   const [error, setError] = useState(null)
   const [formData, setFormData] = useState({ email: '', password: '' })
 
+
+console.log(window.location.hash)
   async function handleLogin(e) {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
     })
+    
     setLoading(false)
     if (error) { setError(error.message); return }
     navigate('/dashboard')
@@ -73,7 +76,7 @@ export default function LoginPage() {
         </form>
 
         <div className="auth-footer">
-          Don't have an account? <Link to="/signup">Sign up</Link>
+         {"Don't have an account?"} <Link to="/signup">Sign up</Link>
         </div>
 
         <div className="auth-back">

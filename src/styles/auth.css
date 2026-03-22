@@ -48,6 +48,49 @@
   gap: 8px;
 }
 
+/* Profile picture Styling, Courtesy, Deepseek AI*/
+.auth-form .form-group .profile-pic-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.auth-form .form-group .profile-pic-input {
+  display: flex;
+  width: 
+  border: 1px solid red;
+  flex-direction: rows;
+  align-items: center;
+  gap: 0px;
+  flex-wrap: wrap;
+}
+
+.file-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-input-wrapper input {
+  width: 100%;
+}
+
+.preview-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.upload-status {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+/*---*/
+
 .auth-form label {
   font-size: 14px;
   font-weight: 600;

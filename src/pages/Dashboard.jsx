@@ -8,9 +8,9 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [account, setAccount] = useState(null)
   const [schools, setSchools] = useState([])
+  const [editingAccount, setEditingAccount] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [editingAccount, setEditingAccount] = useState(false)
 
   useEffect(() => { loadAll() }, [])
 
@@ -41,6 +41,8 @@ export default function Dashboard() {
           .eq('owner_id', user.id)
           .order('created_at', { ascending: false }),
       ])
+
+      console.log(account)
 
       setAccount(acct)
       setSchools(schoolData || [])

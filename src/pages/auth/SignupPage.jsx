@@ -6,19 +6,55 @@ import '../../styles/auth.css'
 export default function SignupPage() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [loadingText, setLoadingText] = useState("Creating account...")
   const [error, setError] = useState(null)
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     surname: '',
     otherNames: '',
+    profilePic: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: ''
   })
 
+  async function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setLoadingText("Uploading Profile Pic.")
+    setLoading(true);
+    
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${fileName}`; // or `${data.user.id}/${fileName}` if you have user ID
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('profile_pictures')
+        .upload(filePath, file);
+      
+      if (uploadError) throw uploadError;
+      console.log(uploadData)
+      const { data: { publicUrl } } = supabase.storage
+        .from('profile_pictures')
+        .getPublicUrl(filePath);
+      console.log(publicUrl)
+      setFormData({ ...formData, profilePic: publicUrl });
+    } catch (error) {
+      console.error('Upload error:', error);
+      setError('Failed to upload profile picture');
+    } finally {
+      setLoading(false);
+      setLoadingText("Creating Account...");
+    }
+  }
+
   async function handleSignup(e) {
     e.preventDefault()
+    setLoadingText("Creating account...")
     setLoading(true)
     setError(null)
 
@@ -37,20 +73,27 @@ export default function SignupPage() {
           data: {
             first_name: formData.firstName,
             surname: formData.surname,
-            other_names: formData.otherNames
+            other_names: formData.otherNames,
+            phone: formData.phone
           }
         }
       })
 
+      console.log("DATA", data, "ERROR", error);
+
       if (error) throw error
 
-      if (data.user) {
-        const { error: rpcError } = await supabase.rpc('create_acadryx_user', {
-          p_user_id: data.user.id,
-          p_email: data.user.email,
-          p_first_name: formData.firstName,
-          p_surname: formData.surname,
-          p_other_names: formData.otherNames || null
+      if (data.user && data.user.identities && data.user.identities.length > 0) {
+        const { error: rpcError } = await supabase
+         .schema('acadryx')
+         .rpc('create_acadryx_user', {
+            p_user_id: data.user.id,
+            p_email: data.user.email,
+            p_first_name: formData.firstName,
+            p_surname: formData.surname,
+            p_other_names: formData.otherNames || null,
+            p_phone: formData.phone || null,
+            p_profile_pic_url: formData.profilePic || null,
         })
 
         if (rpcError) throw rpcError
@@ -63,6 +106,10 @@ export default function SignupPage() {
           // No confirmation needed - redirect immediately
           navigate('/dashboard')
         }
+      }
+      else {
+      	setError("Account already exists. Please log in or contact customer care if encountering issues");
+      	return;
       }
     } catch (error) {
       setError(error.message)
@@ -103,6 +150,26 @@ export default function SignupPage() {
           <>
             <form onSubmit={handleSignup} className="auth-form">
               <div className="form-group">
+                <label htmlFor="profilePic">Profile Picture</label>
+                <div className="file-input-wrapper">
+                  <input
+                    id="profilePic"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                  />
+                  {formData.profilePic && (
+                    <img 
+                      src={formData.profilePic} 
+                      alt="Preview" 
+                      className="preview-image"
+                    />
+                  )}
+                </div>
+                {loadingText === "Uploading Profile Pic." && <div className="upload-status">Uploading...</div>}
+              </div>
+
+              <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
                 <input
                   id="firstName"
@@ -138,18 +205,29 @@ export default function SignupPage() {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email Address</label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-              </div>
-
+			  <div className="form-group">
+			    <label htmlFor="phone">Phone Number (Optional)</label>
+			    <input
+			      id="phone"
+			      type="tel"
+			      placeholder="08129735338"
+			      value={formData.phone}
+			      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+			    />
+			  </div>
+			  
+			  <div className="form-group">
+			    <label htmlFor="email">Email Address</label>
+			    <input
+			      id="email"
+			      type="email"
+			      placeholder="you@example.com"
+			      value={formData.email}
+			      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+			      required
+			    />
+			  </div>
+			  
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
@@ -179,7 +257,7 @@ export default function SignupPage() {
               {error && <div className="error-message">{error}</div>}
 
               <button type="submit" disabled={loading} className="auth-button">
-                {loading ? 'Creating Account...' : 'Sign Up'}
+                {loading ? loadingText : 'Sign Up'}
               </button>
             </form>
 

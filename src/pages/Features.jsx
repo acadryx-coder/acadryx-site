@@ -2,21 +2,19 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
 import ProfileAvatar from "../components/ProfileAvatar";
 
-const FEATURES = [
+const BASE_FEATURES = [
   {
     num: "01", title: "Identity & Access",
     tagline: "One identity. From admission to alumni.",
     body: "Every school gets its own branded web app. Every student gets a single profile that follows them from Pre-KG through graduation — never recreated, never lost. Schools generate access codes — no emails, no passwords. The right dashboard loads automatically for each role: Admin, Teacher, Student, Parent, Alumni.",
     pts: ["Five roles, one school—different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", "Your school. Your brand. Your own app."],
-    mockup: <LoginMockup />,
     flip: false,
   },
   {
     num: "02", title: "Academic Structure",
     tagline: "Your school. Your hierarchy. No vendor lock-in.",
-    body: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+    // body and mockup will be dynamic based on country
     pts: ["Pre-KG to Senior Secondary—every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Divided subjects and optional vs mandatory subjects setting fully supported.", "Sessions, terms, and dates fully yours to set", "Your school's hierarchy, your school's app — no vendor lock-in"],
-    mockup: <StructureMockup />,
     flip: true,
   },
   {
@@ -51,6 +49,66 @@ const FEATURES = [
   },
 ];
 
+// Country-specific academic structures
+const getAcademicStructure = (countryCode) => {
+  const structures = {
+    NG: {
+      description: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "Senior Secondary", arms: ["SS1A","SS1B","SS1C","SS2A","SS2B","SS3A"] },
+        { name: "Junior Secondary", arms: ["JSS1A","JSS1B","JSS2A","JSS3A"] },
+        { name: "Primary", arms: ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6"] }
+      ]
+    },
+    GH: {
+      description: "Start with sensible defaults—Primary, Junior High School, Senior High School. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "Senior High School", arms: ["SHS 1","SHS 2","SHS 3"] },
+        { name: "Junior High School", arms: ["JHS 1","JHS 2","JHS 3"] },
+        { name: "Primary", arms: ["P1","P2","P3","P4","P5","P6"] }
+      ]
+    },
+    KE: {
+      description: "Start with sensible defaults—Pre-Primary, Primary (CBC), Junior Secondary, Senior Secondary. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "Senior Secondary", arms: ["Grade 10","Grade 11","Grade 12"] },
+        { name: "Junior Secondary", arms: ["Grade 7","Grade 8","Grade 9"] },
+        { name: "Primary", arms: ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6"] }
+      ]
+    },
+    ZA: {
+      description: "Start with sensible defaults—Foundation Phase, Intermediate Phase, Senior Phase, FET Phase. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "FET Phase", arms: ["Grade 10","Grade 11","Grade 12"] },
+        { name: "Senior Phase", arms: ["Grade 7","Grade 8","Grade 9"] },
+        { name: "Intermediate Phase", arms: ["Grade 4","Grade 5","Grade 6"] },
+        { name: "Foundation Phase", arms: ["Grade R","Grade 1","Grade 2","Grade 3"] }
+      ]
+    },
+    GB: {
+      description: "Start with sensible defaults—Key Stages 1-5, Years 1-13. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "Key Stage 4", arms: ["Year 10","Year 11"] },
+        { name: "Key Stage 3", arms: ["Year 7","Year 8","Year 9"] },
+        { name: "Key Stage 2", arms: ["Year 3","Year 4","Year 5","Year 6"] },
+        { name: "Key Stage 1", arms: ["Year 1","Year 2"] },
+        { name: "Early Years", arms: ["Reception","Nursery"] }
+      ]
+    },
+    US: {
+      description: "Start with sensible defaults—Elementary, Middle, High School. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
+      sections: [
+        { name: "High School", arms: ["9th","10th","11th","12th"] },
+        { name: "Middle School", arms: ["6th","7th","8th"] },
+        { name: "Elementary", arms: ["K","1st","2nd","3rd","4th","5th"] }
+      ]
+    }
+  };
+  
+  return structures[countryCode] || structures.NG;
+};
+
+// Mockup components
 function LoginMockup() {
   return (
     <div className="mockup">
@@ -72,12 +130,12 @@ function LoginMockup() {
   );
 }
 
-function StructureMockup() {
+function StructureMockup({ sections }) {
   return (
     <div className="mockup">
       <div className="mockup-bar"><span className="dot-r"/><span className="dot-y"/><span className="dot-g"/></div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {[["Senior Secondary", ["SS1A","SS1B","SS1C","SS2A","SS2B","SS3A"]], ["Junior Secondary", ["JSS1A","JSS1B","JSS2A","JSS3A"]]].map(([name, arms]) => (
+        {sections.map(({ name, arms }) => (
           <div key={name} style={{ background: "var(--white)", borderRadius: 12, padding: "14px 16px", border: "1px solid var(--border)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
               <span style={{ fontWeight: 600, fontSize: ".9rem" }}>{name}</span>
@@ -137,11 +195,10 @@ function MagazineMockup() {
         <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: "bold", fontSize: "1.1rem", marginBottom: 10 }}>{"Your School's Digital Magazine"}</div>
       </div>
       {[
-      	["🏆","Achievement","We Won the National Science Quiz Competition"],
-      	["🎨","Culture","Art Exhibition 2025: Colours of Tomorrow"],
-      	["⚽","Sports","Football Season: A Historic Year"]
-      ]
-      .map(([icon,cat,title]) => (
+        ["🏆","Achievement","We Won the National Science Quiz Competition"],
+        ["🎨","Culture","Art Exhibition 2025: Colours of Tomorrow"],
+        ["⚽","Sports","Football Season: A Historic Year"]
+      ].map(([icon,cat,title]) => (
         <div key={title} style={{ display: "flex", gap: 10, padding: "10px 0", borderBottom: "1px solid var(--border)", alignItems: "center" }}>
           <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
           <div>
@@ -151,12 +208,11 @@ function MagazineMockup() {
         </div>
       ))}
       <div>
-      	<button>See More</button>
+        <button style={{ marginTop: 12, padding: "6px 12px", background: "var(--teal)", color: "white", borderRadius: 20, border: "none", fontSize: ".7rem", cursor: "pointer" }}>See More</button>
       </div>
     </div>
   );
 }
-
 
 function AlumniMockup() {
   return (
@@ -166,249 +222,63 @@ function AlumniMockup() {
         <span className="dot-y" />
         <span className="dot-g" />
       </div>
-      <div
-        style={{
-          background: "var(--white)",
-          borderRadius: 12,
-          border: "1px solid var(--border)",
-          overflow: "hidden",
-          width: "100%"
-        }}
-      >
-        {/* Header */}
+      <div style={{ background: "var(--white)", borderRadius: 12, border: "1px solid var(--border)", overflow: "hidden", width: "100%" }}>
         <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border)" }}>
-          <div
-            style={{
-              fontWeight: 700,
-              color: "var(--blue)",
-              fontSize: ".9rem",
-              marginBottom: 12
-            }}
-          >
-            {"MyDemo Int'l Alumni"}
-          </div>
-
-          {/* Nav row 
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 12,
-              marginBottom: 14
-            }}
-          >
-            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>👥 Network</span>
-            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>💬 Chats</span>
-            <span style={{ fontSize: ".7rem", color: "var(--teal)", fontWeight: 500 }}>
-              🤝 Mentorship
-            </span>
-            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>❤️ Donate</span>
-            <span style={{ fontSize: ".7rem", color: "var(--text-2)" }}>📄 Records</span>
-          </div>*/}
-
-          {/* Profile row */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              gap: 10
-            }}
-          >
-            <ProfileAvatar
-              src="https://randomuser.me/api/portraits/women/68.jpg"
-              name="Adaeze Okafor"
-              size={36}
-            />
+          <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: ".9rem", marginBottom: 12 }}>{"MyDemo Int'l Alumni"}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+            <ProfileAvatar src="https://randomuser.me/api/portraits/women/68.jpg" name="Adaeze Okafor" size={36} />
             <div style={{ flex: 1, minWidth: 120 }}>
               <div style={{ fontWeight: 600, fontSize: ".85rem" }}>Adaeze Okafor</div>
-              <div style={{ fontSize: ".65rem", color: "var(--text-3)" }}>
-                Class of 2022 · Product Designer
-              </div>
+              <div style={{ fontSize: ".65rem", color: "var(--text-3)" }}>Class of 2022 · Product Designer</div>
             </div>
-            <div
-              style={{
-                fontSize: ".65rem",
-                background: "var(--green-soft)",
-                padding: "4px 10px",
-                borderRadius: 20,
-                color: "var(--green)",
-                whiteSpace: "nowrap"
-              }}
-            >
-              ✓ Verified
-            </div>
+            <div style={{ fontSize: ".65rem", background: "var(--green-soft)", padding: "4px 10px", borderRadius: 20, color: "var(--green)", whiteSpace: "nowrap" }}>✓ Verified</div>
           </div>
         </div>
-
-        {/* Scrollable feed */}
-        <div
-          style={{
-            padding: "14px 16px",
-            background: "var(--g1)",
-            maxHeight: 320,
-            overflowY: "auto"
-          }}
-        >
-          {/* Post 1 - Mentorship */}
-          <div
-            style={{
-              background: "var(--white)",
-              borderRadius: 12,
-              padding: 12,
-              marginBottom: 12,
-              border: "1px solid var(--border)"
-            }}
-          >
+        <div style={{ padding: "14px 16px", background: "var(--g1)", maxHeight: 320, overflowY: "auto" }}>
+          <div style={{ background: "var(--white)", borderRadius: 12, padding: 12, marginBottom: 12, border: "1px solid var(--border)" }}>
             <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-              <ProfileAvatar
-                src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=32&h=32&fit=crop"
-                name="Mentorship Exchange"
-                size={32}
-              />
+              <ProfileAvatar src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=32&h=32&fit=crop" name="Mentorship Exchange" size={32} />
               <div>
-                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>
-                  Mentorship Exchange
-                </div>
-                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>
-                  2 hours ago
-                </div>
+                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>Mentorship Exchange</div>
+                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>2 hours ago</div>
               </div>
             </div>
-            <div style={{ fontSize: ".75rem", marginBottom: 10, lineHeight: 1.4 }}>
-              🎓 Looking for mentors in Tech! Current SS3 students need career guidance. Any
-              alumni available for a 30-min chat?
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 12,
-                fontSize: ".65rem",
-                color: "var(--text-3)"
-              }}
-            >
+            <div style={{ fontSize: ".75rem", marginBottom: 10, lineHeight: 1.4 }}>🎓 Looking for mentors in Tech! Current SS3 students need career guidance. Any alumni available for a 30-min chat?</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, fontSize: ".65rem", color: "var(--text-3)" }}>
               <span>❤️ 24 interested</span>
               <span>💬 8 responses</span>
               <span style={{ color: "var(--teal)" }}>🤝 Volunteer →</span>
             </div>
           </div>
-
-          {/* Post 2 - Job Opportunity */}
-          <div
-            style={{
-              background: "var(--white)",
-              borderRadius: 12,
-              padding: 12,
-              marginBottom: 12,
-              border: "1px solid var(--border)"
-            }}
-          >
+          <div style={{ background: "var(--white)", borderRadius: 12, padding: 12, marginBottom: 12, border: "1px solid var(--border)" }}>
             <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-              <ProfileAvatar
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                name="James D."
-                size={32}
-              />
+              <ProfileAvatar src="https://randomuser.me/api/portraits/men/32.jpg" name="James D." size={32} />
               <div>
-                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>
-                  James D. · Class of 2019
-                </div>
-                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>
-                  Software Engineer at Flutterwave
-                </div>
+                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>James D. · Class of 2019</div>
+                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>Software Engineer at Flutterwave</div>
               </div>
             </div>
-            <div style={{ fontSize: ".75rem", marginBottom: 10 }}>
-              🚀 Flutterwave is hiring! 3 entry-level backend roles. DM if interested or know
-              someone from MyDemo.
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 12,
-                fontSize: ".65rem",
-                color: "var(--text-3)"
-              }}
-            >
+            <div style={{ fontSize: ".75rem", marginBottom: 10 }}>🚀 Flutterwave is hiring! 3 entry-level backend roles. DM if interested or know someone from MyDemo.</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, fontSize: ".65rem", color: "var(--text-3)" }}>
               <span>❤️ 47 likes</span>
               <span>💬 12 comments</span>
               <span>📌 5 shares</span>
             </div>
           </div>
-
-          {/* Post 3 - Donation Campaign */}
-          <div
-            style={{
-              background: "var(--teal-soft)",
-              borderRadius: 12,
-              padding: 12,
-              border: "1px solid var(--teal-light)"
-            }}
-          >
-            <div
-              style={{
-                fontSize: ".65rem",
-                textTransform: "uppercase",
-                color: "var(--teal)",
-                marginBottom: 6
-              }}
-            >
-              ❤️ Annual Giving
+          <div style={{ background: "var(--teal-soft)", borderRadius: 12, padding: 12, border: "1px solid var(--teal-light)" }}>
+            <div style={{ fontSize: ".65rem", textTransform: "uppercase", color: "var(--teal)", marginBottom: 6 }}>❤️ Annual Giving</div>
+            <div style={{ fontSize: ".8rem", fontWeight: 500, marginBottom: 6 }}>Help build a new science lab!</div>
+            <div style={{ fontSize: ".7rem", marginBottom: 8 }}>₦12.5M raised of ₦20M goal · 62%</div>
+            <div style={{ background: "var(--white)", borderRadius: 20, height: 6, width: "100%", marginBottom: 8 }}>
+              <div style={{ background: "var(--teal)", borderRadius: 20, width: "62%", height: 6 }} />
             </div>
-            <div style={{ fontSize: ".8rem", fontWeight: 500, marginBottom: 6 }}>
-              Help build a new science lab!
-            </div>
-            <div style={{ fontSize: ".7rem", marginBottom: 8 }}>
-              ₦12.5M raised of ₦20M goal · 62%
-            </div>
-            <div
-              style={{
-                background: "var(--white)",
-                borderRadius: 20,
-                height: 6,
-                width: "100%",
-                marginBottom: 8
-              }}
-            >
-              <div
-                style={{
-                  background: "var(--teal)",
-                  borderRadius: 20,
-                  width: "62%",
-                  height: 6
-                }}
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontSize: ".65rem",
-                flexWrap: "wrap",
-                gap: 8
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".65rem", flexWrap: "wrap", gap: 8 }}>
               <span>🤝 142 alumni donated</span>
               <span style={{ fontWeight: 600, color: "var(--teal)" }}>Donate →</span>
             </div>
           </div>
         </div>
-
-        {/* Bottom nav */}
-        <div
-          style={{
-            padding: "10px 12px",
-            borderTop: "1px solid var(--border)",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 16,
-            fontSize: ".65rem",
-            color: "var(--text-3)"
-          }}
-        >
+        <div style={{ padding: "10px 12px", borderTop: "1px solid var(--border)", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, fontSize: ".65rem", color: "var(--text-3)" }}>
           <span style={{ color: "var(--blue)" }}>🏠 Feed</span>
           <span>👥 Network</span>
           <span>💬 Chats</span>
@@ -418,21 +288,36 @@ function AlumniMockup() {
       </div>
     </div>
   );
-};
+}
 
-export default function Features() {
+export default function Features({ selectedCountry }) {
+  const countryCode = selectedCountry?.code || "NG";
+  const academicStructure = getAcademicStructure(countryCode);
+  
+  // Build dynamic features with country-specific Academic Structure
+  const FEATURES = BASE_FEATURES.map(feature => {
+    if (feature.title === "Academic Structure") {
+      return {
+        ...feature,
+        body: academicStructure.description,
+        mockup: <StructureMockup sections={academicStructure.sections} />
+      };
+    }
+    return feature;
+  });
+
   return (
     <>
-	  <section className="hero" style={{ padding: "88px 0 80px" }}>
-	    <div className="wrap">
-	      <div className="hero-content">
-	        <span className="eyebrow-pill"><span className="dot" />Platform Overview</span>
-	        <h1 style={{ fontSize: "clamp(2.4rem,5vw,4.2rem)", color: "#fff" }}>Built for how<br /><em>schools actually work</em></h1>
-	        <p className="hero-sub">Every feature designed around the reality of K12 institutions—not retrofitted from consumer apps. Schools that used paper for years go fully digital in one term.</p>
-	      </div>
-	    </div>
-	  </section>
-	  
+      <section className="hero" style={{ padding: "88px 0 80px" }}>
+        <div className="wrap">
+          <div className="hero-content">
+            <span className="eyebrow-pill"><span className="dot" />Platform Overview</span>
+            <h1 style={{ fontSize: "clamp(2.4rem,5vw,4.2rem)", color: "#fff" }}>Built for how<br /><em>schools actually work</em></h1>
+            <p className="hero-sub">Every feature designed around the reality of K12 institutions—not retrofitted from consumer apps. Schools that used paper for years go fully digital in one term.</p>
+          </div>
+        </div>
+      </section>
+      
       <section className="section">
         <div className="wrap">
           <div className="feat-rows">
@@ -447,7 +332,7 @@ export default function Features() {
                     {f.pts.map((p, j) => <li key={j}>{p}</li>)}
                   </ul>
                 </div>
-                <div style={{order: 1}}>{f.mockup}</div>
+                <div style={{ order: 1 }}>{f.mockup}</div>
               </div>
             ))}
           </div>
@@ -459,8 +344,8 @@ export default function Features() {
           <h2 className="section-h white" style={{ maxWidth: 480, margin: "0 auto 16px" }}>See it working live</h2>
           <p className="section-p white" style={{ margin: "0 auto 36px" }}>Try the interactive demo or get early access for your school.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link to="/demo"    className="btn btn-white btn-lg">Interactive demo →</Link>
-            <Link to="/contact" className="btn btn-ghost  btn-lg">Get early access</Link>
+            <Link to="/demo" className="btn btn-white btn-lg">Interactive demo →</Link>
+            <Link to="/contact" className="btn btn-ghost btn-lg">Get early access</Link>
           </div>
         </div>
       </section>

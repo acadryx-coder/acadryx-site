@@ -10,7 +10,11 @@ const FEATURES = [
   { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
 ];
 
-export default function Home() {
+export default function Home({ selectedCountry }) {
+  const currencySymbol = selectedCountry?.currency || "₦"
+  const pricePerStudent = selectedCountry?.price_per_student || 1000
+  const countryCode = selectedCountry?.code || "NG"
+
   return (
     <>
       {/* HERO */}
@@ -46,8 +50,8 @@ export default function Home() {
           <div className="stat-strip">
             {[
               { value: "5",    label: "Portals in one platform" },
-              { value: "Local",  label: "Per-student pricing by country" },
               { value: "∞",   label: "Records stored forever" },
+              { value: "Local",  label: "Per-student pricing by country" },
               { value: "Permanent",  label: "Built for Legacy and Global Dominance" },
             ].map((stat, index) => (
               <div className="stat-item" key={index}>
@@ -80,58 +84,62 @@ export default function Home() {
         </div>
       </section>
 
-	  {/* PRICING PREVIEW */}
-	  <section className="section section-off">
-	    <div className="wrap">
-	      <div style={{ marginBottom: 48 }}>
-	        <span className="eyebrow">Pricing</span>
-	        <h2 className="section-h" style={{ maxWidth: 480 }}>{"Get everything today's Edtech offers... "} plus an optional more.</h2>
-	        <p className="section-p">All five portals are included. Add only the tools your school needs from the marketplace.</p>
-	      </div>
-	  
-	      <div className="pricing-wrap">
-	        <div className="price-grid">
-	          {/* CORE — ALL PORTALS */}
-	          <div className="price-col dark">
-	            <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 14 }}>
-	              Core — Your School App
-	            </div>
-	            <div className="price-tag" style={{ color: "#fff" }}>₦1000 (NG)</div>
-	            <div className="price-note" style={{ color: "rgba(255,255,255,.5)" }}>per active student · per term</div>
-	            <ul className="price-list">
-	              <li>📊 One-click school-wide digital generation and publication</li>
-	              <li>🏫 Student Portal — results, records, portfolio</li>
-	              <li>{"👨‍👩‍👧 Parent Portal — access to child's data"}</li>
-	              <li>👩‍🏫 Teacher Portal — grading, attendance, classes</li>
-	              <li>⚙️ Admin Portal — full school management</li>
-	              <li>🎓 Alumni Portal — permanent access, forever</li>
-	              <li>🔒 Permanent, verifiable, credientials storage & access</li>
-	            </ul>
-	            <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Get early access →</Link>
-	          </div>
-	  
-	          {/* FEATURE MARKETPLACE */}
-	          <div className="price-col light">
-	            <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 14 }}>
-	              Add-On Feature Marketplace
-	            </div>
-	            <div className="price-tag" style={{ color: "var(--blue)" }}>Under Development</div>
-	            <div className="price-note" style={{ color: "var(--text-3)" }}>Add-on tools that serve your users — launching after pilot schools</div>
-	            <ul className="price-list" >
-	              <li>🤖 AI Lesson Note Assistant — for teachers</li>
-	              <li>🧠 Acadryx Exam Driller — for students</li>
-	              <li>📷 Lifetime Event Photo Storage — for school</li>
-	              <li>👥 Advanced Career Advancement Features — for alumni</li>
-	              <li>📅 Events & Digital Magazine — for students</li>
-	              <li>✨ More, requested by schools like yours</li>
-	            </ul>
-	            <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Join pilot → Get early access</Link>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </section>
-	  
+      {/* PRICING PREVIEW */}
+      <section className="section section-off">
+        <div className="wrap">
+          <div style={{ marginBottom: 48 }}>
+            <span className="eyebrow">Pricing</span>
+            <h2 className="section-h" style={{ maxWidth: 480 }}>{"Get everything today's Edtech offers... "} plus an optional more.</h2>
+            <p className="section-p">All five portals are included. Add only the tools your school needs from the marketplace.</p>
+          </div>
+
+          <div className="pricing-wrap">
+            <div className="price-grid">
+              {/* CORE — YOUR SCHOOL APP */}
+              <div className="price-col dark">
+                <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 14 }}>
+                  Core — Your School App
+                </div>
+                <div className="price-tag" style={{ color: "#fff" }}>
+                  {currencySymbol}{pricePerStudent.toLocaleString()} ({countryCode})
+                </div>
+                <div className="price-note" style={{ color: "rgba(255,255,255,.5)" }}>
+                  per active student · per term
+                </div>
+                <ul className="price-list">
+                  <li>📊 One-click school-wide digital generation and publication</li>
+                  <li>🏫 Student Portal — results, records, portfolio</li>
+                  <li>{"👨‍👩‍👧 Parent Portal — access to child's data"}</li>
+                  <li>👩‍🏫 Teacher Portal — grading, attendance, classes</li>
+                  <li>⚙️ Admin Portal — full school management</li>
+                  <li>🎓 Alumni Portal — permanent access, forever</li>
+                  <li>🔒 Permanent, verifiable, credentials storage & access</li>
+                </ul>
+                <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Get early access →</Link>
+              </div>
+
+              {/* FEATURE MARKETPLACE */}
+              <div className="price-col light">
+                <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 14 }}>
+                  Add-On Feature Marketplace
+                </div>
+                <div className="price-tag" style={{ color: "var(--blue)" }}>Under Development</div>
+                <div className="price-note" style={{ color: "var(--text-3)" }}>Add-on tools that serve your users — launching after pilot schools</div>
+                <ul className="price-list">
+                  <li>🤖 AI Lesson Note Assistant — for teachers</li>
+                  <li>🧠 Acadryx Exam Driller — for students</li>
+                  <li>📷 Lifetime Event Photo Storage — for school</li>
+                  <li>👥 Advanced Career Advancement Features — for alumni</li>
+                  <li>📅 Events & Digital Magazine — for students</li>
+                  <li>✨ More, requested by schools like yours</li>
+                </ul>
+                <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Join pilot → Get early access</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="section section-dark">
         <div className="wrap" style={{ textAlign: "center" }}>

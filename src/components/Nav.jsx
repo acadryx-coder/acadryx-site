@@ -1,10 +1,12 @@
-// Nav.jsx — auth-aware
+// Nav.jsx — auth-aware with country selector
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { countries } from '../config/countries'
 
-export default function Nav() {
+export default function Nav({ selectedCountry, onCountryChange }) {
   const [open, setOpen] = useState(false)
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const [session, setSession] = useState(null)
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -36,6 +38,32 @@ export default function Nav() {
               <NavLink to="/pricing" className={({ isActive }) => isActive ? 'active' : ''}>Pricing</NavLink>
               <NavLink to="/demo" className={({ isActive }) => isActive ? 'active' : ''}>Demo</NavLink>
               <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
+
+              {/* Country Selector */}
+              <div className="country-selector">
+                <button 
+                  className="country-btn"
+                  onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                >
+                  {selectedCountry?.flag} {selectedCountry?.name} ▼
+                </button>
+                {showCountryDropdown && (
+                  <div className="country-dropdown">
+                    {countries.map(c => (
+                      <button 
+                        key={c.code} 
+                        className="country-option"
+                        onClick={() => {
+                          onCountryChange(c)
+                          setShowCountryDropdown(false)
+                        }}
+                      >
+                        {c.flag} {c.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {session ? (
                 <>
@@ -76,6 +104,24 @@ export default function Nav() {
         <NavLink to="/pricing">Pricing</NavLink>
         <NavLink to="/demo">Demo</NavLink>
         <NavLink to="/contact">Contact</NavLink>
+        
+        {/* Country selector in mobile */}
+        <div className="mobile-country-selector">
+          <div className="mobile-country-label">Country</div>
+          {countries.map(c => (
+            <button
+              key={c.code}
+              className={`mobile-country-option ${selectedCountry?.code === c.code ? 'active' : ''}`}
+              onClick={() => {
+                onCountryChange(c)
+                setOpen(false)
+              }}
+            >
+              {c.flag} {c.name}
+            </button>
+          ))}
+        </div>
+
         {session ? (
           <>
             <NavLink to="/dashboard" style={{ color: 'var(--teal)' }}>Dashboard →</NavLink>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import Footer from "../components/Footer.jsx";
 
 const FEATURES = [
@@ -10,10 +11,67 @@ const FEATURES = [
   { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
 ];
 
+const QUOTES = [
+  {
+    text: `The part everyone loves the most is how the system's result engine takes subject scores straight from a teacher's phone to a parent's phone as soon as it is entered. We are investing heavily into strengthening this layer.`,
+    author: "ACADRYX CEO"
+  },
+  {
+    text: "Simeon has been extremely demanding and pushing for the best. The app is a testimonial of sleepless nights of relentless work and we still do upgrades all the time.",
+    author: "ACADRYX CTO"
+  }
+];
+
 export default function Home({ selectedCountry }) {
   const currencySymbol = selectedCountry?.currency || "₦"
   const pricePerStudent = selectedCountry?.price_per_student || 1000
   const countryCode = selectedCountry?.code || "NG"
+  
+  const [currentQuote, setCurrentQuote] = useState(0);
+  const [direction, setDirection]       = useState("next"); // "next" | "prev"
+  const [animKey, setAnimKey]           = useState(0);      // increment to re-trigger CSS anim
+  const [touchStart, setTouchStart]     = useState(0);
+  const [touchEnd, setTouchEnd]         = useState(0);
+  const [hintVisible, setHintVisible]   = useState(true);   // swipe hint fades after first use
+  const hintTimer = useRef(null);
+
+  // Hide swipe hint after 4 s or after first real swipe
+  useEffect(() => {
+    hintTimer.current = setTimeout(() => setHintVisible(false), 4000);
+    return () => clearTimeout(hintTimer.current);
+  }, []);
+
+  const dismissHint = () => {
+    clearTimeout(hintTimer.current);
+    setHintVisible(false);
+  };
+
+  const goTo = (index, dir) => {
+    setDirection(dir);
+    setAnimKey(k => k + 1);
+    setCurrentQuote(index);
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      dismissHint();
+      goTo((currentQuote + 1) % QUOTES.length, "next");
+    }
+    if (touchStart - touchEnd < -50) {
+      dismissHint();
+      goTo((currentQuote - 1 + QUOTES.length) % QUOTES.length, "prev");
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
 
   return (
     <>
@@ -40,6 +98,141 @@ export default function Home({ selectedCountry }) {
               <Link to="/signup" className="btn btn-white btn-lg">Get Started →</Link>
               <Link to="/demo"    className="btn btn-ghost btn-lg">See the demo</Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* QUOTE CAROUSEL */}
+      <style>{`
+        @keyframes quoteSlideNext {
+          from { opacity: 0; transform: translateX(36px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes quoteSlidePrev {
+          from { opacity: 0; transform: translateX(-36px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes swipeFloat {
+          0%   { transform: translateX(0px);   opacity: 0.4; }
+          50%  { transform: translateX(-12px); opacity: 0.75; }
+          100% { transform: translateX(0px);   opacity: 0.4; }
+        }
+        .quote-slide-next { animation: quoteSlideNext 0.35s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+        .quote-slide-prev { animation: quoteSlidePrev 0.35s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+        .swipe-hint-icon  { animation: swipeFloat 1.5s ease-in-out infinite; }
+        .swipe-hint-wrap  { transition: opacity 0.7s ease; }
+        .quote-dot        { width:8px; height:8px; border-radius:50%; border:none; padding:0; cursor:pointer; transition: all 0.3s ease; }
+        .quote-dot.active { width:20px; border-radius:4px; }
+      `}</style>
+
+      <section style={{
+        background: "var(--off)",
+        borderBottom: "1px solid var(--border)",
+        padding: "52px 0",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        <div className="wrap">
+          <div
+            style={{
+              maxWidth: 680,
+              margin: "0 auto",
+              textAlign: "center",
+              position: "relative",
+              cursor: "grab",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+            }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Quote — re-keyed on every change to retrigger CSS animation */}
+            <div
+              key={animKey}
+              className={direction === "next" ? "quote-slide-next" : "quote-slide-prev"}
+            >
+              <div style={{
+                fontSize: "3.5rem",
+                lineHeight: 0.7,
+                color: "var(--border)",
+                fontFamily: "Georgia, serif",
+                marginBottom: "16px",
+                userSelect: "none",
+              }}>
+                "
+              </div>
+
+              <p style={{
+                fontSize: "1.15rem",
+                fontWeight: 500,
+                color: "var(--text-2)",
+                lineHeight: 1.75,
+                letterSpacing: "-0.01em",
+                margin: "0 0 18px",
+              }}>
+                {QUOTES[currentQuote].text}
+              </p>
+
+              <div style={{
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                color: "var(--text-3)",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+              }}>
+                — {QUOTES[currentQuote].author}
+              </div>
+            </div>
+
+            {/* Dot indicators — active dot stretches into a pill */}
+            <div style={{ display:"flex", justifyContent:"center", gap:"7px", marginTop:"28px" }}>
+              {QUOTES.map((_, index) => (
+                <button
+                  key={index}
+                  className={`quote-dot${currentQuote === index ? " active" : ""}`}
+                  onClick={() => { dismissHint(); goTo(index, index >= currentQuote ? "next" : "prev"); }}
+                  style={{
+                    background: currentQuote === index ? "var(--teal)" : "var(--border)",
+                    opacity: currentQuote === index ? 1 : 0.45,
+                  }}
+                  aria-label={`Go to quote ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Swipe hint — animated, no button, fades after 4s or first swipe */}
+            <div
+              className="swipe-hint-wrap"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+                marginTop: "20px",
+                opacity: hintVisible ? 1 : 0,
+                pointerEvents: "none",
+                height: "24px",
+              }}
+            >
+              <svg className="swipe-hint-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                style={{ color: "var(--text-3)", animationDirection:"reverse", animationDelay:"0.1s" }}>
+                <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <svg className="swipe-hint-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                style={{ color: "var(--text-3)" }}>
+                <path d="M9 11V6.5a1.5 1.5 0 0 1 3 0V11m0-4.5V5a1.5 1.5 0 0 1 3 0v5.5m0-3a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6v-2a1.5 1.5 0 0 1 3 0"
+                  stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span style={{ fontSize:"10px", fontWeight:600, color:"var(--text-3)", letterSpacing:"0.06em", textTransform:"uppercase" }}>
+                swipe
+              </span>
+              <svg className="swipe-hint-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                style={{ color: "var(--text-3)", animationDelay:"0.1s" }}>
+                <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+
           </div>
         </div>
       </section>

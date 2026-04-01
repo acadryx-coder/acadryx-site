@@ -74,7 +74,7 @@ export default function SchoolPage() {
     
     try {
       const { data: billing, error: billingError } = await supabase
-        .schema('schools')
+        .schema('billing')
         .rpc('get_branch_billing_data', { p_branch_id: branchId })
       
       if (billingError) {

@@ -1,0 +1,94 @@
+// config/us-curriculum.js
+export const usSchoolStructure = {
+  grading_defaults: [
+    { min_score: 90, max_score: 100, grade: 'A', description: 'Excellent' },
+    { min_score: 80, max_score: 89, grade: 'B', description: 'Good' },
+    { min_score: 70, max_score: 79, grade: 'C', description: 'Satisfactory' },
+    { min_score: 60, max_score: 69, grade: 'D', description: 'Passing' },
+    { min_score: 0, max_score: 59, grade: 'F', description: 'Failing' }
+  ],
+  sections: [
+    {
+      name: "Elementary School",
+      level: 1,
+      classes: [
+        { name: "Kindergarten", sequence: 1, arms: ["A"], is_graduating: false },
+        { name: "Grade 1", sequence: 2, arms: ["A", "B"], is_graduating: false },
+        { name: "Grade 2", sequence: 3, arms: ["A", "B"], is_graduating: false },
+        { name: "Grade 3", sequence: 4, arms: ["A", "B"], is_graduating: false },
+        { name: "Grade 4", sequence: 5, arms: ["A", "B"], is_graduating: false },
+        { name: "Grade 5", sequence: 6, arms: ["A", "B"], is_graduating: true }
+      ],
+      subjects: [
+        { name: "English Language Arts", is_mandatory: true, components: [{ name: "English Language Arts", weight: 100 }] },
+        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
+        { name: "Science", is_mandatory: true, components: [{ name: "Science", weight: 100 }] },
+        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
+        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
+        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
+        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
+        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] }
+      ]
+    },
+    {
+      name: "Middle School",
+      level: 2,
+      classes: [
+        { name: "Grade 6", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
+        { name: "Grade 7", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
+        { name: "Grade 8", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
+      ],
+      subjects: [
+        { name: "English Language Arts", is_mandatory: true, components: [{ name: "English Language Arts", weight: 100 }] },
+        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
+        { name: "Science", is_mandatory: true, components: [{ name: "Life Science", weight: 34 }, { name: "Physical Science", weight: 33 }, { name: "Earth Science", weight: 33 }] },
+        { name: "Social Studies", is_mandatory: true, components: [{ name: "History", weight: 50 }, { name: "Geography", weight: 50 }] },
+        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
+        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
+        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
+        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
+        { name: "Spanish", is_mandatory: false, components: [{ name: "Spanish", weight: 100 }] },
+        { name: "Health", is_mandatory: false, components: [{ name: "Health", weight: 100 }] }
+      ]
+    },
+    {
+      name: "High School",
+      level: 3,
+      classes: [
+        { name: "Grade 9 (Freshman)", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
+        { name: "Grade 10 (Sophomore)", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
+        { name: "Grade 11 (Junior)", sequence: 3, arms: ["A", "B", "C"], is_graduating: false },
+        { name: "Grade 12 (Senior)", sequence: 4, arms: ["A", "B", "C"], is_graduating: true }
+      ],
+      subjects: [
+        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
+        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
+        { name: "Algebra I", is_mandatory: false, components: [{ name: "Algebra I", weight: 100 }] },
+        { name: "Geometry", is_mandatory: false, components: [{ name: "Geometry", weight: 100 }] },
+        { name: "Algebra II", is_mandatory: false, components: [{ name: "Algebra II", weight: 100 }] },
+        { name: "Pre-Calculus", is_mandatory: false, components: [{ name: "Pre-Calculus", weight: 100 }] },
+        { name: "Calculus", is_mandatory: false, components: [{ name: "Calculus", weight: 100 }] },
+
+
+        { name: "Statistics", is_mandatory: false, components: [{ name: "Statistics", weight: 100 }] },
+        { name: "Biology", is_mandatory: false, components: [{ name: "Biology", weight: 100 }] },
+        { name: "Chemistry", is_mandatory: false, components: [{ name: "Chemistry", weight: 100 }] },
+        { name: "Physics", is_mandatory: false, components: [{ name: "Physics", weight: 100 }] },
+        { name: "Environmental Science", is_mandatory: false, components: [{ name: "Environmental Science", weight: 100 }] },
+        { name: "World History", is_mandatory: false, components: [{ name: "World History", weight: 100 }] },
+        { name: "US History", is_mandatory: false, components: [{ name: "US History", weight: 100 }] },
+        { name: "Government", is_mandatory: false, components: [{ name: "Government", weight: 100 }] },
+        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
+        { name: "Psychology", is_mandatory: false, components: [{ name: "Psychology", weight: 100 }] },
+        { name: "Spanish", is_mandatory: false, components: [{ name: "Spanish", weight: 100 }] },
+        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
+        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
+        { name: "Business", is_mandatory: false, components: [{ name: "Business", weight: 100 }] },
+        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
+        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
+        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
+        { name: "Health", is_mandatory: false, components: [{ name: "Health", weight: 100 }] }
+      ]
+    }
+  ]
+}

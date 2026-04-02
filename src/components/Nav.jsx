@@ -1,10 +1,9 @@
-// Nav.jsx — auth-aware with country selector
+// src/components/Nav.jsx — updated to use DB countries
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { countries } from '../config/countries'
 
-export default function Nav({ selectedCountry, onCountryChange }) {
+export default function Nav({ selectedCountry, onCountryChange, countriesList }) {
   const [open, setOpen] = useState(false)
   const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const [session, setSession] = useState(null)
@@ -39,7 +38,7 @@ export default function Nav({ selectedCountry, onCountryChange }) {
               <NavLink to="/demo" className={({ isActive }) => isActive ? 'active' : ''}>Demo</NavLink>
               <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
 
-              {/* Country Selector */}
+              {/* Country Selector - now using DB data */}
               <div className="country-selector">
                 <button 
                   className="country-btn"
@@ -49,7 +48,7 @@ export default function Nav({ selectedCountry, onCountryChange }) {
                 </button>
                 {showCountryDropdown && (
                   <div className="country-dropdown">
-                    {countries.map(c => (
+                    {countriesList.map(c => (
                       <button 
                         key={c.code} 
                         className="country-option"
@@ -66,14 +65,12 @@ export default function Nav({ selectedCountry, onCountryChange }) {
               </div>
 
               {session ? (
-                <>
-                  <NavLink
-                    to="/dashboard"
-                    className={({ isActive }) => `nav-cta${isActive ? ' active' : ''}`}
-                  >
-                    Dashboard →
-                  </NavLink>
-                </>
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) => `nav-cta${isActive ? ' active' : ''}`}
+                >
+                  Dashboard →
+                </NavLink>
               ) : (
                 <>
                   <NavLink to="/login" className={({ isActive }) => isActive ? 'active' : ''}>Log in</NavLink>
@@ -105,10 +102,10 @@ export default function Nav({ selectedCountry, onCountryChange }) {
         <NavLink to="/demo">Demo</NavLink>
         <NavLink to="/contact">Contact</NavLink>
         
-        {/* Country selector in mobile */}
+        {/* Country selector in mobile - now using DB data */}
         <div className="mobile-country-selector">
           <div className="mobile-country-label">Country</div>
-          {countries.map(c => (
+          {countriesList.map(c => (
             <button
               key={c.code}
               className={`mobile-country-option ${selectedCountry?.code === c.code ? 'active' : ''}`}

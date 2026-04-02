@@ -92,6 +92,7 @@ export default function StepCurriculum({ data, updateData, back, next }) {
         <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '8px' }}>
           💡 Subjects marked "Apply to All" will be automatically assigned to all students in that section.
           Optional subjects can be assigned individually later.
+          You can also change all of this later.
         </p>
       </div>
 

@@ -95,7 +95,7 @@ export default function Home({ selectedCountry }) {
             </p>
 
             <div className="hero-btns anim d3">
-              <Link to="/signup" className="btn btn-white btn-lg">Get Started →</Link>
+              <Link to="/login" className="btn btn-white btn-lg">Get Started →</Link>
               <Link to="/demo"    className="btn btn-ghost btn-lg">See the demo</Link>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function Home({ selectedCountry }) {
                 marginBottom: "16px",
                 userSelect: "none",
               }}>
-                "
+               ''
               </div>
 
               <p style={{

@@ -84,7 +84,17 @@ export const southAfricaSchoolStructure = {
         { name: "Business Studies", apply_to_all: false },
         { name: "Accounting", apply_to_all: false },
         { name: "Computer Applications Technology", apply_to_all: false },
-        { name: "Information Technology", apply_to_all: false }
+        { name: "Information Technology", apply_to_all: false },
+        { name: "Engineering Graphics and Design", apply_to_all: false },
+        { name: "Civil Technology", apply_to_all: false },
+        { name: "Electrical Technology", apply_to_all: false },
+        { name: "Mechanical Technology", apply_to_all: false },
+        { name: "Dramatic Arts", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Visual Arts", apply_to_all: false },
+        { name: "Agricultural Sciences", apply_to_all: false },
+        { name: "Agricultural Management Practices", apply_to_all: false },
+        { name: "Agricultural Technology", apply_to_all: false }
       ]
     }
   ]

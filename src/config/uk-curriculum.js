@@ -83,18 +83,18 @@ export const ukSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Science", apply_to_all: true },
         { name: "Physical Education", apply_to_all: true },
+        { name: "Citizenship", apply_to_all: true },
         { name: "Art and Design", apply_to_all: false },
         { name: "Computing", apply_to_all: false },
         { name: "Design and Technology", apply_to_all: false },
         { name: "Geography", apply_to_all: false },
         { name: "History", apply_to_all: false },
         { name: "Languages", apply_to_all: false },
-        { name: "Music", apply_to_all: false },
-        { name: "Citizenship", apply_to_all: false }
+        { name: "Music", apply_to_all: false }
       ]
     },
     {
-      name: "Key Stage 4",
+      name: "Key Stage 4 (GCSE)",
       level: 5,
       classes: [
         { name: "Year 10", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
@@ -106,17 +106,26 @@ export const ukSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Science (Combined)", apply_to_all: true },
         { name: "Physical Education", apply_to_all: true },
-        { name: "Physics (Triple)", apply_to_all: false },
-        { name: "Chemistry (Triple)", apply_to_all: false },
         { name: "Biology (Triple)", apply_to_all: false },
+        { name: "Chemistry (Triple)", apply_to_all: false },
+        { name: "Physics (Triple)", apply_to_all: false },
         { name: "History", apply_to_all: false },
         { name: "Geography", apply_to_all: false },
         { name: "French", apply_to_all: false },
+        { name: "German", apply_to_all: false },
         { name: "Spanish", apply_to_all: false },
         { name: "Computer Science", apply_to_all: false },
         { name: "Business Studies", apply_to_all: false },
         { name: "Economics", apply_to_all: false },
-        { name: "Art and Design", apply_to_all: false }
+        { name: "Religious Studies", apply_to_all: false },
+        { name: "Art and Design", apply_to_all: false },
+        { name: "Design and Technology", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Drama", apply_to_all: false },
+        { name: "Media Studies", apply_to_all: false },
+        { name: "Physical Education (GCSE)", apply_to_all: false },
+        { name: "Sociology", apply_to_all: false },
+        { name: "Psychology", apply_to_all: false }
       ]
     }
   ]

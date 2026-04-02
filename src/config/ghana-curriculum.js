@@ -22,7 +22,8 @@ export const ghanaSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Creative Arts", apply_to_all: true },
         { name: "Our World", apply_to_all: true },
-        { name: "Physical Development", apply_to_all: true }
+        { name: "Physical Development", apply_to_all: true },
+        { name: "Ghanaian Language", apply_to_all: true }
       ]
     },
     {
@@ -38,12 +39,15 @@ export const ghanaSchoolStructure = {
       ],
       subjects: [
         { name: "English Language", apply_to_all: true },
+        { name: "Ghanaian Language", apply_to_all: true },
         { name: "Mathematics", apply_to_all: true },
         { name: "Science", apply_to_all: true },
         { name: "Our World (Social Studies)", apply_to_all: true },
+        { name: "Religious and Moral Education", apply_to_all: true },
+        { name: "Creative Arts", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
         { name: "Computing", apply_to_all: false },
-        { name: "French", apply_to_all: false },
-        { name: "Religious and Moral Education", apply_to_all: false }
+        { name: "French", apply_to_all: false }
       ]
     },
     {
@@ -56,13 +60,14 @@ export const ghanaSchoolStructure = {
       ],
       subjects: [
         { name: "English Language", apply_to_all: true },
+        { name: "Ghanaian Language", apply_to_all: true },
         { name: "Mathematics", apply_to_all: true },
         { name: "Integrated Science", apply_to_all: true },
         { name: "Social Studies", apply_to_all: true },
-        { name: "ICT", apply_to_all: false },
-        { name: "French", apply_to_all: false },
-        { name: "Religious and Moral Education", apply_to_all: false },
-        { name: "Basic Design and Technology", apply_to_all: false }
+        { name: "Religious and Moral Education", apply_to_all: true },
+        { name: "Basic Design and Technology", apply_to_all: true },
+        { name: "Information and Communication Technology", apply_to_all: false },
+        { name: "French", apply_to_all: false }
       ]
     },
     {
@@ -78,18 +83,27 @@ export const ghanaSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Integrated Science", apply_to_all: true },
         { name: "Social Studies", apply_to_all: true },
-        { name: "Elective Mathematics", apply_to_all: false },
+        { name: "General Arts Core", apply_to_all: false },
+        { name: "General Science Core", apply_to_all: false },
+        { name: "Business Core", apply_to_all: false },
+        { name: "Visual Arts Core", apply_to_all: false },
+        { name: "Home Economics Core", apply_to_all: false },
         { name: "Physics", apply_to_all: false },
         { name: "Chemistry", apply_to_all: false },
         { name: "Biology", apply_to_all: false },
+        { name: "Elective Mathematics", apply_to_all: false },
         { name: "Economics", apply_to_all: false },
         { name: "Business Management", apply_to_all: false },
         { name: "Accounting", apply_to_all: false },
-        { name: "ICT", apply_to_all: false },
         { name: "Government", apply_to_all: false },
         { name: "History", apply_to_all: false },
         { name: "Geography", apply_to_all: false },
-        { name: "Literature in English", apply_to_all: false }
+        { name: "Literature in English", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "ICT", apply_to_all: false },
+        { name: "Graphic Design", apply_to_all: false },
+        { name: "Food and Nutrition", apply_to_all: false },
+        { name: "Textiles", apply_to_all: false }
       ]
     }
   ]

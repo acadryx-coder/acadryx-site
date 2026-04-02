@@ -10,14 +10,15 @@ export const kenyaSchoolStructure = {
   ],
   sections: [
     {
-      name: "Pre-Primary",
+      name: "Pre-Primary (Early Years)",
       level: 1,
       classes: [
         { name: "Pre-Primary 1", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Pre-Primary 2", sequence: 2, arms: ["A"], is_graduating: true }
       ],
       subjects: [
-        { name: "Language Activities", apply_to_all: true },
+        { name: "Language Activities (English)", apply_to_all: true },
+        { name: "Kiswahili Language Activities", apply_to_all: true },
         { name: "Mathematical Activities", apply_to_all: true },
         { name: "Environmental Activities", apply_to_all: true },
         { name: "Psychomotor and Creative Activities", apply_to_all: true },
@@ -25,7 +26,7 @@ export const kenyaSchoolStructure = {
       ]
     },
     {
-      name: "Primary (CBC)",
+      name: "Primary (Middle School)",
       level: 2,
       classes: [
         { name: "Grade 1", sequence: 1, arms: ["A", "B"], is_graduating: false },
@@ -41,13 +42,15 @@ export const kenyaSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Science and Technology", apply_to_all: true },
         { name: "Social Studies", apply_to_all: true },
+        { name: "Agriculture and Nutrition", apply_to_all: true },
+        { name: "Creative Arts", apply_to_all: true },
+        { name: "Physical and Health Education", apply_to_all: true },
         { name: "Religious Education", apply_to_all: false },
-        { name: "Creative Arts", apply_to_all: false },
-        { name: "Physical and Health Education", apply_to_all: false }
+        { name: "Indigenous Languages", apply_to_all: false }
       ]
     },
     {
-      name: "Junior Secondary (CBC)",
+      name: "Junior Secondary",
       level: 3,
       classes: [
         { name: "Grade 7", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
@@ -60,17 +63,21 @@ export const kenyaSchoolStructure = {
         { name: "Mathematics", apply_to_all: true },
         { name: "Integrated Science", apply_to_all: true },
         { name: "Social Studies", apply_to_all: true },
-        { name: "Religious Education", apply_to_all: false },
+        { name: "Religious Education", apply_to_all: true },
         { name: "Business Studies", apply_to_all: false },
         { name: "Agriculture", apply_to_all: false },
         { name: "Computer Science", apply_to_all: false },
         { name: "Physical Education", apply_to_all: false },
         { name: "Visual Arts", apply_to_all: false },
-        { name: "Performing Arts", apply_to_all: false }
+        { name: "Performing Arts", apply_to_all: false },
+        { name: "Life Skills", apply_to_all: false },
+        { name: "Indigenous Languages", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Arabic", apply_to_all: false }
       ]
     },
     {
-      name: "Senior Secondary (CBC)",
+      name: "Senior Secondary (Pre-Professional)",
       level: 4,
       classes: [
         { name: "Grade 10", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
@@ -90,7 +97,10 @@ export const kenyaSchoolStructure = {
         { name: "Business Studies", apply_to_all: false },
         { name: "Computer Science", apply_to_all: false },
         { name: "Agriculture", apply_to_all: false },
-        { name: "Religious Education", apply_to_all: false }
+        { name: "Religious Education", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Art and Design", apply_to_all: false }
       ]
     }
   ]

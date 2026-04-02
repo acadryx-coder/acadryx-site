@@ -1,7 +1,6 @@
 // src/pages/school/tabs/UsersTab.jsx
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
-import AddUserModal from '../components/AddUserModal'
 
 export default function UsersTab({ schoolId, branchId }) {
   const [profiles, setProfiles] = useState([])
@@ -16,11 +15,9 @@ export default function UsersTab({ schoolId, branchId }) {
     loadRoles()
   }, [schoolId])
 
-  // Filter profiles when search or role changes
   useEffect(() => {
     let filtered = [...profiles]
     
-    // Filter by search (first name or surname)
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
       filtered = filtered.filter(p => 
@@ -30,7 +27,6 @@ export default function UsersTab({ schoolId, branchId }) {
       )
     }
     
-    // Filter by role
     if (selectedRole) {
       filtered = filtered.filter(p => p.role_id === selectedRole)
     }
@@ -172,7 +168,6 @@ export default function UsersTab({ schoolId, branchId }) {
           </tbody>
         </table>
       </div>
-
     </div>
   )
 }

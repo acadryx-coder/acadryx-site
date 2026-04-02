@@ -1,8 +1,7 @@
-// App.jsx
+// src/App.jsx
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from './lib/supabase'
-import { countriesMap } from './config/countries'
 
 // Marketing pages
 import Nav from './components/Nav.jsx'
@@ -16,7 +15,7 @@ import Demo from './pages/Demo.jsx'
 import SignupPage from './pages/auth/SignupPage.jsx'
 import LoginPage from './pages/auth/LoginPage.jsx'
 import ForgotPassword from './pages/auth/ForgotPassword.jsx'
-import ResetPassword from './pages/auth/ResetPassword.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx'
 
 // App pages
 import Dashboard from './pages/Dashboard.jsx'
@@ -25,7 +24,7 @@ import SchoolPage from './pages/school/SchoolPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 function useSession() {
-  const [session, setSession] = useState(undefined) // undefined = loading
+  const [session, setSession] = useState(undefined)
   useEffect(() => {
     supabase.auth.getSession().then(response => {
       setSession(response.data.session);
@@ -46,14 +45,18 @@ function ProtectedRoute({ children }) {
 
 function PublicOnlyRoute({ children }) {
   const session = useSession()
-  if (session === undefined) return <div style={{ minHeight: '100vh', color: 'white', background: '#060d1f' }} />
+  if (session === undefined) return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
   return !session ? children : <Navigate to="/dashboard" replace />
 }
 
-function MarketingLayout({ children, selectedCountry, onCountryChange }) {
+function MarketingLayout({ children, selectedCountry, onCountryChange, countriesList }) {
   return (
     <>
-      <Nav selectedCountry={selectedCountry} onCountryChange={onCountryChange} />
+      <Nav 
+        selectedCountry={selectedCountry} 
+        onCountryChange={onCountryChange}
+        countriesList={countriesList}
+      />
       <div className="page">{children}</div>
     </>
   )
@@ -61,43 +64,68 @@ function MarketingLayout({ children, selectedCountry, onCountryChange }) {
 
 export default function App() {
   const [selectedCountry, setSelectedCountry] = useState(null)
-  const [loadingCountry, setLoadingCountry] = useState(true)
+  const [countriesList, setCountriesList] = useState([])
+  const [loadingCountries, setLoadingCountries] = useState(true)
 
-  // Detect country on mount
+  /* RETURNS { array of: { id: uuid, code: string, name: string, flag: string, currency: string, currency_symbol: string, price_per_student: number } } */
+  async function loadCountriesFromDB() {
+    const { data, error } = await supabase
+      .schema('acadryx')
+      .rpc('get_countries_with_core_pricing')
+    
+    if (error) {
+      console.error('Failed to load countries:', error)
+      return []
+    }
+    return data || []
+  }
+
+  /* RETURNS { country_code: string } or null on error */
+  async function detectCountryByIP() {
+    try {
+      const res = await fetch('https://ipapi.co/json/')
+      const data = await res.json()
+      return data.country_code || 'NG'
+    } catch (err) {
+      console.error('IP detection failed:', err)
+      return 'NG'
+    }
+  }
+
   useEffect(() => {
-    const detectCountry = async () => {
-      // Check localStorage first
+    async function initCountry() {
+      // 1. Check localStorage first
       const saved = localStorage.getItem('selectedCountry')
       if (saved) {
         try {
-          setSelectedCountry(JSON.parse(saved))
-          setLoadingCountry(false)
-          return
+          const parsed = JSON.parse(saved)
+          setSelectedCountry(parsed)
         } catch (e) {
           // Invalid JSON, continue with detection
         }
       }
-
-      try {
-        // Detect by IP
-        const res = await fetch('https://ipapi.co/json/')
-        const data = await res.json()
-        const countryCode = data.country_code || 'NG'
-        
-        // Map to your country object
-        const country = countriesMap[countryCode] || countriesMap['NG']
-        setSelectedCountry(country)
-        localStorage.setItem('selectedCountry', JSON.stringify(country))
-      } catch (err) {
-        // Fallback to Nigeria
-        setSelectedCountry(countriesMap['NG'])
-        localStorage.setItem('selectedCountry', JSON.stringify(countriesMap['NG']))
-      } finally {
-        setLoadingCountry(false)
+      
+      // 2. Load countries from DB
+      const countries = await loadCountriesFromDB()
+      setCountriesList(countries)
+      
+      if (countries.length === 0) {
+        setLoadingCountries(false)
+        return
       }
+      
+      // 3. If no saved country, detect by IP
+      if (!selectedCountry) {
+        const detectedCode = await detectCountryByIP()
+        const matched = countries.find(c => c.code === detectedCode) || countries.find(c => c.code === 'NG') || countries[0]
+        setSelectedCountry(matched)
+        localStorage.setItem('selectedCountry', JSON.stringify(matched))
+      }
+      
+      setLoadingCountries(false)
     }
-
-    detectCountry()
+    
+    initCountry()
   }, [])
 
   const handleCountryChange = (country) => {
@@ -105,8 +133,8 @@ export default function App() {
     localStorage.setItem('selectedCountry', JSON.stringify(country))
   }
 
-  // Show nothing while detecting country (prevents flash)
-  if (loadingCountry) {
+  // Show nothing while detecting country
+  if (loadingCountries) {
     return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
   }
 
@@ -115,27 +143,47 @@ export default function App() {
       <Routes>
         {/* Marketing */}
         <Route path="/" element={
-          <MarketingLayout selectedCountry={selectedCountry} onCountryChange={handleCountryChange}>
+          <MarketingLayout 
+            selectedCountry={selectedCountry} 
+            onCountryChange={handleCountryChange}
+            countriesList={countriesList}
+          >
             <Home selectedCountry={selectedCountry} />
           </MarketingLayout>
         } />
         <Route path="/features" element={
-          <MarketingLayout selectedCountry={selectedCountry} onCountryChange={handleCountryChange}>
+          <MarketingLayout 
+            selectedCountry={selectedCountry} 
+            onCountryChange={handleCountryChange}
+            countriesList={countriesList}
+          >
             <Features selectedCountry={selectedCountry} />
           </MarketingLayout>
         } />
         <Route path="/pricing" element={
-          <MarketingLayout selectedCountry={selectedCountry} onCountryChange={handleCountryChange}>
+          <MarketingLayout 
+            selectedCountry={selectedCountry} 
+            onCountryChange={handleCountryChange}
+            countriesList={countriesList}
+          >
             <Pricing selectedCountry={selectedCountry} />
           </MarketingLayout>
         } />
         <Route path="/contact" element={
-          <MarketingLayout selectedCountry={selectedCountry} onCountryChange={handleCountryChange}>
+          <MarketingLayout 
+            selectedCountry={selectedCountry} 
+            onCountryChange={handleCountryChange}
+            countriesList={countriesList}
+          >
             <Contact />
           </MarketingLayout>
         } />
         <Route path="/demo" element={
-          <MarketingLayout selectedCountry={selectedCountry} onCountryChange={handleCountryChange}>
+          <MarketingLayout 
+            selectedCountry={selectedCountry} 
+            onCountryChange={handleCountryChange}
+            countriesList={countriesList}
+          >
             <Demo />
           </MarketingLayout>
         } />

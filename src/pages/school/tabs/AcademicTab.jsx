@@ -39,7 +39,6 @@ export default function AcademicTab({ schoolId, branchId }) {
     <div className="academic-tab">
       <div className="academic-header">
         <h2>Sections & Classes</h2>
-        <button className="btn-outline-sm">Edit Structure</button>
       </div>
       
       {sections.map(section => (
@@ -67,7 +66,7 @@ export default function AcademicTab({ schoolId, branchId }) {
       ))}
 
       <div className="academic-note">
-        💡 You can add, remove, and customize sections, classes, and arms from School Settings.
+        💡 Manage sections, classes, arms, and subjects from the branch admin portal.
       </div>
     </div>
   )

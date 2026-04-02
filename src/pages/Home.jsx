@@ -23,7 +23,7 @@ const QUOTES = [
 ];
 
 export default function Home({ selectedCountry }) {
-  const currencySymbol = selectedCountry?.currency || "₦"
+  const currencySymbol = selectedCountry?.currency_symbol || "₦"
   const pricePerStudent = selectedCountry?.price_per_student || 1000
   const countryCode = selectedCountry?.code || "NG"
   

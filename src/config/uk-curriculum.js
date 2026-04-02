@@ -18,13 +18,13 @@ export const ukSchoolStructure = {
         { name: "Reception", sequence: 2, arms: ["A"], is_graduating: true }
       ],
       subjects: [
-        { name: "Communication and Language", is_mandatory: true, components: [{ name: "Communication and Language", weight: 100 }] },
-        { name: "Physical Development", is_mandatory: true, components: [{ name: "Physical Development", weight: 100 }] },
-        { name: "Personal, Social and Emotional Development", is_mandatory: true, components: [{ name: "PSED", weight: 100 }] },
-        { name: "Literacy", is_mandatory: true, components: [{ name: "Literacy", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Understanding the World", is_mandatory: true, components: [{ name: "Understanding the World", weight: 100 }] },
-        { name: "Expressive Arts and Design", is_mandatory: true, components: [{ name: "Expressive Arts and Design", weight: 100 }] }
+        { name: "Communication and Language", apply_to_all: true },
+        { name: "Physical Development", apply_to_all: true },
+        { name: "Personal, Social and Emotional Development", apply_to_all: true },
+        { name: "Literacy", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Understanding the World", apply_to_all: true },
+        { name: "Expressive Arts and Design", apply_to_all: true }
       ]
     },
     {
@@ -35,16 +35,16 @@ export const ukSchoolStructure = {
         { name: "Year 2", sequence: 2, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Science", weight: 100 }] },
-        { name: "Art and Design", is_mandatory: false, components: [{ name: "Art and Design", weight: 100 }] },
-        { name: "Computing", is_mandatory: false, components: [{ name: "Computing", weight: 100 }] },
-        { name: "Design and Technology", is_mandatory: false, components: [{ name: "Design and Technology", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Art and Design", apply_to_all: false },
+        { name: "Computing", apply_to_all: false },
+        { name: "Design and Technology", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Music", apply_to_all: false }
       ]
     },
     {
@@ -57,17 +57,17 @@ export const ukSchoolStructure = {
         { name: "Year 6", sequence: 4, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Science", weight: 100 }] },
-        { name: "Art and Design", is_mandatory: false, components: [{ name: "Art and Design", weight: 100 }] },
-        { name: "Computing", is_mandatory: false, components: [{ name: "Computing", weight: 100 }] },
-        { name: "Design and Technology", is_mandatory: false, components: [{ name: "Design and Technology", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Languages", is_mandatory: false, components: [{ name: "Languages", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Art and Design", apply_to_all: false },
+        { name: "Computing", apply_to_all: false },
+        { name: "Design and Technology", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Languages", apply_to_all: false },
+        { name: "Music", apply_to_all: false }
       ]
     },
     {
@@ -79,18 +79,18 @@ export const ukSchoolStructure = {
         { name: "Year 9", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Biology", weight: 34 }, { name: "Chemistry", weight: 33 }, { name: "Physics", weight: 33 }] },
-        { name: "Art and Design", is_mandatory: false, components: [{ name: "Art and Design", weight: 100 }] },
-        { name: "Computing", is_mandatory: false, components: [{ name: "Computing", weight: 100 }] },
-        { name: "Design and Technology", is_mandatory: false, components: [{ name: "Design and Technology", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Languages", is_mandatory: false, components: [{ name: "Languages", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
-        { name: "Citizenship", is_mandatory: false, components: [{ name: "Citizenship", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Art and Design", apply_to_all: false },
+        { name: "Computing", apply_to_all: false },
+        { name: "Design and Technology", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Languages", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Citizenship", apply_to_all: false }
       ]
     },
     {
@@ -101,22 +101,22 @@ export const ukSchoolStructure = {
         { name: "Year 11", sequence: 2, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "English Literature", is_mandatory: true, components: [{ name: "English Literature", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science (Combined)", is_mandatory: true, components: [{ name: "Biology", weight: 34 }, { name: "Chemistry", weight: 33 }, { name: "Physics", weight: 33 }] },
-        { name: "Physics (Triple)", is_mandatory: false, components: [{ name: "Physics", weight: 100 }] },
-        { name: "Chemistry (Triple)", is_mandatory: false, components: [{ name: "Chemistry", weight: 100 }] },
-        { name: "Biology (Triple)", is_mandatory: false, components: [{ name: "Biology", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
-        { name: "Spanish", is_mandatory: false, components: [{ name: "Spanish", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
-        { name: "Business Studies", is_mandatory: false, components: [{ name: "Business Studies", weight: 100 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
-        { name: "Art and Design", is_mandatory: false, components: [{ name: "Art and Design", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] }
+        { name: "English Language", apply_to_all: true },
+        { name: "English Literature", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science (Combined)", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Physics (Triple)", apply_to_all: false },
+        { name: "Chemistry (Triple)", apply_to_all: false },
+        { name: "Biology (Triple)", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Spanish", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false },
+        { name: "Business Studies", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Art and Design", apply_to_all: false }
       ]
     }
   ]

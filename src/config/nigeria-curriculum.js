@@ -19,12 +19,12 @@ export const nigeriaSchoolStructure = {
         { name: "Kindergarten", sequence: 4, arms: ["A"], is_graduating: true }
       ],
       subjects: [
-        { name: "Literacy", is_mandatory: true, components: [{ name: "Literacy", weight: 100 }] },
-        { name: "Numeracy", is_mandatory: true, components: [{ name: "Numeracy", weight: 100 }] },
-        { name: "Creative Arts", is_mandatory: true, components: [{ name: "Creative Arts", weight: 100 }] },
-        { name: "Social Habits", is_mandatory: true, components: [{ name: "Social Habits", weight: 100 }] },
-        { name: "Health Habits", is_mandatory: true, components: [{ name: "Health Habits", weight: 100 }] },
-        { name: "Christian Religious Studies", is_mandatory: false, components: [{ name: "Christian Religious Studies", weight: 100 }] }
+        { name: "Literacy", apply_to_all: true },
+        { name: "Numeracy", apply_to_all: true },
+        { name: "Creative Arts", apply_to_all: true },
+        { name: "Social Habits", apply_to_all: true },
+        { name: "Health Habits", apply_to_all: true },
+        { name: "Christian Religious Studies", apply_to_all: false }
       ]
     },
     {
@@ -39,17 +39,17 @@ export const nigeriaSchoolStructure = {
         { name: "Primary 6", sequence: 6, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "English Studies", is_mandatory: true, components: [{ name: "English Studies", weight: 100 }] },
-        { name: "Basic Science", is_mandatory: true, components: [{ name: "Basic Science", weight: 100 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Quantitative Reasoning", is_mandatory: false, components: [{ name: "Quantitative Reasoning", weight: 100 }] },
-        { name: "Verbal Reasoning", is_mandatory: false, components: [{ name: "Verbal Reasoning", weight: 100 }] },
-        { name: "Computer Studies", is_mandatory: false, components: [{ name: "Computer Studies", weight: 100 }] },
-        { name: "Physical and Health Education", is_mandatory: false, components: [{ name: "Physical and Health Education", weight: 100 }] },
-        { name: "Agricultural Science", is_mandatory: false, components: [{ name: "Agricultural Science", weight: 100 }] },
-        { name: "Christian Religious Studies", is_mandatory: false, components: [{ name: "Christian Religious Studies", weight: 100 }] },
-        { name: "Home Economics", is_mandatory: false, components: [{ name: "Home Economics", weight: 100 }] }
+        { name: "Mathematics", apply_to_all: true },
+        { name: "English Studies", apply_to_all: true },
+        { name: "Basic Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Quantitative Reasoning", apply_to_all: false },
+        { name: "Verbal Reasoning", apply_to_all: false },
+        { name: "Computer Studies", apply_to_all: false },
+        { name: "Physical and Health Education", apply_to_all: false },
+        { name: "Agricultural Science", apply_to_all: false },
+        { name: "Christian Religious Studies", apply_to_all: false },
+        { name: "Home Economics", apply_to_all: false }
       ]
     },
     {
@@ -61,18 +61,18 @@ export const nigeriaSchoolStructure = {
         { name: "JSS 3", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "Basic Science", is_mandatory: true, components: [{ name: "Biology", weight: 40 }, { name: "Chemistry", weight: 30 }, { name: "Physics", weight: 30 }] },
-        { name: "Basic Technology", is_mandatory: true, components: [{ name: "Basic Technology", weight: 100 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Business Studies", is_mandatory: true, components: [{ name: "Business Studies", weight: 100 }] },
-        { name: "Computer Studies", is_mandatory: false, components: [{ name: "Computer Studies", weight: 100 }] },
-        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
-        { name: "Physical and Health Education", is_mandatory: false, components: [{ name: "Physical and Health Education", weight: 100 }] },
-        { name: "Agricultural Science", is_mandatory: false, components: [{ name: "Agricultural Science", weight: 100 }] },
-        { name: "Christian Religious Studies", is_mandatory: false, components: [{ name: "Christian Religious Studies", weight: 100 }] },
-        { name: "Home Economics", is_mandatory: false, components: [{ name: "Home Economics", weight: 100 }] }
+        { name: "Mathematics", apply_to_all: true },
+        { name: "English Language", apply_to_all: true },
+        { name: "Basic Science", apply_to_all: true },
+        { name: "Basic Technology", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Business Studies", apply_to_all: true },
+        { name: "Computer Studies", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Physical and Health Education", apply_to_all: false },
+        { name: "Agricultural Science", apply_to_all: false },
+        { name: "Christian Religious Studies", apply_to_all: false },
+        { name: "Home Economics", apply_to_all: false }
       ]
     },
     {
@@ -84,20 +84,20 @@ export const nigeriaSchoolStructure = {
         { name: "SSS 3", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "Physics", is_mandatory: false, components: [{ name: "Mechanics", weight: 40 }, { name: "Waves & Optics", weight: 20 }, { name: "Electricity & Magnetism", weight: 20 }, { name: "Modern Physics", weight: 20 }] },
-        { name: "Chemistry", is_mandatory: false, components: [{ name: "Physical Chemistry", weight: 40 }, { name: "Organic Chemistry", weight: 35 }, { name: "Inorganic Chemistry", weight: 25 }] },
-        { name: "Biology", is_mandatory: false, components: [{ name: "Botany", weight: 40 }, { name: "Zoology", weight: 40 }, { name: "Ecology", weight: 20 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Microeconomics", weight: 50 }, { name: "Macroeconomics", weight: 50 }] },
-        { name: "Government", is_mandatory: false, components: [{ name: "Government", weight: 100 }] },
-        { name: "Literature in English", is_mandatory: false, components: [{ name: "Prose", weight: 40 }, { name: "Poetry", weight: 30 }, { name: "Drama", weight: 30 }] },
-        { name: "Data Processing", is_mandatory: false, components: [{ name: "Data Processing", weight: 100 }] },
-        { name: "Physical and Health Education", is_mandatory: false, components: [{ name: "Physical and Health Education", weight: 100 }] },
-        { name: "Agricultural Science", is_mandatory: false, components: [{ name: "Agricultural Science", weight: 100 }] },
-        { name: "Christian Religious Studies", is_mandatory: false, components: [{ name: "Christian Religious Studies", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Physical Geography", weight: 40 }, { name: "Human Geography", weight: 35 }, { name: "Map Reading", weight: 25 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] }
+        { name: "Mathematics", apply_to_all: true },
+        { name: "English Language", apply_to_all: true },
+        { name: "Physics", apply_to_all: false },
+        { name: "Chemistry", apply_to_all: false },
+        { name: "Biology", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Government", apply_to_all: false },
+        { name: "Literature in English", apply_to_all: false },
+        { name: "Data Processing", apply_to_all: false },
+        { name: "Physical and Health Education", apply_to_all: false },
+        { name: "Agricultural Science", apply_to_all: false },
+        { name: "Christian Religious Studies", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "History", apply_to_all: false }
       ]
     }
   ]

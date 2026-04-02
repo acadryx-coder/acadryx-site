@@ -44,15 +44,6 @@ export default function StepCurriculum({ data, updateData, back, next }) {
     updateSection(sectionIndex, { subjects: newSubjects })
   }
 
-  const toggleComponent = (sectionIndex, subjectIndex, compIndex) => {
-    const section = sections[sectionIndex]
-    const newSubjects = [...section.subjects]
-    const components = [...newSubjects[subjectIndex].components]
-    components[compIndex] = { ...components[compIndex], selected: !components[compIndex].selected }
-    newSubjects[subjectIndex] = { ...newSubjects[subjectIndex], components }
-    updateSection(sectionIndex, { subjects: newSubjects })
-  }
-
   const addClass = (sectionIndex) => {
     const section = sections[sectionIndex]
     const nextSequence = section.classes.length + 1
@@ -68,19 +59,6 @@ export default function StepCurriculum({ data, updateData, back, next }) {
     setNewClassName('')
   }
 
-  /*const addArm = (sectionIndex, classIndex) => {
-    const section = sections[sectionIndex]
-    const newClasses = [...section.classes]
-    const arms = [...newClasses[classIndex].arms]
-    const nextLetter = String.fromCharCode(65 + arms.length) // A, B, C...
-    const newArm = { name: nextLetter, selected: true }
-    arms.push(newArm)
-    newClasses[classIndex] = { ...newClasses[classIndex], arms }
-    updateSection(sectionIndex, { classes: newClasses })
-    setAddingArmTo(null)
-    setNewArmName('')
-  }*/
-
   const addArm = (sectionIndex, classIndex) => {
     if (!newArmName.trim()) return
     const section = sections[sectionIndex]
@@ -88,7 +66,6 @@ export default function StepCurriculum({ data, updateData, back, next }) {
     const arms = [...newClasses[classIndex].arms]
     const newArm = { name: newArmName.trim(), selected: true }
     
-    // Check for duplicate arm name
     if (arms.some(arm => arm.name === newArmName.trim())) {
       alert('Arm name already exists for this class')
       return
@@ -112,6 +89,10 @@ export default function StepCurriculum({ data, updateData, back, next }) {
         <span className="step-number">Step 2 of 5</span>
         <h2>Choose your school structure</h2>
         <p>Select which sections your school offers. You can customize classes and arms below.</p>
+        <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '8px' }}>
+          💡 Subjects marked "Apply to All" will be automatically assigned to all students in that section.
+          Optional subjects can be assigned individually later.
+        </p>
       </div>
 
       <div className="curriculum-sections">
@@ -138,6 +119,7 @@ export default function StepCurriculum({ data, updateData, back, next }) {
 
             {section.selected && editingSection === sIdx && (
               <div className="section-detail">
+                {/* Classes Section */}
                 <div className="classes-list">
                   <h4>Classes</h4>
                   {section.classes.map((cls, cIdx) => (
@@ -201,8 +183,13 @@ export default function StepCurriculum({ data, updateData, back, next }) {
                   )}
                 </div>
 
+                {/* Subjects Section - SIMPLIFIED: No components, just apply_to_all toggle */}
                 <div className="subjects-list">
                   <h4>Subjects</h4>
+                  <p style={{ fontSize: '0.7rem', color: '#64748b', marginBottom: '12px' }}>
+                    ✅ Checked subjects = automatically assigned to all students in this section.<br/>
+                    ☐ Unchecked subjects = optional (can be assigned per student later).
+                  </p>
                   {section.subjects.map((subj, subIdx) => (
                     <div key={subIdx} className="subject-item">
                       <label className="subject-checkbox">
@@ -213,26 +200,9 @@ export default function StepCurriculum({ data, updateData, back, next }) {
                         />
                         <span className="subject-name">{subj.name}</span>
                       </label>
-                      {subj.components.length > 1 && (
-                      <>
-                        <div className="components-note" style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '0.25rem' }}>
-                          ℹ️ Subject components (e.g., Biology 40%, Chemistry 30%, Physics 30%) can be edited or deleted later in School Settings.
-                        </div>
-                        <div className="components-list">
-                          {subj.components.map((comp, compIdx) => (
-                            <label key={compIdx} className="component-checkbox">
-                              <input
-                                type="checkbox"
-                                checked={comp.selected}
-                                onChange={() => toggleComponent(sIdx, subIdx, compIdx)}
-                                style={{display: "none"}}
-                              />
-                              <span>{comp.name} ({comp.weight}%)</span>
-                            </label>
-                          ))}
-                        </div>
-                      </>
-                      )}
+                      <span style={{ marginLeft: '12px', fontSize: '0.7rem', color: subj.apply_to_all ? '#16a34a' : '#64748b' }}>
+                        {subj.apply_to_all ? '✓ Applies to all students' : '⚡ Optional'}
+                      </span>
                     </div>
                   ))}
                 </div>

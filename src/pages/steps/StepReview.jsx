@@ -1,4 +1,3 @@
-
 // steps/StepReview.jsx
 import { getSchoolStructure } from '../../config/schoolConfig'
 

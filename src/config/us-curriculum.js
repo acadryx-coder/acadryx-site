@@ -20,14 +20,14 @@ export const usSchoolStructure = {
         { name: "Grade 5", sequence: 6, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language Arts", is_mandatory: true, components: [{ name: "English Language Arts", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Science", weight: 100 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
-        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] }
+        { name: "English Language Arts", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Art", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false }
       ]
     },
     {
@@ -39,16 +39,16 @@ export const usSchoolStructure = {
         { name: "Grade 8", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language Arts", is_mandatory: true, components: [{ name: "English Language Arts", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Life Science", weight: 34 }, { name: "Physical Science", weight: 33 }, { name: "Earth Science", weight: 33 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "History", weight: 50 }, { name: "Geography", weight: 50 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
-        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
-        { name: "Spanish", is_mandatory: false, components: [{ name: "Spanish", weight: 100 }] },
-        { name: "Health", is_mandatory: false, components: [{ name: "Health", weight: 100 }] }
+        { name: "English Language Arts", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Art", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false },
+        { name: "Spanish", apply_to_all: false },
+        { name: "Health", apply_to_all: false }
       ]
     },
     {
@@ -61,31 +61,31 @@ export const usSchoolStructure = {
         { name: "Grade 12 (Senior)", sequence: 4, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Algebra I", is_mandatory: false, components: [{ name: "Algebra I", weight: 100 }] },
-        { name: "Geometry", is_mandatory: false, components: [{ name: "Geometry", weight: 100 }] },
-        { name: "Algebra II", is_mandatory: false, components: [{ name: "Algebra II", weight: 100 }] },
-        { name: "Pre-Calculus", is_mandatory: false, components: [{ name: "Pre-Calculus", weight: 100 }] },
-        { name: "Calculus", is_mandatory: false, components: [{ name: "Calculus", weight: 100 }] },
-        { name: "Statistics", is_mandatory: false, components: [{ name: "Statistics", weight: 100 }] },
-        { name: "Biology", is_mandatory: false, components: [{ name: "Biology", weight: 100 }] },
-        { name: "Chemistry", is_mandatory: false, components: [{ name: "Chemistry", weight: 100 }] },
-        { name: "Physics", is_mandatory: false, components: [{ name: "Physics", weight: 100 }] },
-        { name: "Environmental Science", is_mandatory: false, components: [{ name: "Environmental Science", weight: 100 }] },
-        { name: "World History", is_mandatory: false, components: [{ name: "World History", weight: 100 }] },
-        { name: "US History", is_mandatory: false, components: [{ name: "US History", weight: 100 }] },
-        { name: "Government", is_mandatory: false, components: [{ name: "Government", weight: 100 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
-        { name: "Psychology", is_mandatory: false, components: [{ name: "Psychology", weight: 100 }] },
-        { name: "Spanish", is_mandatory: false, components: [{ name: "Spanish", weight: 100 }] },
-        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
-        { name: "Business", is_mandatory: false, components: [{ name: "Business", weight: 100 }] },
-        { name: "Art", is_mandatory: false, components: [{ name: "Art", weight: 100 }] },
-        { name: "Music", is_mandatory: false, components: [{ name: "Music", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: true, components: [{ name: "Physical Education", weight: 100 }] },
-        { name: "Health", is_mandatory: false, components: [{ name: "Health", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Physical Education", apply_to_all: true },
+        { name: "Algebra I", apply_to_all: false },
+        { name: "Geometry", apply_to_all: false },
+        { name: "Algebra II", apply_to_all: false },
+        { name: "Pre-Calculus", apply_to_all: false },
+        { name: "Calculus", apply_to_all: false },
+        { name: "Statistics", apply_to_all: false },
+        { name: "Biology", apply_to_all: false },
+        { name: "Chemistry", apply_to_all: false },
+        { name: "Physics", apply_to_all: false },
+        { name: "Environmental Science", apply_to_all: false },
+        { name: "World History", apply_to_all: false },
+        { name: "US History", apply_to_all: false },
+        { name: "Government", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Psychology", apply_to_all: false },
+        { name: "Spanish", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false },
+        { name: "Business", apply_to_all: false },
+        { name: "Art", apply_to_all: false },
+        { name: "Music", apply_to_all: false },
+        { name: "Health", apply_to_all: false }
       ]
     }
   ]

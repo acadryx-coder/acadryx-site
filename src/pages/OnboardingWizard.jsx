@@ -106,7 +106,7 @@ export default function OnboardingWizard() {
       if (country) {
         const structure = getSchoolStructure(country.code)
         if (structure && structure.sections) {
-          // Build selectedSections with all sections enabled
+          // Build selectedSections with the NEW structure (apply_to_all instead of is_mandatory, no components)
           const sections = structure.sections.map(section => ({
             name: section.name,
             level: section.level,
@@ -119,17 +119,12 @@ export default function OnboardingWizard() {
             })),
             subjects: section.subjects.map(subj => ({
               name: subj.name,
-              is_mandatory: subj.is_mandatory,
-              selected: true,
-              components: subj.components.map(comp => ({
-                name: comp.name,
-                weight: comp.weight,
-                selected: true
-              }))
+              apply_to_all: subj.apply_to_all,  // ← NEW: use apply_to_all
+              selected: true                     // ← subject is included in section
             }))
           }))
           
-          // Get grading defaults
+          // Get grading defaults (unchanged)
           const gradingDefaults = structure.grading_defaults || []
           
           setFormData(prev => ({ 
@@ -164,7 +159,7 @@ export default function OnboardingWizard() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')
 
-      // Build the selected sections payload for RPC
+      // Build the selected sections payload for RPC (NEW STRUCTURE)
       const selectedSectionsPayload = formData.selectedSections
         .filter(s => s.selected)
         .map(section => ({
@@ -175,17 +170,14 @@ export default function OnboardingWizard() {
             .map(cls => ({
               name: cls.name,
               sequence: cls.sequence,
-              arms: cls.arms.filter(a => a.selected).map(a => a.name)
+              arms: cls.arms.filter(a => a.selected).map(a => a.name),
+              is_graduating_class: cls.is_graduating_class || false
             })),
           subjects: section.subjects
             .filter(s => s.selected)
             .map(subj => ({
               subject_name: subj.name,
-              is_mandatory: subj.is_mandatory,
-              components: subj.components.filter(c => c.selected).map(comp => ({
-                component_name: comp.name,
-                weight: comp.weight
-              }))
+              apply_to_all: subj.apply_to_all  // ← NEW: send apply_to_all, not is_mandatory
             }))
         }))
 
@@ -231,7 +223,7 @@ export default function OnboardingWizard() {
         <div className="success-card">
           <div className="success-icon">🎉</div>
           <h2>School Created Successfully!</h2>
-          <p>{"Your school is ready. Here's your admin login code:"}</p>
+          <p>Your school is ready. Here's your admin login code:</p>
           <p>acadryx.vercel.app/?school={success.school_slug}</p>
           <div className="login-code">{success.admin_login_code}</div>
           <button onClick={() => navigate('/dashboard')} className="btn-primary">

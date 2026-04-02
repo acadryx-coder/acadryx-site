@@ -17,11 +17,11 @@ export const kenyaSchoolStructure = {
         { name: "Pre-Primary 2", sequence: 2, arms: ["A"], is_graduating: true }
       ],
       subjects: [
-        { name: "Language Activities", is_mandatory: true, components: [{ name: "Language Activities", weight: 100 }] },
-        { name: "Mathematical Activities", is_mandatory: true, components: [{ name: "Mathematical Activities", weight: 100 }] },
-        { name: "Environmental Activities", is_mandatory: true, components: [{ name: "Environmental Activities", weight: 100 }] },
-        { name: "Psychomotor and Creative Activities", is_mandatory: true, components: [{ name: "Psychomotor and Creative Activities", weight: 100 }] },
-        { name: "Religious Education", is_mandatory: false, components: [{ name: "Religious Education", weight: 100 }] }
+        { name: "Language Activities", apply_to_all: true },
+        { name: "Mathematical Activities", apply_to_all: true },
+        { name: "Environmental Activities", apply_to_all: true },
+        { name: "Psychomotor and Creative Activities", apply_to_all: true },
+        { name: "Religious Education", apply_to_all: false }
       ]
     },
     {
@@ -36,14 +36,14 @@ export const kenyaSchoolStructure = {
         { name: "Grade 6", sequence: 6, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Kiswahili", is_mandatory: true, components: [{ name: "Kiswahili", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science and Technology", is_mandatory: true, components: [{ name: "Science and Technology", weight: 100 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Religious Education", is_mandatory: false, components: [{ name: "Religious Education", weight: 100 }] },
-        { name: "Creative Arts", is_mandatory: false, components: [{ name: "Creative Arts", weight: 100 }] },
-        { name: "Physical and Health Education", is_mandatory: false, components: [{ name: "Physical and Health Education", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Kiswahili", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science and Technology", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Religious Education", apply_to_all: false },
+        { name: "Creative Arts", apply_to_all: false },
+        { name: "Physical and Health Education", apply_to_all: false }
       ]
     },
     {
@@ -55,18 +55,18 @@ export const kenyaSchoolStructure = {
         { name: "Grade 9", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Kiswahili", is_mandatory: true, components: [{ name: "Kiswahili", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Integrated Science", is_mandatory: true, components: [{ name: "Biology", weight: 40 }, { name: "Chemistry", weight: 30 }, { name: "Physics", weight: 30 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Religious Education", is_mandatory: false, components: [{ name: "Religious Education", weight: 100 }] },
-        { name: "Business Studies", is_mandatory: false, components: [{ name: "Business Studies", weight: 100 }] },
-        { name: "Agriculture", is_mandatory: false, components: [{ name: "Agriculture", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
-        { name: "Physical Education", is_mandatory: false, components: [{ name: "Physical Education", weight: 100 }] },
-        { name: "Visual Arts", is_mandatory: false, components: [{ name: "Visual Arts", weight: 100 }] },
-        { name: "Performing Arts", is_mandatory: false, components: [{ name: "Performing Arts", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Kiswahili", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Integrated Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Religious Education", apply_to_all: false },
+        { name: "Business Studies", apply_to_all: false },
+        { name: "Agriculture", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false },
+        { name: "Physical Education", apply_to_all: false },
+        { name: "Visual Arts", apply_to_all: false },
+        { name: "Performing Arts", apply_to_all: false }
       ]
     },
     {
@@ -78,19 +78,19 @@ export const kenyaSchoolStructure = {
         { name: "Grade 12", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English", is_mandatory: true, components: [{ name: "English", weight: 100 }] },
-        { name: "Kiswahili", is_mandatory: true, components: [{ name: "Kiswahili", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Physics", is_mandatory: false, components: [{ name: "Physics", weight: 100 }] },
-        { name: "Chemistry", is_mandatory: false, components: [{ name: "Chemistry", weight: 100 }] },
-        { name: "Biology", is_mandatory: false, components: [{ name: "Biology", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
-        { name: "Business Studies", is_mandatory: false, components: [{ name: "Business Studies", weight: 100 }] },
-        { name: "Computer Science", is_mandatory: false, components: [{ name: "Computer Science", weight: 100 }] },
-        { name: "Agriculture", is_mandatory: false, components: [{ name: "Agriculture", weight: 100 }] },
-        { name: "Religious Education", is_mandatory: false, components: [{ name: "Religious Education", weight: 100 }] }
+        { name: "English", apply_to_all: true },
+        { name: "Kiswahili", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Physics", apply_to_all: false },
+        { name: "Chemistry", apply_to_all: false },
+        { name: "Biology", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Business Studies", apply_to_all: false },
+        { name: "Computer Science", apply_to_all: false },
+        { name: "Agriculture", apply_to_all: false },
+        { name: "Religious Education", apply_to_all: false }
       ]
     }
   ]

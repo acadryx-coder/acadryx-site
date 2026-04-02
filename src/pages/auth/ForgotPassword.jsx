@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     setLoading(true)
     setError(null)
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `https://acadryx-site.vercel.app/reset-password`,
+      redirectTo: `${window.location.origin}/reset-password`
     })
     setLoading(false)
     if (error) { setError(error.message); return }

@@ -18,11 +18,11 @@ export const ghanaSchoolStructure = {
         { name: "Kindergarten 2", sequence: 3, arms: ["A"], is_graduating: true }
       ],
       subjects: [
-        { name: "Language and Literacy", is_mandatory: true, components: [{ name: "Language and Literacy", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Creative Arts", is_mandatory: true, components: [{ name: "Creative Arts", weight: 100 }] },
-        { name: "Our World", is_mandatory: true, components: [{ name: "Our World", weight: 100 }] },
-        { name: "Physical Development", is_mandatory: true, components: [{ name: "Physical Development", weight: 100 }] }
+        { name: "Language and Literacy", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Creative Arts", apply_to_all: true },
+        { name: "Our World", apply_to_all: true },
+        { name: "Physical Development", apply_to_all: true }
       ]
     },
     {
@@ -37,13 +37,13 @@ export const ghanaSchoolStructure = {
         { name: "Primary 6", sequence: 6, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Science", is_mandatory: true, components: [{ name: "Science", weight: 100 }] },
-        { name: "Our World (Social Studies)", is_mandatory: true, components: [{ name: "Our World", weight: 100 }] },
-        { name: "Computing", is_mandatory: false, components: [{ name: "Computing", weight: 100 }] },
-        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
-        { name: "Religious and Moral Education", is_mandatory: false, components: [{ name: "Religious and Moral Education", weight: 100 }] }
+        { name: "English Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Science", apply_to_all: true },
+        { name: "Our World (Social Studies)", apply_to_all: true },
+        { name: "Computing", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Religious and Moral Education", apply_to_all: false }
       ]
     },
     {
@@ -55,14 +55,14 @@ export const ghanaSchoolStructure = {
         { name: "JHS 3", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Integrated Science", is_mandatory: true, components: [{ name: "Biology", weight: 40 }, { name: "Chemistry", weight: 30 }, { name: "Physics", weight: 30 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "ICT", is_mandatory: false, components: [{ name: "ICT", weight: 100 }] },
-        { name: "French", is_mandatory: false, components: [{ name: "French", weight: 100 }] },
-        { name: "Religious and Moral Education", is_mandatory: false, components: [{ name: "Religious and Moral Education", weight: 100 }] },
-        { name: "Basic Design and Technology", is_mandatory: false, components: [{ name: "Basic Design and Technology", weight: 100 }] }
+        { name: "English Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Integrated Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "ICT", apply_to_all: false },
+        { name: "French", apply_to_all: false },
+        { name: "Religious and Moral Education", apply_to_all: false },
+        { name: "Basic Design and Technology", apply_to_all: false }
       ]
     },
     {
@@ -74,22 +74,22 @@ export const ghanaSchoolStructure = {
         { name: "SHS 3", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "English Language", is_mandatory: true, components: [{ name: "English Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Integrated Science", is_mandatory: true, components: [{ name: "Biology", weight: 40 }, { name: "Chemistry", weight: 30 }, { name: "Physics", weight: 30 }] },
-        { name: "Social Studies", is_mandatory: true, components: [{ name: "Social Studies", weight: 100 }] },
-        { name: "Elective Mathematics", is_mandatory: false, components: [{ name: "Elective Mathematics", weight: 100 }] },
-        { name: "Physics", is_mandatory: false, components: [{ name: "Physics", weight: 100 }] },
-        { name: "Chemistry", is_mandatory: false, components: [{ name: "Chemistry", weight: 100 }] },
-        { name: "Biology", is_mandatory: false, components: [{ name: "Biology", weight: 100 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
-        { name: "Business Management", is_mandatory: false, components: [{ name: "Business Management", weight: 100 }] },
-        { name: "Accounting", is_mandatory: false, components: [{ name: "Accounting", weight: 100 }] },
-        { name: "ICT", is_mandatory: false, components: [{ name: "ICT", weight: 100 }] },
-        { name: "Government", is_mandatory: false, components: [{ name: "Government", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "Literature in English", is_mandatory: false, components: [{ name: "Literature in English", weight: 100 }] }
+        { name: "English Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Integrated Science", apply_to_all: true },
+        { name: "Social Studies", apply_to_all: true },
+        { name: "Elective Mathematics", apply_to_all: false },
+        { name: "Physics", apply_to_all: false },
+        { name: "Chemistry", apply_to_all: false },
+        { name: "Biology", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Business Management", apply_to_all: false },
+        { name: "Accounting", apply_to_all: false },
+        { name: "ICT", apply_to_all: false },
+        { name: "Government", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "Literature in English", apply_to_all: false }
       ]
     }
   ]

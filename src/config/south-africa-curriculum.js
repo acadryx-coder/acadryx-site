@@ -19,10 +19,10 @@ export const southAfricaSchoolStructure = {
         { name: "Grade 3", sequence: 4, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "Home Language", is_mandatory: true, components: [{ name: "Home Language", weight: 100 }] },
-        { name: "First Additional Language", is_mandatory: true, components: [{ name: "First Additional Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Life Skills", is_mandatory: true, components: [{ name: "Life Skills", weight: 100 }] }
+        { name: "Home Language", apply_to_all: true },
+        { name: "First Additional Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Life Skills", apply_to_all: true }
       ]
     },
     {
@@ -34,12 +34,12 @@ export const southAfricaSchoolStructure = {
         { name: "Grade 6", sequence: 3, arms: ["A", "B"], is_graduating: true }
       ],
       subjects: [
-        { name: "Home Language", is_mandatory: true, components: [{ name: "Home Language", weight: 100 }] },
-        { name: "First Additional Language", is_mandatory: true, components: [{ name: "First Additional Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Natural Sciences and Technology", is_mandatory: true, components: [{ name: "Natural Sciences", weight: 70 }, { name: "Technology", weight: 30 }] },
-        { name: "Social Sciences", is_mandatory: true, components: [{ name: "History", weight: 50 }, { name: "Geography", weight: 50 }] },
-        { name: "Life Skills", is_mandatory: true, components: [{ name: "Life Skills", weight: 100 }] }
+        { name: "Home Language", apply_to_all: true },
+        { name: "First Additional Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Natural Sciences and Technology", apply_to_all: true },
+        { name: "Social Sciences", apply_to_all: true },
+        { name: "Life Skills", apply_to_all: true }
       ]
     },
     {
@@ -51,15 +51,15 @@ export const southAfricaSchoolStructure = {
         { name: "Grade 9", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "Home Language", is_mandatory: true, components: [{ name: "Home Language", weight: 100 }] },
-        { name: "First Additional Language", is_mandatory: true, components: [{ name: "First Additional Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: true, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Natural Sciences", is_mandatory: true, components: [{ name: "Biology", weight: 50 }, { name: "Chemistry", weight: 50 }] },
-        { name: "Social Sciences", is_mandatory: true, components: [{ name: "History", weight: 50 }, { name: "Geography", weight: 50 }] },
-        { name: "Technology", is_mandatory: true, components: [{ name: "Technology", weight: 100 }] },
-        { name: "Economic and Management Sciences", is_mandatory: true, components: [{ name: "Economics", weight: 50 }, { name: "Business Studies", weight: 50 }] },
-        { name: "Life Orientation", is_mandatory: true, components: [{ name: "Life Orientation", weight: 100 }] },
-        { name: "Creative Arts", is_mandatory: false, components: [{ name: "Creative Arts", weight: 100 }] }
+        { name: "Home Language", apply_to_all: true },
+        { name: "First Additional Language", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: true },
+        { name: "Natural Sciences", apply_to_all: true },
+        { name: "Social Sciences", apply_to_all: true },
+        { name: "Technology", apply_to_all: true },
+        { name: "Economic and Management Sciences", apply_to_all: true },
+        { name: "Life Orientation", apply_to_all: true },
+        { name: "Creative Arts", apply_to_all: false }
       ]
     },
     {
@@ -71,20 +71,20 @@ export const southAfricaSchoolStructure = {
         { name: "Grade 12", sequence: 3, arms: ["A", "B", "C"], is_graduating: true }
       ],
       subjects: [
-        { name: "Home Language", is_mandatory: true, components: [{ name: "Home Language", weight: 100 }] },
-        { name: "First Additional Language", is_mandatory: true, components: [{ name: "First Additional Language", weight: 100 }] },
-        { name: "Mathematics", is_mandatory: false, components: [{ name: "Mathematics", weight: 100 }] },
-        { name: "Mathematical Literacy", is_mandatory: false, components: [{ name: "Mathematical Literacy", weight: 100 }] },
-        { name: "Life Orientation", is_mandatory: true, components: [{ name: "Life Orientation", weight: 100 }] },
-        { name: "Physical Sciences", is_mandatory: false, components: [{ name: "Physics", weight: 50 }, { name: "Chemistry", weight: 50 }] },
-        { name: "Life Sciences", is_mandatory: false, components: [{ name: "Life Sciences", weight: 100 }] },
-        { name: "History", is_mandatory: false, components: [{ name: "History", weight: 100 }] },
-        { name: "Geography", is_mandatory: false, components: [{ name: "Geography", weight: 100 }] },
-        { name: "Economics", is_mandatory: false, components: [{ name: "Economics", weight: 100 }] },
-        { name: "Business Studies", is_mandatory: false, components: [{ name: "Business Studies", weight: 100 }] },
-        { name: "Accounting", is_mandatory: false, components: [{ name: "Accounting", weight: 100 }] },
-        { name: "Computer Applications Technology", is_mandatory: false, components: [{ name: "Computer Applications Technology", weight: 100 }] },
-        { name: "Information Technology", is_mandatory: false, components: [{ name: "Information Technology", weight: 100 }] }
+        { name: "Home Language", apply_to_all: true },
+        { name: "First Additional Language", apply_to_all: true },
+        { name: "Life Orientation", apply_to_all: true },
+        { name: "Mathematics", apply_to_all: false },
+        { name: "Mathematical Literacy", apply_to_all: false },
+        { name: "Physical Sciences", apply_to_all: false },
+        { name: "Life Sciences", apply_to_all: false },
+        { name: "History", apply_to_all: false },
+        { name: "Geography", apply_to_all: false },
+        { name: "Economics", apply_to_all: false },
+        { name: "Business Studies", apply_to_all: false },
+        { name: "Accounting", apply_to_all: false },
+        { name: "Computer Applications Technology", apply_to_all: false },
+        { name: "Information Technology", apply_to_all: false }
       ]
     }
   ]

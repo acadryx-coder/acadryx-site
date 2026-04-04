@@ -134,10 +134,88 @@ export default function App() {
   }
 
   // Show nothing while detecting country
+  // Show animated loading screen while detecting country
   if (loadingCountries) {
-    return <div style={{ minHeight: '100vh', background: '#060d1f' }} />
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        background: '#060d1f',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <style>{`
+          @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+          .loading-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0b29be, #0d7c96, #1a6bff, #0b29be);
+            background-size: 300% 300%;
+            animation: gradientShift 6s ease infinite;
+            opacity: 0.3;
+          }
+          .loading-logo {
+            position: relative;
+            z-index: 2;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: underline wavy #0d7c96;
+            text-underline-offset: 8px;
+            animation: pulse 1.8s ease-in-out infinite, float 2.5s ease-in-out infinite;
+          }
+          .loading-message {
+            position: relative;
+            z-index: 2;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            margin-top: 32px;
+            letter-spacing: 0.5px;
+          }
+          .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            justify-content: center;
+          }
+          .loading-dots span {
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255, 0.6);
+            border-radius: 50%;
+            animation: pulse 1.4s ease-in-out infinite;
+          }
+          .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+          .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        `}</style>
+        <div className="loading-gradient" />
+        <div style={{ textAlign: 'center', transform: 'translateY(-2.5rem)' }}>
+          <div className="loading-logo">Acadryx</div>
+          <div className="loading-message">Preparing your experience...</div>
+          <div className="loading-dots">
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      </div>
+    )
   }
-
   return (
     <BrowserRouter>
       <Routes>

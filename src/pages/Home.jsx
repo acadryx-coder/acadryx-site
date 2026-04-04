@@ -19,7 +19,11 @@ const QUOTES = [
   {
     text: "Simeon has been extremely demanding and pushing for the best. The app is a testimonial of sleepless nights of relentless work and we still do upgrades all the time.",
     author: "ACADRYX CTO"
-  }
+  },
+  {
+  	text: `It's very easy to use. No digital literacy needed. For example, as a teacher entering scores, all you do is open your scores page for a particular subject and enter scores for all the students there. Even an old man with no phone can borrow a computer from the computer lab or a friend's phone for one day and easily enter his scores seamlessly. Go to school web-app, enter code, login, go to score entry, enter scores, save, Go home."`,
+  	author: "..."
+  },
 ];
 
 export default function Home({ selectedCountry }) {

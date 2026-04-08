@@ -30,7 +30,6 @@ export default function OnboardingWizard() {
 
   // Form data structure matching RPC parameters
   const [formData, setFormData] = useState({
-    // School Info (matches RPC)
     schoolName: '',
     shortName: '',
     slug: '',
@@ -98,7 +97,7 @@ export default function OnboardingWizard() {
     setFormData(prev => ({ ...prev, slugAvailable: data ? false : true }))
   }
 
-  // When country changes, load curriculum structure
+  // When country changes, load curriculum structure with assessments
   useEffect(() => {
     if (curriculumLoadedRef.current === formData.countryId) return
     if (formData.countryId) {
@@ -106,11 +105,11 @@ export default function OnboardingWizard() {
       if (country) {
         const structure = getSchoolStructure(country.code)
         if (structure && structure.sections) {
-          // Build selectedSections with the NEW structure (apply_to_all instead of is_mandatory, no components)
           const sections = structure.sections.map(section => ({
             name: section.name,
             level: section.level,
             selected: false,
+            default_assessments: section.default_assessments || [],
             classes: section.classes.map(cls => ({
               name: cls.name,
               sequence: cls.sequence,
@@ -119,12 +118,11 @@ export default function OnboardingWizard() {
             })),
             subjects: section.subjects.map(subj => ({
               name: subj.name,
-              apply_to_all: subj.apply_to_all,  // ← NEW: use apply_to_all
-              selected: true                     // ← subject is included in section
+              apply_to_all: subj.apply_to_all,
+              selected: true
             }))
           }))
           
-          // Get grading defaults (unchanged)
           const gradingDefaults = structure.grading_defaults || []
           
           setFormData(prev => ({ 
@@ -159,12 +157,13 @@ export default function OnboardingWizard() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')
 
-      // Build the selected sections payload for RPC (NEW STRUCTURE)
+      // Build the selected sections payload for RPC (includes default_assessments)
       const selectedSectionsPayload = formData.selectedSections
         .filter(s => s.selected)
         .map(section => ({
           section_name: section.name,
           level: section.level,
+          default_assessments: section.default_assessments || [],
           classes: section.classes
             .filter(c => c.selected)
             .map(cls => ({
@@ -177,7 +176,7 @@ export default function OnboardingWizard() {
             .filter(s => s.selected)
             .map(subj => ({
               subject_name: subj.name,
-              apply_to_all: subj.apply_to_all  // ← NEW: send apply_to_all, not is_mandatory
+              apply_to_all: subj.apply_to_all
             }))
         }))
 

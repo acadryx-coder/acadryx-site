@@ -51,7 +51,8 @@ export default function StepCurriculum({ data, updateData, back, next }) {
       name: `Class ${nextSequence}`,
       sequence: nextSequence,
       selected: true,
-      arms: [{ name: 'A', selected: true }]
+      arms: [{ name: 'A', selected: true }],
+      is_graduating_class: false
     }
     const newClasses = [...section.classes, newClass]
     updateSection(sectionIndex, { classes: newClasses })
@@ -120,6 +121,33 @@ export default function StepCurriculum({ data, updateData, back, next }) {
 
             {section.selected && editingSection === sIdx && (
               <div className="section-detail">
+                {/* Default Assessments Section */}
+                {section.default_assessments && section.default_assessments.length > 0 && (
+                  <div className="assessments-list" style={{ marginBottom: '20px' }}>
+                    <h4>Default Assessments</h4>
+                    <p style={{ fontSize: '0.7rem', color: '#64748b', marginBottom: '12px' }}>
+                      These assessments will be created for each term. You can modify them later in Academic Config.
+                    </p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                      {section.default_assessments.map((assessment, aIdx) => (
+                        <div key={aIdx} style={{ 
+                          background: '#f1f5f9', 
+                          padding: '6px 12px', 
+                          borderRadius: '20px',
+                          fontSize: '0.8rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}>
+                          <span style={{ fontWeight: 600 }}>{assessment.name}</span>
+                          <span style={{ color: '#0b29be' }}>({assessment.weight}%)</span>
+                          <span style={{ color: '#64748b', fontSize: '0.7rem' }}>Max: {assessment.max_score}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Classes Section */}
                 <div className="classes-list">
                   <h4>Classes</h4>
@@ -184,7 +212,7 @@ export default function StepCurriculum({ data, updateData, back, next }) {
                   )}
                 </div>
 
-                {/* Subjects Section - SIMPLIFIED: No components, just apply_to_all toggle */}
+                {/* Subjects Section */}
                 <div className="subjects-list">
                   <h4>Subjects</h4>
                   <p style={{ fontSize: '0.7rem', color: '#64748b', marginBottom: '12px' }}>

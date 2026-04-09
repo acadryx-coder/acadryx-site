@@ -18,6 +18,18 @@ export default function StepReview({ data, back, submit, loading }) {
       <div className="review-grid">
         <div className="review-section">
           <h3>School Details</h3>
+          {data.logo_url && (
+            <div className="review-row">
+              <span>School Logo:</span>
+              <span>
+                <img 
+                  src={data.logo_url} 
+                  alt="School logo" 
+                  style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '8px' }}
+                />
+              </span>
+            </div>
+          )}
           <div className="review-row">
             <span>School Name:</span>
             <span>{data.schoolName}</span>
@@ -37,6 +49,22 @@ export default function StepReview({ data, back, submit, loading }) {
             <span>{data.branchName || 'MAIN'}</span>
           </div>
           <div className="review-row">
+            <span>Brand Color:</span>
+            <span>
+              <span style={{ 
+                display: 'inline-block', 
+                width: '20px', 
+                height: '20px', 
+                backgroundColor: data.brandColor,
+                borderRadius: '4px',
+                marginRight: '8px',
+                verticalAlign: 'middle',
+                border: '1px solid #e2e8f0'
+              }} />
+              {data.brandColor}
+            </span>
+          </div>
+          <div className="review-row">
             <span>Contact Email:</span>
             <span>{data.contactEmail}</span>
           </div>
@@ -44,6 +72,12 @@ export default function StepReview({ data, back, submit, loading }) {
             <div className="review-row">
               <span>Phone:</span>
               <span>{data.contactPhone}</span>
+            </div>
+          )}
+          {data.address && (
+            <div className="review-row">
+              <span>Address:</span>
+              <span>{data.address}</span>
             </div>
           )}
           {data.city && (

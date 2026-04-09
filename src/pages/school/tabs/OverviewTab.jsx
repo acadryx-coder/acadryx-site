@@ -43,7 +43,7 @@ export default function OverviewTab({ school, billingData }) {
           <h3>School Information</h3>
           <div className="info-row"><span>School Name:</span><strong>{school.school_name}</strong></div>
           {school.short_name && <div className="info-row"><span>Short Name:</span><strong>{school.short_name}</strong></div>}
-          <div className="info-row"><span>School Link:</span><strong>{school.slug}.acadryx.com</strong></div>
+          <div className="info-row"><span>School Link:</span><strong>acadryx.vercel.app?school={school.slug}</strong></div>
           <div className="info-row"><span>Country:</span><strong>{school.country?.name}</strong></div>
           {school.address && <div className="info-row"><span>Address:</span><strong>{school.address}</strong></div>}
           {school.city && <div className="info-row"><span>City:</span><strong>{school.city}</strong></div>}

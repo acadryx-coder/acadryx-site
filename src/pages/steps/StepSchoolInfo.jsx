@@ -9,9 +9,20 @@ export default function StepSchoolInfo({
   checkSlugAvailability,
   next
 }) {
+
+  console.log('StepSchoolInfo received data:', {
+    schoolName: data.schoolName,
+    slug: data.slug,
+    contactEmail: data.contactEmail,
+    countryId: data.countryId
+  })
+  
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [checkingSlug, setCheckingSlug] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  const [selectedCountryPrice, setSelectedCountryPrice] = useState(null)
+  const [loadingPrice, setLoadingPrice] = useState(false)
 
   // Slug availability debounce
   useEffect(() => {
@@ -22,6 +33,39 @@ export default function StepSchoolInfo({
     }, 500)
     return () => clearTimeout(timer)
   }, [data.slug, data.slugAvailable, checkSlugAvailability])
+
+  // Fetch country price when country changes
+  useEffect(() => {
+    const fetchCountryPrice = async () => {
+      if (!data.countryId) {
+        setSelectedCountryPrice(null)
+        return
+      }
+
+      setLoadingPrice(true)
+      
+      const { data: priceData, error } = await supabase
+        .schema('features')
+        .from('country_features')
+        .select(`
+          price_number,
+          features!inner (name)
+        `)
+        .eq('country_id', data.countryId)
+        .eq('features.name', 'core')
+        .single()
+
+      if (!error && priceData) {
+        setSelectedCountryPrice(priceData.price_number)
+      } else {
+        setSelectedCountryPrice(null)
+      }
+      
+      setLoadingPrice(false)
+    }
+
+    fetchCountryPrice()
+  }, [data.countryId])
 
   const validateField = (name, value) => {
     switch (name) {
@@ -49,9 +93,9 @@ export default function StepSchoolInfo({
   const handleChange = (field, value) => {
     updateData({ [field]: value })
     if(field === "countryId") {
-    	updateData({
-    		selectedSections: [],
-    	})
+      updateData({
+        selectedSections: [],
+      })
     };
     setTouched(prev => ({ ...prev, [field]: true }))
     const error = validateField(field, value)
@@ -62,6 +106,46 @@ export default function StepSchoolInfo({
     setTouched(prev => ({ ...prev, [field]: true }))
     const error = validateField(field, data[field])
     setErrors(prev => ({ ...prev, [field]: error }))
+  }
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file')
+      return
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Logo must be less than 2MB')
+      return
+    }
+
+    setUploadingLogo(true)
+
+    try {
+      const fileExt = file.name.split('.').pop()
+      const fileName = `logo_${Date.now()}.${fileExt}`
+      const filePath = `school_logos/${fileName}`
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('school-logos')
+        .upload(filePath, file)
+
+      if (uploadError) throw uploadError
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('school-logos')
+        .getPublicUrl(filePath)
+
+      updateData({ logo_url: publicUrl })
+    } catch (error) {
+      console.error('Logo upload error:', error)
+      alert('Failed to upload logo. Please try again.')
+    } finally {
+      setUploadingLogo(false)
+    }
   }
 
   const isStepValid = () => {
@@ -84,6 +168,10 @@ export default function StepSchoolInfo({
     if (isStepValid()) next()
   }
 
+  // Get selected country details for currency symbol
+  const selectedCountry = countries.find(c => c.id === data.countryId)
+  const currencySymbol = selectedCountry?.currency_symbol || '₦'
+
   return (
     <form onSubmit={handleNext} className="step-form">
       <div className="step-header">
@@ -93,6 +181,69 @@ export default function StepSchoolInfo({
       </div>
 
       <div className="form-grid">
+        <div className="form-field full">
+          <label>School Logo</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            {data.logo_url ? (
+              <img 
+                src={data.logo_url} 
+                alt="School logo preview" 
+                style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '12px', border: '1px solid #e2e8f0' }}
+              />
+            ) : (
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                background: '#f8fafc', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                border: '1px dashed #cbd5e1',
+                color: '#94a3b8',
+                fontSize: '12px'
+              }}>
+                No logo
+              </div>
+            )}
+            <label style={{
+              padding: '8px 16px',
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              borderRadius: '40px',
+              fontSize: '13px',
+              cursor: 'pointer',
+              color: '#1e293b',
+              fontWeight: 500
+            }}>
+              {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                disabled={uploadingLogo}
+                style={{ display: 'none' }}
+              />
+            </label>
+            {data.logo_url && (
+              <button
+                type="button"
+                onClick={() => updateData({ logo_url: '' })}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ef4444',
+                  fontSize: '12px',
+                  cursor: 'pointer'
+                }}
+              >
+                Remove
+              </button>
+            )}
+          </div>
+          <small>Recommended: square image, at least 200x200px. Max 2MB.</small>
+        </div>
+
         <div className="form-field full">
           <label>School Name *</label>
           <input
@@ -165,6 +316,29 @@ export default function StepSchoolInfo({
           {touched.countryId && errors.countryId && (
             <div className="field-error">{errors.countryId}</div>
           )}
+          
+          {/* Price display */}
+          {data.countryId && (
+            <div style={{ 
+              marginTop: '8px', 
+              padding: '8px 12px', 
+              background: '#f0fdf4', 
+              borderRadius: '8px',
+              border: '1px solid #bbf7d0',
+              fontSize: '13px'
+            }}>
+              {loadingPrice ? (
+                <span style={{ color: '#475569' }}>Loading price...</span>
+              ) : selectedCountryPrice ? (
+                <span>
+                  <strong>Price:</strong> {currencySymbol}{selectedCountryPrice.toLocaleString()} <span style={{ color: '#475569' }}>per student per term</span>
+                </span>
+              ) : (
+                <span style={{ color: '#dc2626' }}>Price information unavailable</span>
+              )}
+            </div>
+          )}
+          <small>You pay only for active student accounts. Teachers, parents, and alumni are free.</small>
         </div>
 
         <div className="form-field">

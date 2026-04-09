@@ -12,6 +12,9 @@ export const kenyaSchoolStructure = {
     {
       name: "Pre-Primary (Early Years)",
       level: 1,
+      default_assessments: [
+        { name: "Observation Checklist", weight: 100, max_score: 100, display_order: 1 }
+      ],
       classes: [
         { name: "Pre-Primary 1", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Pre-Primary 2", sequence: 2, arms: ["A"], is_graduating: true }
@@ -28,6 +31,10 @@ export const kenyaSchoolStructure = {
     {
       name: "Primary (Middle School)",
       level: 2,
+      default_assessments: [
+        { name: "Formative Assessment", weight: 30, max_score: 30, display_order: 1 },
+        { name: "Summative Assessment", weight: 70, max_score: 70, display_order: 2 }
+      ],
       classes: [
         { name: "Grade 1", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Grade 2", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -52,6 +59,10 @@ export const kenyaSchoolStructure = {
     {
       name: "Junior Secondary",
       level: 3,
+      default_assessments: [
+        { name: "Formative Assessment", weight: 30, max_score: 30, display_order: 1 },
+        { name: "Summative Assessment", weight: 70, max_score: 70, display_order: 2 }
+      ],
       classes: [
         { name: "Grade 7", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 8", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -79,6 +90,11 @@ export const kenyaSchoolStructure = {
     {
       name: "Senior Secondary (Pre-Professional)",
       level: 4,
+      default_assessments: [
+        { name: "Continuous Assessment", weight: 30, max_score: 100, display_order: 1 },
+        { name: "KCSE Mock", weight: 20, max_score: 100, display_order: 2 },
+        { name: "KCSE Final", weight: 50, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 10", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 11", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -104,4 +120,4 @@ export const kenyaSchoolStructure = {
       ]
     }
   ]
-}
+};

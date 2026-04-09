@@ -1,5 +1,5 @@
 // OnboardingWizard.jsx
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { getSchoolStructure } from '../config/schoolConfig'
@@ -9,6 +9,7 @@ import StepAcademic from './steps/StepAcademic'
 import StepAdmin from './steps/StepAdmin'
 import StepReview from './steps/StepReview'
 import ProgressBar from '../components/ProgressBar'
+import { saveOnboardingProgress, loadOnboardingProgress, clearOnboardingProgress } from '../utils/onboardingStorage'
 import '../styles/onboarding.css'
 
 const STEPS = [
@@ -19,6 +20,23 @@ const STEPS = [
   { id: 5, title: 'Review' }
 ]
 
+// Debounce helper
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
+}
+
 export default function OnboardingWizard() {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
@@ -26,7 +44,11 @@ export default function OnboardingWizard() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [countries, setCountries] = useState([])
+  const [isRestoring, setIsRestoring] = useState(true)
+  const [isAutoSaving, setIsAutoSaving] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
   const curriculumLoadedRef = useRef(null)
+  const autoSaveTimerRef = useRef(null)
 
   // Form data structure matching RPC parameters
   const [formData, setFormData] = useState({
@@ -35,6 +57,7 @@ export default function OnboardingWizard() {
     slug: '',
     slugAvailable: null,
     slugManuallyEdited: false,
+    logo_url: '',
     address: '',
     city: '',
     state: '',
@@ -62,6 +85,42 @@ export default function OnboardingWizard() {
     adminPhone: ''
   })
 
+  // Load saved progress on mount - BEFORE initializing formData
+  useEffect(() => {
+    const savedProgress = loadOnboardingProgress()
+    console.log("savedProgress", savedProgress)
+    if (savedProgress && savedProgress.formData) {
+      const restored = savedProgress.formData
+    console.log("restored", restored)
+      setFormData(prev => ({
+        ...prev,
+        ...restored,
+        selectedSections: restored.selectedSections || [],
+        gradingDefaults: restored.gradingDefaults || [],
+        termNames: restored.termNames || ['First Term', 'Second Term', 'Third Term']
+      }))
+      setStep(savedProgress.step || 1)
+    }
+    setIsRestoring(false)
+    setIsInitialized(true)
+  }, [])
+
+  // Debounced formData for auto-save (only after initialization)
+  const debouncedFormData = useDebounce(formData, 800)
+
+  // Auto-save whenever debounced formData changes (only after restoration is complete)
+  useEffect(() => {
+    if (isRestoring) return
+    if (success) return
+    if (!isInitialized) return
+    
+    setIsAutoSaving(true)
+    saveOnboardingProgress(debouncedFormData, step)
+    
+    const timer = setTimeout(() => setIsAutoSaving(false), 500)
+    return () => clearTimeout(timer)
+  }, [debouncedFormData, step, isRestoring, success, isInitialized])
+
   // Load countries on mount
   useEffect(() => {
     supabase
@@ -74,7 +133,7 @@ export default function OnboardingWizard() {
 
   // Auto-generate slug from school name if not manually edited
   useEffect(() => {
-    if (formData.schoolName && !formData.slugManuallyEdited) {
+    if (formData.schoolName && !formData.slugManuallyEdited && !isRestoring) {
       const generatedSlug = formData.schoolName
         .toLowerCase()
         .replace(/[^a-z0-9]/g, '-')
@@ -83,7 +142,7 @@ export default function OnboardingWizard() {
         .slice(0, 50)
       setFormData(prev => ({ ...prev, slug: generatedSlug, slugAvailable: null }))
     }
-  }, [formData.schoolName, formData.slugManuallyEdited])
+  }, [formData.schoolName, formData.slugManuallyEdited, isRestoring])
 
   // Check slug availability
   const checkSlugAvailability = async (slug) => {
@@ -100,7 +159,7 @@ export default function OnboardingWizard() {
   // When country changes, load curriculum structure with assessments
   useEffect(() => {
     if (curriculumLoadedRef.current === formData.countryId) return
-    if (formData.countryId) {
+    if (formData.countryId && countries.length > 0 && !isRestoring) {
       const country = countries.find(c => c.id === formData.countryId)
       if (country) {
         const structure = getSchoolStructure(country.code)
@@ -134,19 +193,22 @@ export default function OnboardingWizard() {
         }
       }
     }
-  }, [formData.countryId, countries])
+  }, [formData.countryId, countries, isRestoring])
 
-  const updateFormData = (updates) => {
+  const updateFormData = useCallback((updates) => {
     setFormData(prev => ({ ...prev, ...updates }))
-  }
+  }, [])
 
   const next = () => {
-    if (step < STEPS.length) setStep(step + 1)
-    else submit()
+    const newStep = step + 1
+    setStep(newStep)
+    saveOnboardingProgress(formData, newStep)
   }
 
   const back = () => {
-    if (step > 1) setStep(step - 1)
+    const newStep = step - 1
+    setStep(newStep)
+    saveOnboardingProgress(formData, newStep)
   }
 
   const submit = async () => {
@@ -157,7 +219,6 @@ export default function OnboardingWizard() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')
 
-      // Build the selected sections payload for RPC (includes default_assessments)
       const selectedSectionsPayload = formData.selectedSections
         .filter(s => s.selected)
         .map(section => ({
@@ -185,6 +246,7 @@ export default function OnboardingWizard() {
         p_school_name: formData.schoolName.trim(),
         p_short_name: formData.shortName.trim() || null,
         p_slug: formData.slug.trim(),
+        p_logo_url: formData.logo_url || null,
         p_address: formData.address.trim() || null,
         p_city: formData.city.trim() || null,
         p_state: formData.state.trim() || null,
@@ -208,12 +270,31 @@ export default function OnboardingWizard() {
       if (rpcError) throw rpcError
       if (!data.success) throw new Error(data.error || 'School creation failed')
 
+      clearOnboardingProgress()
       setSuccess(data)
     } catch (err) {
       setError(err.message)
     } finally {
       setLoading(false)
     }
+  }
+
+  // Show loading while restoring saved progress
+  if (isRestoring) {
+    return (
+      <div className="onboarding-container">
+        <div className="onboarding-header">
+          <h1>Set up your school</h1>
+          <div className="progress-bar-container">
+            <div className="progress-bar-fill" style={{ width: '0%' }}></div>
+          </div>
+        </div>
+        <div className="onboarding-content" style={{ textAlign: 'center', padding: '60px' }}>
+          <div className="dash-spinner" style={{ margin: '0 auto 20px' }}></div>
+          <p>Restoring your progress...</p>
+        </div>
+      </div>
+    )
   }
 
   if (success) {
@@ -237,7 +318,14 @@ export default function OnboardingWizard() {
     <div className="onboarding-container">
       <div className="onboarding-header">
         <h1>Set up your school</h1>
-        <ProgressBar currentStep={step} totalSteps={STEPS.length} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <ProgressBar currentStep={step} totalSteps={STEPS.length} />
+          {isAutoSaving && (
+            <span style={{ fontSize: '11px', color: '#64748b', marginLeft: '12px' }}>
+              Saving...
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="onboarding-content">

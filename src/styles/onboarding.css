@@ -454,6 +454,17 @@
   color: white;
 }
 
+.btn-primary:active {
+  background: #0b29be !important;
+  color: white !important;
+  transform: translateY(0);
+}
+
+.btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(11, 41, 190, 0.3);
+}
+
 .btn-primary:hover:not(:disabled) {
   background: #1a3dcc;
   transform: translateY(-1px);
@@ -597,4 +608,127 @@
     text-align: left;
     max-width: 100%;
   }
+}
+
+/* Force light mode text colors for onboarding (override dark theme inheritance) */
+.onboarding-container,
+.onboarding-container * {
+  color: #1e293b; /* Default dark text for all elements */
+}
+
+.onboarding-container h1,
+.onboarding-container h2,
+.onboarding-container h3,
+.onboarding-container h4 {
+  color: #0f172a;
+}
+
+.onboarding-container .step-number {
+  color: #0b29be;
+}
+
+.onboarding-container .step-header p {
+  color: #475569;
+}
+
+.onboarding-container .form-field label {
+  color: #1e293b;
+}
+
+.onboarding-container .form-field small {
+  color: #64748b;
+}
+
+.onboarding-container .field-error {
+  color: #dc2626;
+}
+
+.onboarding-container .slug-domain {
+  color: #475569;
+}
+
+.onboarding-container .slug-available {
+  color: #10b981;
+}
+
+.onboarding-container .slug-unavailable {
+  color: #ef4444;
+}
+
+.onboarding-container .slug-checking {
+  color: #f59e0b;
+}
+
+.onboarding-container .section-header .section-name {
+  color: #0f172a;
+}
+
+.onboarding-container .class-name {
+  color: #0f172a;
+}
+
+.onboarding-container .arm-checkbox span {
+  color: #1e293b;
+}
+
+.onboarding-container .subject-name {
+  color: #0f172a;
+}
+
+.onboarding-container .btn-icon {
+  color: #64748b;
+}
+
+.onboarding-container .btn-small {
+  color: #0b29be;
+}
+
+.onboarding-container .review-row span:first-child {
+  color: #475569;
+}
+
+.onboarding-container .review-row span:last-child {
+  color: #0f172a;
+}
+
+.onboarding-container .preview-badge {
+  color: white;
+}
+
+.onboarding-container .btn-primary {
+  color: white;
+}
+
+.onboarding-container .btn-secondary {
+  color: #1e293b;
+}
+
+/* Keep input text dark */
+.onboarding-container input,
+.onboarding-container select,
+.onboarding-container textarea {
+  color: #1e293b;
+}
+
+.onboarding-container input::placeholder,
+.onboarding-container textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Keep error message text */
+.onboarding-container .error-message {
+  color: #991b1b;
+}
+
+/* Keep success card text */
+.onboarding-container .success-card h2 {
+  color: #0f172a;
+}
+
+.onboarding-container .success-card p {
+  color: #475569;
+}
+
+.onboarding-container .login-code {
+  color: #0f172a;
 }

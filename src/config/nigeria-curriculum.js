@@ -12,6 +12,9 @@ export const nigeriaSchoolStructure = {
     {
       name: "Pre-Primary",
       level: 1,
+      default_assessments: [
+        { name: "Continuous Assessment", weight: 100, max_score: 100, display_order: 1 }
+      ],
       classes: [
         { name: "Creche", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Nursery 1", sequence: 2, arms: ["A"], is_graduating: false },
@@ -31,6 +34,11 @@ export const nigeriaSchoolStructure = {
     {
       name: "Primary",
       level: 2,
+      default_assessments: [
+        { name: "CA1", weight: 20, max_score: 20, display_order: 1 },
+        { name: "CA2", weight: 20, max_score: 20, display_order: 2 },
+        { name: "Exam", weight: 60, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Primary 1", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Primary 2", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -61,6 +69,11 @@ export const nigeriaSchoolStructure = {
     {
       name: "Junior Secondary",
       level: 3,
+      default_assessments: [
+        { name: "CA1", weight: 20, max_score: 20, display_order: 1 },
+        { name: "CA2", weight: 20, max_score: 20, display_order: 2 },
+        { name: "Exam", weight: 60, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "JSS 1", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "JSS 2", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -90,6 +103,11 @@ export const nigeriaSchoolStructure = {
     {
       name: "Senior Secondary",
       level: 4,
+      default_assessments: [
+        { name: "CA1", weight: 15, max_score: 20, display_order: 1 },
+        { name: "CA2", weight: 15, max_score: 20, display_order: 2 },
+        { name: "Final Exam", weight: 70, max_score: 100, display_order: 4 }
+      ],
       classes: [
         { name: "SSS 1", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "SSS 2", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -126,4 +144,4 @@ export const nigeriaSchoolStructure = {
       ]
     }
   ]
-}
+};

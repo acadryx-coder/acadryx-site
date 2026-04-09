@@ -1,4 +1,4 @@
-// config/schoolStructure.js
+// config/schoolConfig.js
 import { nigeriaSchoolStructure } from './nigeria-curriculum.js'
 import { ghanaSchoolStructure } from './ghana-curriculum.js'
 import { kenyaSchoolStructure } from './kenya-curriculum.js'

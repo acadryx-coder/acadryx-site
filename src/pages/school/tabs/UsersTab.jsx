@@ -9,6 +9,7 @@ export default function UsersTab({ schoolId, branchId }) {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRole, setSelectedRole] = useState('')
+  const [loginCodes, setLoginCodes] = useState({})
 
   useEffect(() => {
     loadUsers()
@@ -63,6 +64,20 @@ export default function UsersTab({ schoolId, branchId }) {
       
       setProfiles(profilesWithRoles)
       
+      // Fetch login codes for all profiles
+      const { data: tokens } = await supabase
+        .schema('schools')
+        .from('login_tokens')
+        .select('profile_id, code')
+        .eq('school_id', schoolId)
+        .eq('is_active', true)
+      
+      const codeMap = {}
+      tokens?.forEach(token => {
+        codeMap[token.profile_id] = token.code
+      })
+      setLoginCodes(codeMap)
+      
     } catch (err) {
       console.error('Error loading users:', err)
     } finally {
@@ -81,6 +96,13 @@ export default function UsersTab({ schoolId, branchId }) {
   const handleClearFilters = () => {
     setSearchQuery('')
     setSelectedRole('')
+  }
+
+  // Function to mask login code for non-admin roles
+  const formatLoginCode = (code, roleName) => {
+    if (!code) return '—'
+    if (roleName === 'admin') return code
+    return '🔐'
   }
 
   if (loading) return <div className="loading-placeholder">Loading users...</div>
@@ -143,12 +165,13 @@ export default function UsersTab({ schoolId, branchId }) {
               <th>Email</th>
               <th>Phone</th>
               <th>Status</th>
+              <th>Login Code</th>
             </tr>
           </thead>
           <tbody>
             {filteredProfiles.length === 0 ? (
               <tr className="empty-row">
-                <td colSpan="5">No users found</td>
+                <td colSpan="6">No users found</td>
               </tr>
             ) : (
               filteredProfiles.map(p => (
@@ -160,6 +183,15 @@ export default function UsersTab({ schoolId, branchId }) {
                   <td>
                     <span className={`status-badge ${p.is_active ? 'active' : 'inactive'}`}>
                       {p.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td>
+                    <span style={{ 
+                      fontFamily: p.role_name === 'admin' ? 'monospace' : 'inherit',
+                      fontWeight: p.role_name === 'admin' ? 600 : 400,
+                      letterSpacing: p.role_name === 'admin' ? '0.5px' : 'normal'
+                    }}>
+                      {formatLoginCode(loginCodes[p.id], p.role_name)}
                     </span>
                   </td>
                 </tr>

@@ -12,6 +12,9 @@ export const ghanaSchoolStructure = {
     {
       name: "Pre-Primary",
       level: 1,
+      default_assessments: [
+        { name: "Portfolio Assessment", weight: 100, max_score: 100, display_order: 1 }
+      ],
       classes: [
         { name: "Nursery", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Kindergarten 1", sequence: 2, arms: ["A"], is_graduating: false },
@@ -29,6 +32,11 @@ export const ghanaSchoolStructure = {
     {
       name: "Primary",
       level: 2,
+      default_assessments: [
+        { name: "Class Exercise", weight: 10, max_score: 20, display_order: 1 },
+        { name: "Mid-Term Test", weight: 20, max_score: 40, display_order: 2 },
+        { name: "End of Term Exam", weight: 70, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Primary 1", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Primary 2", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -53,6 +61,11 @@ export const ghanaSchoolStructure = {
     {
       name: "Junior High School",
       level: 3,
+      default_assessments: [
+        { name: "Quiz", weight: 10, max_score: 20, display_order: 1 },
+        { name: "Mid-Term Test", weight: 20, max_score: 40, display_order: 2 },
+        { name: "End of Term Exam", weight: 70, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "JHS 1", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "JHS 2", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -73,6 +86,10 @@ export const ghanaSchoolStructure = {
     {
       name: "Senior High School",
       level: 4,
+      default_assessments: [
+        { name: "Continuous Assessment", weight: 30, max_score: 100, display_order: 1 },
+        { name: "End of Term Exam", weight: 70, max_score: 100, display_order: 2 }
+      ],
       classes: [
         { name: "SHS 1", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "SHS 2", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -107,4 +124,4 @@ export const ghanaSchoolStructure = {
       ]
     }
   ]
-}
+};

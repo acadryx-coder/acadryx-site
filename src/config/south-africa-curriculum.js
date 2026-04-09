@@ -12,6 +12,9 @@ export const southAfricaSchoolStructure = {
     {
       name: "Foundation Phase",
       level: 1,
+      default_assessments: [
+        { name: "Continuous Assessment", weight: 100, max_score: 100, display_order: 1 }
+      ],
       classes: [
         { name: "Grade R", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Grade 1", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -28,6 +31,11 @@ export const southAfricaSchoolStructure = {
     {
       name: "Intermediate Phase",
       level: 2,
+      default_assessments: [
+        { name: "Class Test", weight: 25, max_score: 50, display_order: 1 },
+        { name: "June Exam", weight: 35, max_score: 100, display_order: 2 },
+        { name: "November Exam", weight: 40, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 4", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Grade 5", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -45,6 +53,11 @@ export const southAfricaSchoolStructure = {
     {
       name: "Senior Phase",
       level: 3,
+      default_assessments: [
+        { name: "Class Test", weight: 25, max_score: 50, display_order: 1 },
+        { name: "June Exam", weight: 35, max_score: 100, display_order: 2 },
+        { name: "November Exam", weight: 40, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 7", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 8", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -65,6 +78,11 @@ export const southAfricaSchoolStructure = {
     {
       name: "FET Phase",
       level: 4,
+      default_assessments: [
+        { name: "School-Based Assessment", weight: 25, max_score: 100, display_order: 1 },
+        { name: "Trial Exam", weight: 25, max_score: 100, display_order: 2 },
+        { name: "Final Matric Exam", weight: 50, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 10", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 11", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -98,4 +116,4 @@ export const southAfricaSchoolStructure = {
       ]
     }
   ]
-}
+};

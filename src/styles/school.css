@@ -1405,3 +1405,80 @@
   color: #fff;
   margin-bottom: 16px;
 }
+
+/* Balance Card - Luxury Scroll for Large Numbers */
+.billing-tab .balance-card {
+  background: linear-gradient(135deg, rgba(11, 41, 190, 0.2), rgba(13, 124, 150, 0.2));
+  border-radius: 28px;
+  border: 1px solid rgba(13, 124, 150, 0.3);
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.billing-tab .balance-card .balance-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.billing-tab .balance-card .balance-amount {
+  font-size: 56px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 28px;
+  font-family: monospace;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.billing-tab .balance-card .balance-amount::-webkit-scrollbar {
+  height: 4px;
+}
+
+.billing-tab .balance-card .balance-amount::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.billing-tab .balance-card .balance-amount::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.billing-tab .balance-card .balance-amount::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.billing-tab .balance-card .balance-amount:active {
+  cursor: grabbing;
+}
+
+.billing-tab .balance-card .balance-amount:hover {
+  scrollbar-width: thin;
+}
+
+/* Mobile adjustment */
+@media (max-width: 640px) {
+  .billing-tab .balance-card .balance-amount {
+    font-size: 40px;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .billing-tab .balance-card .balance-amount {
+    font-size: 32px;
+  }
+}

@@ -13,6 +13,9 @@ export const ukSchoolStructure = {
     {
       name: "Early Years Foundation Stage",
       level: 1,
+      default_assessments: [
+        { name: "Observational Assessment", weight: 100, max_score: 100, display_order: 1 }
+      ],
       classes: [
         { name: "Nursery", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Reception", sequence: 2, arms: ["A"], is_graduating: true }
@@ -30,6 +33,10 @@ export const ukSchoolStructure = {
     {
       name: "Key Stage 1",
       level: 2,
+      default_assessments: [
+        { name: "Teacher Assessment", weight: 50, max_score: 100, display_order: 1 },
+        { name: "SATs", weight: 50, max_score: 100, display_order: 2 }
+      ],
       classes: [
         { name: "Year 1", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Year 2", sequence: 2, arms: ["A", "B"], is_graduating: true }
@@ -50,6 +57,10 @@ export const ukSchoolStructure = {
     {
       name: "Key Stage 2",
       level: 3,
+      default_assessments: [
+        { name: "Teacher Assessment", weight: 40, max_score: 100, display_order: 1 },
+        { name: "SATs", weight: 60, max_score: 100, display_order: 2 }
+      ],
       classes: [
         { name: "Year 3", sequence: 1, arms: ["A", "B"], is_graduating: false },
         { name: "Year 4", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -73,6 +84,10 @@ export const ukSchoolStructure = {
     {
       name: "Key Stage 3",
       level: 4,
+      default_assessments: [
+        { name: "End of Topic Test", weight: 30, max_score: 100, display_order: 1 },
+        { name: "End of Year Exam", weight: 70, max_score: 100, display_order: 2 }
+      ],
       classes: [
         { name: "Year 7", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Year 8", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -96,6 +111,11 @@ export const ukSchoolStructure = {
     {
       name: "Key Stage 4 (GCSE)",
       level: 5,
+      default_assessments: [
+        { name: "GCSE Coursework", weight: 30, max_score: 100, display_order: 1 },
+        { name: "Mock Exam", weight: 20, max_score: 100, display_order: 2 },
+        { name: "GCSE Final Exam", weight: 50, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Year 10", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Year 11", sequence: 2, arms: ["A", "B", "C"], is_graduating: true }
@@ -129,4 +149,4 @@ export const ukSchoolStructure = {
       ]
     }
   ]
-}
+};

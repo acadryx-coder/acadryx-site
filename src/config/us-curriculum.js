@@ -11,6 +11,11 @@ export const usSchoolStructure = {
     {
       name: "Elementary School",
       level: 1,
+      default_assessments: [
+        { name: "Quiz", weight: 15, max_score: 20, display_order: 1 },
+        { name: "Test", weight: 25, max_score: 50, display_order: 2 },
+        { name: "Final Exam", weight: 60, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Kindergarten", sequence: 1, arms: ["A"], is_graduating: false },
         { name: "Grade 1", sequence: 2, arms: ["A", "B"], is_graduating: false },
@@ -33,6 +38,11 @@ export const usSchoolStructure = {
     {
       name: "Middle School",
       level: 2,
+      default_assessments: [
+        { name: "Quiz", weight: 15, max_score: 20, display_order: 1 },
+        { name: "Test", weight: 25, max_score: 50, display_order: 2 },
+        { name: "Final Exam", weight: 60, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 6", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 7", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -56,6 +66,11 @@ export const usSchoolStructure = {
     {
       name: "High School",
       level: 3,
+      default_assessments: [
+        { name: "Quiz", weight: 15, max_score: 20, display_order: 1 },
+        { name: "Test", weight: 25, max_score: 50, display_order: 2 },
+        { name: "Final Exam", weight: 60, max_score: 100, display_order: 3 }
+      ],
       classes: [
         { name: "Grade 9 (Freshman)", sequence: 1, arms: ["A", "B", "C"], is_graduating: false },
         { name: "Grade 10 (Sophomore)", sequence: 2, arms: ["A", "B", "C"], is_graduating: false },
@@ -113,4 +128,4 @@ export const usSchoolStructure = {
       ]
     }
   ]
-}
+};

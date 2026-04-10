@@ -2,6 +2,15 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
+// Nigerian states list (can be moved to a config file later)
+const NIGERIAN_STATES = [
+  'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
+  'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT - Abuja', 'Gombe',
+  'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos',
+  'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto',
+  'Taraba', 'Yobe', 'Zamfara'
+]
+
 export default function StepSchoolInfo({
   data,
   updateData,
@@ -9,20 +18,19 @@ export default function StepSchoolInfo({
   checkSlugAvailability,
   next
 }) {
-
-  console.log('StepSchoolInfo received data:', {
-    schoolName: data.schoolName,
-    slug: data.slug,
-    contactEmail: data.contactEmail,
-    countryId: data.countryId
-  })
-  
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [checkingSlug, setCheckingSlug] = useState(false)
   const [uploadingLogo, setUploadingLogo] = useState(false)
   const [selectedCountryPrice, setSelectedCountryPrice] = useState(null)
   const [loadingPrice, setLoadingPrice] = useState(false)
+  const [showStateField, setShowStateField] = useState(false)
+
+  // Check if selected country is Nigeria (code 'NG')
+  useEffect(() => {
+    const selectedCountry = countries.find(c => c.id === data.countryId)
+    setShowStateField(selectedCountry?.code === 'NG')
+  }, [data.countryId, countries])
 
   // Slug availability debounce
   useEffect(() => {
@@ -85,6 +93,9 @@ export default function StepSchoolInfo({
       case 'countryId':
         if (!value) return 'Please select your country'
         return null
+      case 'state':
+        if (showStateField && !value?.trim()) return 'State is required for Nigerian schools'
+        return null
       default:
         return null
     }
@@ -92,11 +103,9 @@ export default function StepSchoolInfo({
 
   const handleChange = (field, value) => {
     updateData({ [field]: value })
-    if(field === "countryId") {
-      updateData({
-        selectedSections: [],
-      })
-    };
+    if (field === "countryId") {
+      updateData({ selectedSections: [], state: '' })
+    }
     setTouched(prev => ({ ...prev, [field]: true }))
     const error = validateField(field, value)
     setErrors(prev => ({ ...prev, [field]: error }))
@@ -150,6 +159,8 @@ export default function StepSchoolInfo({
 
   const isStepValid = () => {
     const fields = ['schoolName', 'slug', 'contactEmail', 'countryId']
+    if (showStateField) fields.push('state')
+    
     let valid = true
     fields.forEach(f => {
       const error = validateField(f, data[f])
@@ -168,7 +179,6 @@ export default function StepSchoolInfo({
     if (isStepValid()) next()
   }
 
-  // Get selected country details for currency symbol
   const selectedCountry = countries.find(c => c.id === data.countryId)
   const currencySymbol = selectedCountry?.currency_symbol || '₦'
 
@@ -277,8 +287,7 @@ export default function StepSchoolInfo({
               value={data.slug}
               onChange={(e) => {
                 const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '')
-                console.log(data)
-                data.slugAvailable = null;
+                data.slugAvailable = null
                 handleChange('slug', val)
               }}
               onBlur={() => handleBlur('slug')}
@@ -298,7 +307,7 @@ export default function StepSchoolInfo({
               {errors.slug && <div className="field-error">{errors.slug}</div>}
             </>
           )}
-          <small>{"Only lowercase letters, numbers, and hyphens. This becomes your school's unique address."}</small>
+          <small>Only lowercase letters, numbers, and hyphens. This becomes your school's unique address.</small>
         </div>
 
         <div className="form-field">
@@ -317,7 +326,6 @@ export default function StepSchoolInfo({
             <div className="field-error">{errors.countryId}</div>
           )}
           
-          {/* Price display */}
           {data.countryId && (
             <div style={{ 
               marginTop: '8px', 
@@ -340,6 +348,26 @@ export default function StepSchoolInfo({
           )}
           <small>You pay only for active student accounts. Teachers, parents, and alumni are free.</small>
         </div>
+
+        {showStateField && (
+          <div className="form-field">
+            <label>State *</label>
+            <select
+              value={data.state || ''}
+              onChange={(e) => handleChange('state', e.target.value)}
+              onBlur={() => handleBlur('state')}
+            >
+              <option value="">Select State</option>
+              {NIGERIAN_STATES.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+            {touched.state && errors.state && (
+              <div className="field-error">{errors.state}</div>
+            )}
+            <small>Required for Nigerian schools to provide state-specific report card templates.</small>
+          </div>
+        )}
 
         <div className="form-field">
           <label>Main Branch Name</label>
@@ -369,16 +397,6 @@ export default function StepSchoolInfo({
             value={data.city}
             onChange={(e) => handleChange('city', e.target.value)}
             placeholder="City"
-          />
-        </div>
-
-        <div className="form-field">
-          <label>State / Province</label>
-          <input
-            type="text"
-            value={data.state}
-            onChange={(e) => handleChange('state', e.target.value)}
-            placeholder="State"
           />
         </div>
 
@@ -416,7 +434,7 @@ export default function StepSchoolInfo({
             />
             <span>{data.brandColor}</span>
           </div>
-          <small>It is recommended you use dark colors. Used throughout your school app</small>
+          <small>Used throughout your school app. Dark colors recommended.</small>
         </div>
       </div>
 

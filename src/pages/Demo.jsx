@@ -16,7 +16,7 @@ export default function Demo() {
       <section className="section">
         <div className="wrap">
           <div style={{ background: "var(--ink)", borderRadius: "var(--r-xl)", padding: "40px 20px", display: "flex", justifyContent: "center" }}>
-            <iframe src="https://acadryxschools.vercel.app" style={{ width: "100%", maxWidth: 960, height: 900, border: "none", borderRadius: 16 }} title="Acadryx Demo" />
+            <iframe src="https://acadryx-demo.vercel.app" style={{ width: "100%", maxWidth: 960, height: 900, border: "none", borderRadius: 16 }} title="Acadryx Demo" />
           </div>
           <p style={{ textAlign: "center", fontSize: ".82rem", color: "var(--text-3)", marginTop: 16 }}>
             UI prototype. Real data connects from Supabase in production.

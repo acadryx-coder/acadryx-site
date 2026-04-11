@@ -7,8 +7,10 @@ export default function AcademicTab({ schoolId, branchId }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadAcademicStructure()
-  }, [schoolId])
+    if (branchId) {
+      loadAcademicStructure()
+    }
+  }, [schoolId, branchId])
 
   async function loadAcademicStructure() {
     const { data } = await supabase
@@ -27,6 +29,7 @@ export default function AcademicTab({ schoolId, branchId }) {
         )
       `)
       .eq('school_id', schoolId)
+      .eq('school_branch_id', branchId)
       .order('level')
     
     setSections(data || [])
@@ -41,29 +44,35 @@ export default function AcademicTab({ schoolId, branchId }) {
         <h2>Sections & Classes</h2>
       </div>
       
-      {sections.map(section => (
-        <div key={section.id} className="section-card">
-          <div className="section-header">
-            <h3>{section.name}</h3>
-            {section.classes.some(c => c.is_graduating_class) && (
-              <span className="graduation-badge">Graduating Section</span>
-            )}
-          </div>
-          <div className="classes-grid">
-            {section.classes.map(cls => (
-              <div key={cls.id} className="class-card">
-                <div className="class-name">
-                  {cls.name}
-                  {cls.is_graduating_class && <span className="grad-icon">🎓</span>}
-                </div>
-                <div className="class-arms">
-                  Arms: {cls.arms?.map(a => a.name).join(', ') || 'None'}
-                </div>
-              </div>
-            ))}
-          </div>
+      {sections.length === 0 ? (
+        <div className="academic-note">
+          No sections found for this branch. Set up your school structure in the admin portal.
         </div>
-      ))}
+      ) : (
+        sections.map(section => (
+          <div key={section.id} className="section-card">
+            <div className="section-header">
+              <h3>{section.name}</h3>
+              {section.classes?.some(c => c.is_graduating_class) && (
+                <span className="graduation-badge">Graduating Section</span>
+              )}
+            </div>
+            <div className="classes-grid">
+              {section.classes?.map(cls => (
+                <div key={cls.id} className="class-card">
+                  <div className="class-name">
+                    {cls.name}
+                    {cls.is_graduating_class && <span className="grad-icon">🎓</span>}
+                  </div>
+                  <div className="class-arms">
+                    Arms: {cls.arms?.map(a => a.name).join(', ') || 'None'}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      )}
 
       <div className="academic-note">
         💡 Manage sections, classes, arms, and subjects from the branch admin portal.

@@ -258,6 +258,7 @@ export default function OnboardingWizard() {
         p_session_start_year: formData.sessionStartYear,
         p_session_end_year: formData.sessionEndYear,
         p_terms_per_session: formData.termsPerSession,
+        p_term_names: formData.termNames,
         p_current_term_name: formData.currentTerm,
         p_admin_first_name: formData.adminFirstName.trim(),
         p_admin_surname: formData.adminSurname.trim(),
@@ -266,7 +267,7 @@ export default function OnboardingWizard() {
         p_selected_sections: selectedSectionsPayload,
         p_grading_defaults: formData.gradingDefaults
       })
-
+      
       if (rpcError) throw rpcError
       if (!data.success) throw new Error(data.error || 'School creation failed')
 

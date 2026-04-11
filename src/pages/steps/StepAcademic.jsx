@@ -40,7 +40,6 @@ export default function StepAcademic({ data, updateData, back, next }) {
     updated[index] = newName
     setTermNames(updated)
     updateData({ termNames: updated })
-    // If current term was renamed, keep the current selection by value
     if (currentTerm === termNames[index]) {
       setCurrentTerm(newName)
       updateData({ currentTerm: newName })

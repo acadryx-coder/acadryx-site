@@ -12,9 +12,11 @@ export default function UsersTab({ schoolId, branchId }) {
   const [loginCodes, setLoginCodes] = useState({})
 
   useEffect(() => {
-    loadUsers()
-    loadRoles()
-  }, [schoolId])
+    if (branchId) {
+      loadUsers()
+      loadRoles()
+    }
+  }, [schoolId, branchId])
 
   useEffect(() => {
     let filtered = [...profiles]
@@ -42,6 +44,7 @@ export default function UsersTab({ schoolId, branchId }) {
         .from('profiles')
         .select('id, first_name, surname, email, phone, status, is_active, role_id')
         .eq('school_id', schoolId)
+        .eq('school_branch_id', branchId)
       
       if (profilesError) throw profilesError
       
@@ -64,12 +67,13 @@ export default function UsersTab({ schoolId, branchId }) {
       
       setProfiles(profilesWithRoles)
       
-      // Fetch login codes for all profiles
+      // Fetch login codes for all profiles in this branch
       const { data: tokens } = await supabase
         .schema('schools')
         .from('login_tokens')
         .select('profile_id, code')
         .eq('school_id', schoolId)
+        .eq('school_branch_id', branchId)
         .eq('is_active', true)
       
       const codeMap = {}
@@ -98,7 +102,6 @@ export default function UsersTab({ schoolId, branchId }) {
     setSelectedRole('')
   }
 
-  // Function to mask login code for non-admin roles
   const formatLoginCode = (code, roleName) => {
     if (!code) return '—'
     if (roleName === 'admin') return code
@@ -171,7 +174,7 @@ export default function UsersTab({ schoolId, branchId }) {
           <tbody>
             {filteredProfiles.length === 0 ? (
               <tr className="empty-row">
-                <td colSpan="6">No users found</td>
+                <td colSpan="6">No users found in this branch</td>
               </tr>
             ) : (
               filteredProfiles.map(p => (

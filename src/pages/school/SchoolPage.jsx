@@ -8,6 +8,7 @@ import AcademicTab from './tabs/AcademicTab'
 import UsersTab from './tabs/UsersTab'
 import BillingTab from './tabs/BillingTab'
 import SettingsTab from './tabs/SettingsTab'
+import BranchesTab from './tabs/BranchesTab'
 import '../../styles/school.css'
 
 export default function SchoolPage() {
@@ -171,6 +172,9 @@ export default function SchoolPage() {
                         <span className="branch-icon">🏢</span>
                         <span className="branch-name">{branch.branch_name}</span>
                         {branch.is_main && <span className="branch-badge">Main</span>}
+                        {branch.active_term_name && (
+                          <span className="branch-term">{branch.active_term_name}</span>
+                        )}
                         {selectedBranch?.branch_id === branch.branch_id && <span className="branch-check">✓</span>}
                       </button>
                     ))}
@@ -178,7 +182,7 @@ export default function SchoolPage() {
                 )}
               </div>
             </div>
-            <p className="school-slug">acadryx.vercel.app/?{school.slug}</p>
+            <p className="school-slug">acadryx.vercel.app/?school={school.slug}</p>
           </div>
         </div>
         <div className="school-topbar-right">
@@ -207,13 +211,13 @@ export default function SchoolPage() {
       ) : billingData ? (
         <div className="school-balance-bar">
           <div className="balance-info">
-            <span className="balance-label">Available Balance</span>
+            <span className="balance-label">Available Balance ({selectedBranch?.branch_name})</span>
             <span className="balance-amount">
               {billingData.currency_symbol || '₦'}{billingData.balance?.toLocaleString() || 0}
             </span>
           </div>
           <button className="balance-topup" onClick={() => setActiveTab('billing')}>
-            Top Up →
+            Manage Billing →
           </button>
         </div>
       ) : (
@@ -226,7 +230,7 @@ export default function SchoolPage() {
 
       {/* Navigation Tabs */}
       <div className="school-nav">
-        {['overview', 'academic', 'users', 'billing', 'settings'].map(tab => (
+        {['overview', 'academic', 'users', 'billing', 'branches', 'settings'].map(tab => (
           <button
             key={tab}
             className={`school-nav-btn ${activeTab === tab ? 'active' : ''}`}
@@ -240,7 +244,7 @@ export default function SchoolPage() {
       {/* Tab Content */}
       <div className="school-body">
         {activeTab === 'overview' && (
-          <OverviewTab school={school} billingData={billingData} />
+          <OverviewTab school={school} billingData={billingData} selectedBranch={selectedBranch} />
         )}
         {activeTab === 'academic' && (
           <AcademicTab schoolId={school.school_id} branchId={selectedBranch?.branch_id} />
@@ -257,6 +261,9 @@ export default function SchoolPage() {
             currencySymbol={school.country?.currency_symbol}
             onRefresh={() => loadBillingData(selectedBranch?.branch_id)}
           />
+        )}
+        {activeTab === 'branches' && (
+          <BranchesTab schoolId={school.school_id} branches={school.branches} />
         )}
         {activeTab === 'settings' && (
           <SettingsTab school={school} onUpdate={loadSchoolData} />

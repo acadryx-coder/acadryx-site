@@ -21,6 +21,7 @@ import ResetPassword from './pages/auth/ResetPassword.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import OnboardingWizard from './pages/OnboardingWizard.jsx'
 import SchoolPage from './pages/school/SchoolPage.jsx'
+import NewBranchPage from './pages/school/NewBranchPage'
 import NotFound from './pages/NotFound.jsx'
 
 function useSession() {
@@ -276,6 +277,9 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/onboarding" element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
         <Route path="/school/:slug" element={<ProtectedRoute><SchoolPage /></ProtectedRoute>} />
+        <Route path="/school/:slug/branches/new" element={
+          <ProtectedRoute><NewBranchPage /></ProtectedRoute>
+        } />
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

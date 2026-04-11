@@ -1,6 +1,5 @@
 // src/pages/school/tabs/OverviewTab.jsx
-export default function OverviewTab({ school, billingData }) {
-  const mainBranch = school.branches?.find(b => b.is_main) || school.branches?.[0]
+export default function OverviewTab({ school, billingData, selectedBranch }) {
   const totalUsers = school.role_counts 
     ? Object.values(school.role_counts).reduce((a, b) => a + b, 0)
     : 0
@@ -34,7 +33,7 @@ export default function OverviewTab({ school, billingData }) {
         </div>
         <div className="stat-card balance-highlight">
           <div className="stat-value">{school.country?.currency_symbol || '₦'}{billingData?.balance?.toLocaleString() || 0}</div>
-          <div className="stat-label">Wallet Balance</div>
+          <div className="stat-label">Wallet Balance ({selectedBranch?.branch_name})</div>
         </div>
       </div>
 
@@ -50,7 +49,13 @@ export default function OverviewTab({ school, billingData }) {
           {school.state && <div className="info-row"><span>State:</span><strong>{school.state}</strong></div>}
           <div className="info-row"><span>Contact:</span><strong>{school.contact_email}</strong></div>
           {school.contact_phone && <div className="info-row"><span>Phone:</span><strong>{school.contact_phone}</strong></div>}
-          <div className="info-row"><span>Main Branch:</span><strong>{mainBranch?.branch_name || 'MAIN'}</strong></div>
+          <div className="info-row"><span>Selected Branch:</span><strong>{selectedBranch?.branch_name || 'MAIN'}</strong></div>
+          {selectedBranch?.active_term_name && (
+            <div className="info-row">
+              <span>Current Term:</span>
+              <strong>{selectedBranch.active_term_name} · {selectedBranch.active_session_name}</strong>
+            </div>
+          )}
         </div>
 
         <div className="info-card">

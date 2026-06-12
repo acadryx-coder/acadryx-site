@@ -121,6 +121,7 @@ export default function NewBranchPage() {
         .map(section => ({
           section_name: section.name,
           level: section.level,
+          default_assessments: section.default_assessments || [],  // ← ADD THIS
           classes: section.classes
             .filter(c => c.selected)
             .map(cls => ({
@@ -136,7 +137,7 @@ export default function NewBranchPage() {
               apply_to_all: subj.apply_to_all
             }))
         }))
-
+        
         const { data, error: rpcError } = await supabase
           .schema('schools')
           .rpc('create_new_branch', {

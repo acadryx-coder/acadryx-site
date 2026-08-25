@@ -3,10 +3,10 @@ import { useState, useRef, useEffect } from "react";
 import Footer from "../components/Footer.jsx";
 
 const FEATURES = [
-  { icon: "🏫", t: "Your Own School App",  b: "Every school gets a dedicated, branded web app at your-school.acadryx.com. Students see your school, not us. You own the experience — we power the infrastructure." },
+  { icon: "🏫", t: "Your Own School App",  b: "Every school gets a dedicated, branded web app. Students see your school, not us. You own the experience — we power the infrastructure." },
   { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
   { icon: "📊", t: "Results Engine",              b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
-  { icon: "📰", t: "Living Magazine(Add-On)",             b: "Events, achievements, galleries — published daily, not annually. No printing costs. Alumni stay connected." },
+  { icon: "🏗️", t: "Modular by Design",            b: "Activate only what you need. Turn on CBT, Alumni, or Staff Management as you grow. Features can be hidden per school." },
   { icon: "🔒", t: "Permanent Records",           b: "Once a term closes, results are immutable and verifiable by any institution. Complete history, forever." },
   { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
 ];
@@ -27,8 +27,6 @@ const QUOTES = [
 ];
 
 export default function Home({ selectedCountry }) {
-  const currencySymbol = selectedCountry?.currency_symbol || "₦"
-  const pricePerStudent = selectedCountry?.price_per_student || 1000
   const countryCode = selectedCountry?.code || "NG"
   
   const [currentQuote, setCurrentQuote] = useState(0);
@@ -248,8 +246,8 @@ export default function Home({ selectedCountry }) {
             {[
               { value: "5",    label: "Portals in one platform" },
               { value: "∞",   label: "Records stored forever" },
-              { value: "Local",  label: "Per-student pricing by country" },
-              { value: "Permanent",  label: "Built for Legacy and Global Dominance" },
+              { value: "Free",  label: "For schools under 200 students" },
+              { value: "Custom",  label: "Pricing for larger institutions" },
             ].map((stat, index) => (
               <div className="stat-item" key={index}>
                 <div className="stat-val">{stat.value}</div>
@@ -286,8 +284,8 @@ export default function Home({ selectedCountry }) {
         <div className="wrap">
           <div style={{ marginBottom: 48 }}>
             <span className="eyebrow">Pricing</span>
-            <h2 className="section-h" style={{ maxWidth: 480 }}>{"Get everything today's Edtech offers... "} plus an optional more.</h2>
-            <p className="section-p">All five portals are included. Add only the tools your school needs from the marketplace.</p>
+            <h2 className="section-h" style={{ maxWidth: 480 }}>{"Get everything today's Edtech offers... plus more."}</h2>
+            <p className="section-p">All five portals are included. Add only the tools your school needs. Free for small schools, custom for large.</p>
           </div>
 
           <div className="pricing-wrap">
@@ -295,42 +293,43 @@ export default function Home({ selectedCountry }) {
               {/* CORE — YOUR SCHOOL APP */}
               <div className="price-col dark">
                 <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.4)", marginBottom: 14 }}>
-                  Core — Your School App
+                  Starter — Free
                 </div>
                 <div className="price-tag" style={{ color: "#fff" }}>
-                  {currencySymbol}{pricePerStudent.toLocaleString()} ({countryCode})
+                  ₦0
                 </div>
                 <div className="price-note" style={{ color: "rgba(255,255,255,.5)" }}>
-                  per active student · per term
+                  For schools up to 200 students
                 </div>
                 <ul className="price-list">
-                  <li>📊 One-click school-wide digital generation and publication</li>
-                  <li>🏫 Student Portal — results, records, portfolio</li>
-                  <li>{"👨‍👩‍👧 Parent Portal — access to child's data"}</li>
-                  <li>👩‍🏫 Teacher Portal — grading, attendance, classes</li>
-                  <li>⚙️ Admin Portal — full school management</li>
-                  <li>🎓 Alumni Portal — permanent access, forever</li>
-                  <li>🔒 Permanent, verifiable, credentials storage & access</li>
+                  <li>🏫 Branded School App (your-school.acadryx.com)</li>
+                  <li>📊 Results Engine & Report Cards</li>
+                  <li>👨‍👩‍👧 Parent Portal</li>
+                  <li>👩‍🏫 Teacher Portal</li>
+                  <li>⚙️ Admin Portal</li>
+                  <li>🎓 Alumni Portal (Permanent Access)</li>
                 </ul>
-                <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Get early access →</Link>
+                <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Start Free →</Link>
               </div>
 
               {/* FEATURE MARKETPLACE */}
               <div className="price-col light">
                 <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 14 }}>
-                  Add-On Feature Marketplace
+                  Pro — Custom Pricing
                 </div>
-                <div className="price-tag" style={{ color: "var(--blue)" }}>Under Development</div>
-                <div className="price-note" style={{ color: "var(--text-3)" }}>Add-on tools that serve your users — launching after pilot schools</div>
+                <div className="price-tag" style={{ color: "var(--blue)" }}>Let's Talk</div>
+                <div className="price-note" style={{ color: "var(--text-3)" }}>
+                  For schools with 1,000+ students or multiple campuses
+                </div>
                 <ul className="price-list">
-                  <li>🤖 AI Lesson Note Assistant — for teachers</li>
-                  <li>🧠 Acadryx Exam Driller — for students</li>
-                  <li>📷 Lifetime Event Photo Storage — for school</li>
-                  <li>👥 Advanced Career Advancement Features — for alumni</li>
-                  <li>📅 Events & Digital Magazine — for students</li>
-                  <li>✨ More, requested by schools like yours</li>
+                  <li>⚡ Unlimited Students & Staff</li>
+                  <li>🏢 Multi-Campus Support</li>
+                  <li>🤖 AI Migration Assistance</li>
+                  <li>📈 Advanced Reporting & Analytics</li>
+                  <li>🔧 Dedicated Onboarding & Training</li>
+                  <li>💎 Priority Support</li>
                 </ul>
-                <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Join pilot → Get early access</Link>
+                <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Request Pricing →</Link>
               </div>
             </div>
           </div>

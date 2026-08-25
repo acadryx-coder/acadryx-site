@@ -4,47 +4,69 @@ import ProfileAvatar from "../components/ProfileAvatar";
 
 const BASE_FEATURES = [
   {
-    num: "01", title: "Identity & Access",
+    num: "01",
+    title: "Identity & Access",
     tagline: "One identity. From admission to alumni.",
     body: "Every school gets its own branded web app. Every student gets a single profile that follows them from Pre-KG through graduation — never recreated, never lost. Schools generate access codes — no emails, no passwords. The right dashboard loads automatically for each role: Admin, Teacher, Student, Parent, Alumni.",
-    pts: ["Five roles, one school—different views, same backbone", "Profile permanence across terms, years, and sections", "Alumni keep full access after graduation", "Your school. Your brand. Your own app."],
+    pts: [
+      "Five roles, one school—different views, same backbone",
+      "Profile permanence across terms, years, and sections",
+      "Alumni keep full access after graduation",
+      "Your school. Your brand. Your own app."
+    ],
     flip: false,
   },
   {
-    num: "02", title: "Academic Structure",
+    num: "02",
+    title: "Academic Structure & Timetable",
     tagline: "Your school. Your hierarchy. No vendor lock-in.",
-    // body and mockup will be dynamic based on country
-    pts: ["Pre-KG to Senior Secondary—every section included", "Rename anything: 'House', 'Cluster', 'Stream'", "Subject weights configurable per teacher assignment", "Divided subjects and optional vs mandatory subjects setting fully supported.", "Sessions, terms, and dates fully yours to set", "Your school's hierarchy, your school's app — no vendor lock-in"],
+    body: "Configure your school's exact hierarchy—Pre-KG to Senior Secondary. Manage subjects, arms, and grading scales. Use the Timetable Manager to build templates, assign them to arms, and edit them visually.",
+    pts: [
+      "School Structure (Classes, Arms, Sections)",
+      "Subjects Manager (Section Subjects, Enrolment, Teacher Assignments)",
+      "Grading & Assessments (Scales, Assessments, Freeze Config)",
+      "Timetable Manager (Template Builder, Assign to Arms, Visual Editor)"
+    ],
     flip: true,
   },
   {
-    num: "03", title: "Results Engine",
+    num: "03",
+    title: "Comprehensive Admin Suite",
+    tagline: "Powerful tools for school administrators.",
+    body: "Acadryx provides dedicated managers for every person and process in your school. Manage staff, teachers, parents, students, and alumni with bulk creation and login code generation. Track attendance and handle term transitions.",
+    pts: [
+      "Staff & Teachers Manager (Create, Bulk, List, Login Codes, Config)",
+      "Students & Parents Manager (Create, Bulk, List, Parent Links, Config)",
+      "Attendance Manager (Open, Mark, Subject, Reports, Parent Notifications)",
+      "System Manager (School Settings, Term Transition, Navigation Visibility)"
+    ],
+    flip: false,
+  },
+  {
+    num: "04",
+    title: "Results Engine & CBT",
     tagline: "What took weeks now takes one day.",
-    body: "Teachers enter scores per assessment. Acadryx in-built result engine calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Every report card goes live in seconds. Results are permanently immutable from that moment—verifiable by any institution, forever.",
-    pts: ["Bulk score entry for entire classes", "Weighted scoring for multi-teacher subjects", "One-click publication for every report card in a class", "Immutable archives—published results lock forever"],
+    body: "Teachers enter scores per assessment. Acadryx calculates weighted totals automatically. Admin reviews the class summary and clicks publish. Includes a built-in CBT Manager for secure digital exams.",
+    pts: [
+      "Bulk score entry for entire classes",
+      "One-click publication for every report card",
+      "CBT Manager (Question Banks, Pools, Exams, Enrollment, Results, Map Scores)",
+      "Immutable archives—published results lock forever"
+    ],
     mockup: <ResultsMockup />,
     flip: false,
   },
   {
-    num: "04", title: "Living Magazine (Upcoming)",
-    tagline: "Your school's story, published daily—not annually.",
-    body: "Events, achievements, galleries, student articles, sports recaps. Admin approves. Students and teachers submit. Parents and alumni see instantly. No printing costs. No 50-page PDF in June for events that happened in December. The magazine is our first open-source add-on feature.",
-    pts: ["Familiar social-feed interface—fast adoption", "Alumni see and engage with live events from their school", "No more 'Page limits' due to printing costs. Everyone's story get's published", "Print option for hardcopy lovers available"],
-    mockup: <MagazineMockup />,
-    flip: true,
-  },
-  {
     num: "05",
-    title: "Alumni & Legacy (Latest)",
-    tagline: "Your school's greatest asset. Connected forever.",
-    body: "Most school software forgets students the moment they graduate. Acadryx doesn't. Every graduate keeps permanent access to their records, their network, and their school—for life. Principals call this their favorite feature. Because legacy matters.",
+    title: "Role-Specific Portals",
+    tagline: "The right tools, for the right people.",
+    body: "Every role gets a dedicated dashboard with exactly what they need. Teachers get 'My Timetable' and 'Subject Attendance'. Students, Parents, and Alumni get their own Chat, Results, and Profile views.",
     pts: [
-      "Lifetime access — graduates never lose their credentials, results, or portfolio",
-      "Alumni network — classmates stay connected; school stays in their lives",
-      "Career & mentorship — former students support current ones; employers find talent",
-      "Your school's legacy — every graduating class adds value to your institution forever"
+      "Teacher Portal: Dashboard, My Timetable, Scores, Class Attendance, Subject Attendance, CBT Manager, Chats, Profile",
+      "Student Portal: Dashboard, Results, Chats, Profile",
+      "Parent Portal: Dashboard, Results, Chats, Profile",
+      "Alumni Portal: Dashboard, Network, Chats, Profile"
     ],
-    mockup: <AlumniMockup />,
     flip: true,
   },
 ];
@@ -52,84 +74,15 @@ const BASE_FEATURES = [
 // Country-specific academic structures
 const getAcademicStructure = (countryCode) => {
   const structures = {
-    NG: {
-      description: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary, Arms A/B/C. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "Senior Secondary", arms: ["SS1A","SS1B","SS1C","SS2A","SS2B","SS3A"] },
-        { name: "Junior Secondary", arms: ["JSS1A","JSS1B","JSS2A","JSS3A"] },
-        { name: "Primary", arms: ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6"] }
-      ]
-    },
-    GH: {
-      description: "Start with sensible defaults—Primary, Junior High School, Senior High School. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "Senior High School", arms: ["SHS 1","SHS 2","SHS 3"] },
-        { name: "Junior High School", arms: ["JHS 1","JHS 2","JHS 3"] },
-        { name: "Primary", arms: ["P1","P2","P3","P4","P5","P6"] }
-      ]
-    },
-    KE: {
-      description: "Start with sensible defaults—Pre-Primary, Primary (CBC), Junior Secondary, Senior Secondary. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "Senior Secondary", arms: ["Grade 10","Grade 11","Grade 12"] },
-        { name: "Junior Secondary", arms: ["Grade 7","Grade 8","Grade 9"] },
-        { name: "Primary", arms: ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6"] }
-      ]
-    },
-    ZA: {
-      description: "Start with sensible defaults—Foundation Phase, Intermediate Phase, Senior Phase, FET Phase. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "FET Phase", arms: ["Grade 10","Grade 11","Grade 12"] },
-        { name: "Senior Phase", arms: ["Grade 7","Grade 8","Grade 9"] },
-        { name: "Intermediate Phase", arms: ["Grade 4","Grade 5","Grade 6"] },
-        { name: "Foundation Phase", arms: ["Grade R","Grade 1","Grade 2","Grade 3"] }
-      ]
-    },
-    GB: {
-      description: "Start with sensible defaults—Key Stages 1-5, Years 1-13. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "Key Stage 4", arms: ["Year 10","Year 11"] },
-        { name: "Key Stage 3", arms: ["Year 7","Year 8","Year 9"] },
-        { name: "Key Stage 2", arms: ["Year 3","Year 4","Year 5","Year 6"] },
-        { name: "Key Stage 1", arms: ["Year 1","Year 2"] },
-        { name: "Early Years", arms: ["Reception","Nursery"] }
-      ]
-    },
-    US: {
-      description: "Start with sensible defaults—Elementary, Middle, High School. Rename anything. Restructure anytime. It's your school. Acadryx remembers your patterns so you never rebuild from scratch each term.",
-      sections: [
-        { name: "High School", arms: ["9th","10th","11th","12th"] },
-        { name: "Middle School", arms: ["6th","7th","8th"] },
-        { name: "Elementary", arms: ["K","1st","2nd","3rd","4th","5th"] }
-      ]
-    }
+    NG: { description: "Start with sensible defaults—Primary, Junior Secondary, Senior Secondary. Rename anything. Restructure anytime. It's your school.", sections: [{ name: "Senior Secondary", arms: ["SS1A","SS1B","SS1C","SS2A","SS2B","SS3A"] }, { name: "Junior Secondary", arms: ["JSS1A","JSS1B","JSS2A","JSS3A"] }, { name: "Primary", arms: ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6"] }] },
+    GH: { description: "Start with sensible defaults—Primary, Junior High School, Senior High School. Rename anything. Restructure anytime.", sections: [{ name: "Senior High School", arms: ["SHS 1","SHS 2","SHS 3"] }, { name: "Junior High School", arms: ["JHS 1","JHS 2","JHS 3"] }, { name: "Primary", arms: ["P1","P2","P3","P4","P5","P6"] }] },
+    KE: { description: "Start with sensible defaults—Pre-Primary, Primary (CBC), Junior Secondary. Rename anything. Restructure anytime.", sections: [{ name: "Senior Secondary", arms: ["Grade 10","Grade 11","Grade 12"] }, { name: "Junior Secondary", arms: ["Grade 7","Grade 8","Grade 9"] }, { name: "Primary", arms: ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6"] }] },
+    ZA: { description: "Start with sensible defaults—Foundation Phase, Intermediate Phase, Senior Phase. Rename anything. Restructure anytime.", sections: [{ name: "FET Phase", arms: ["Grade 10","Grade 11","Grade 12"] }, { name: "Senior Phase", arms: ["Grade 7","Grade 8","Grade 9"] }, { name: "Intermediate Phase", arms: ["Grade 4","Grade 5","Grade 6"] }, { name: "Foundation Phase", arms: ["Grade R","Grade 1","Grade 2","Grade 3"] }] },
   };
-  
   return structures[countryCode] || structures.NG;
 };
 
 // Mockup components
-function LoginMockup() {
-  return (
-    <div className="mockup">
-      <div className="mockup-bar"><span className="dot-r"/><span className="dot-y"/><span className="dot-g"/></div>
-      <div style={{ background: "var(--white)", borderRadius: 12, padding: 20, border: "1px solid var(--border)" }}>
-        <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: ".95rem", marginBottom: 14 }}>{"MyDemo Int'l School"}</div>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-          {["Admin","Teacher","Parent","Student","Alumni"].map(r => (
-            <span key={r} style={{ background: "var(--teal-soft)", color: "var(--teal)", padding: "4px 11px", borderRadius: 40, fontSize: ".75rem", fontWeight: 600 }}>{r}</span>
-          ))}
-        </div>
-        <div style={{ background: "var(--g1)", borderRadius: 10, padding: "14px 16px", border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: ".72rem", color: "var(--text-3)", marginBottom: 6, textTransform: "uppercase", letterSpacing: ".08em" }}>Access code</div>
-          <div style={{ fontSize: "1.5rem", width: "100%", fontWeight: 800, wordBreak: "break-all", letterSpacing: ".1em", color: "var(--blue)" }}>STU083897</div>
-          <div style={{ fontSize: ".78rem", color: "var(--text-3)", marginTop: 8 }}>One code. Dashboard loads. Done.</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function StructureMockup({ sections }) {
   return (
     <div className="mockup">
@@ -186,42 +139,10 @@ function ResultsMockup() {
   );
 }
 
-function MagazineMockup() {
-  return (
-    <div className="mockup">
-      <div className="mockup-bar"><span className="dot-r"/><span className="dot-y"/><span className="dot-g"/></div>
-      <div style={{ background: "linear-gradient(135deg,var(--blue),var(--teal))", borderRadius: 12, padding: "16px 18px", color: "white", marginBottom: 12 }}>
-        <div style={{ fontSize: ".65rem", opacity: .65, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 4 }}>VOL XIV · 2024/25</div>
-        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: "bold", fontSize: "1.1rem", marginBottom: 10 }}>{"Your School's Digital Magazine"}</div>
-      </div>
-      {[
-        ["🏆","Achievement","We Won the National Science Quiz Competition"],
-        ["🎨","Culture","Art Exhibition 2025: Colours of Tomorrow"],
-        ["⚽","Sports","Football Season: A Historic Year"]
-      ].map(([icon,cat,title]) => (
-        <div key={title} style={{ display: "flex", gap: 10, padding: "10px 0", borderBottom: "1px solid var(--border)", alignItems: "center" }}>
-          <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
-          <div>
-            <div style={{ fontSize: ".68rem", color: "var(--teal)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em" }}>{cat}</div>
-            <div style={{ fontSize: ".82rem", fontWeight: 600, color: "var(--text)" }}>{title}</div>
-          </div>
-        </div>
-      ))}
-      <div>
-        <button style={{ marginTop: 12, padding: "6px 12px", background: "var(--teal)", color: "white", borderRadius: 20, border: "none", fontSize: ".7rem", cursor: "pointer" }}>See More</button>
-      </div>
-    </div>
-  );
-}
-
 function AlumniMockup() {
   return (
     <div className="mockup" style={{ maxWidth: "100%", overflow: "hidden" }}>
-      <div className="mockup-bar">
-        <span className="dot-r" />
-        <span className="dot-y" />
-        <span className="dot-g" />
-      </div>
+      <div className="mockup-bar"><span className="dot-r" /><span className="dot-y" /><span className="dot-g" /></div>
       <div style={{ background: "var(--white)", borderRadius: 12, border: "1px solid var(--border)", overflow: "hidden", width: "100%" }}>
         <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border)" }}>
           <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: ".9rem", marginBottom: 12 }}>{"MyDemo Int'l Alumni"}</div>
@@ -250,21 +171,6 @@ function AlumniMockup() {
               <span style={{ color: "var(--teal)" }}>🤝 Volunteer →</span>
             </div>
           </div>
-          <div style={{ background: "var(--white)", borderRadius: 12, padding: 12, marginBottom: 12, border: "1px solid var(--border)" }}>
-            <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-              <ProfileAvatar src="https://randomuser.me/api/portraits/men/32.jpg" name="James D." size={32} />
-              <div>
-                <div style={{ fontWeight: 600, fontSize: ".75rem" }}>James D. · Class of 2019</div>
-                <div style={{ fontSize: ".6rem", color: "var(--text-3)" }}>Software Engineer at Flutterwave</div>
-              </div>
-            </div>
-            <div style={{ fontSize: ".75rem", marginBottom: 10 }}>🚀 Flutterwave is hiring! 3 entry-level backend roles. DM if interested or know someone from MyDemo.</div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, fontSize: ".65rem", color: "var(--text-3)" }}>
-              <span>❤️ 47 likes</span>
-              <span>💬 12 comments</span>
-              <span>📌 5 shares</span>
-            </div>
-          </div>
           <div style={{ background: "var(--teal-soft)", borderRadius: 12, padding: 12, border: "1px solid var(--teal-light)" }}>
             <div style={{ fontSize: ".65rem", textTransform: "uppercase", color: "var(--teal)", marginBottom: 6 }}>❤️ Annual Giving</div>
             <div style={{ fontSize: ".8rem", fontWeight: 500, marginBottom: 6 }}>Help build a new science lab!</div>
@@ -278,13 +184,6 @@ function AlumniMockup() {
             </div>
           </div>
         </div>
-        <div style={{ padding: "10px 12px", borderTop: "1px solid var(--border)", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, fontSize: ".65rem", color: "var(--text-3)" }}>
-          <span style={{ color: "var(--blue)" }}>🏠 Feed</span>
-          <span>👥 Network</span>
-          <span>💬 Chats</span>
-          <span>🤝 Mentorship</span>
-          <span>❤️ Donate</span>
-        </div>
       </div>
     </div>
   );
@@ -294,9 +193,8 @@ export default function Features({ selectedCountry }) {
   const countryCode = selectedCountry?.code || "NG";
   const academicStructure = getAcademicStructure(countryCode);
   
-  // Build dynamic features with country-specific Academic Structure
   const FEATURES = BASE_FEATURES.map(feature => {
-    if (feature.title === "Academic Structure") {
+    if (feature.title === "Academic Structure & Timetable") {
       return {
         ...feature,
         body: academicStructure.description,
@@ -313,7 +211,7 @@ export default function Features({ selectedCountry }) {
           <div className="hero-content">
             <span className="eyebrow-pill"><span className="dot" />Platform Overview</span>
             <h1 style={{ fontSize: "clamp(2.4rem,5vw,4.2rem)", color: "#fff" }}>Built for how<br /><em>schools actually work</em></h1>
-            <p className="hero-sub">Every feature designed around the reality of K12 institutions—not retrofitted from consumer apps. Schools that used paper for years go fully digital in one term.</p>
+            <p className="hero-sub">Every feature designed around the reality of K12 institutions—not retrofitted from consumer apps.</p>
           </div>
         </div>
       </section>

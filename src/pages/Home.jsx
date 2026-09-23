@@ -8,7 +8,7 @@ import {
 } from "../components/Icons.jsx";
 
 // WhatsApp helper — international format, no '+', no leading 0
-const WHATSAPP_NUMBER = "2337062605268";
+const WHATSAPP_NUMBER = "2347062605268";
 const waLink = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 

@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import Footer from "../components/Footer.jsx";
 
+// WhatsApp helper — international format, no '+', no leading 0
+const WHATSAPP_NUMBER = "2337062605268";
+const waLink = (message) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
 const FEATURES = [
   { icon: "🏫", t: "Your Own School App",  b: "Every school gets a dedicated, branded web app. Students see your school, not us. You own the experience — we power the infrastructure." },
   { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
@@ -97,8 +102,15 @@ export default function Home({ selectedCountry }) {
             </p>
 
             <div className="hero-btns anim d3">
-              <Link to="/login" className="btn btn-white btn-lg">Get Started →</Link>
-              <Link to="/demo"    className="btn btn-ghost btn-lg">See the demo</Link>
+              <a
+                href={waLink("Hi! I'd like to get started with Acadryx for my school.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-white btn-lg"
+              >
+                Get Started →
+              </a>
+              <Link to="/demo" className="btn btn-ghost btn-lg">See the demo</Link>
             </div>
           </div>
         </div>
@@ -309,7 +321,15 @@ export default function Home({ selectedCountry }) {
                   <li>⚙️ Admin Portal</li>
                   <li>🎓 Alumni Portal (Permanent Access)</li>
                 </ul>
-                <Link to="/contact" className="btn btn-white" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Start Free →</Link>
+                <a
+                  href={waLink("Hi! I'd like to start the Free plan (up to 200 students) on Acadryx.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-white"
+                  style={{ marginTop: 28, width: "100%", justifyContent: "center" }}
+                >
+                  Start Free →
+                </a>
               </div>
 
               {/* FEATURE MARKETPLACE */}
@@ -329,7 +349,15 @@ export default function Home({ selectedCountry }) {
                   <li>🔧 Dedicated Onboarding & Training</li>
                   <li>💎 Priority Support</li>
                 </ul>
-                <Link to="/contact" className="btn btn-outline" style={{ marginTop: 28, width: "100%", justifyContent: "center" }}>Request Pricing →</Link>
+                <a
+                  href={waLink("Hi! I'd like a custom quote for the Pro plan (1,000+ students / multi-campus).")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                  style={{ marginTop: 28, width: "100%", justifyContent: "center" }}
+                >
+                  Request Pricing →
+                </a>
               </div>
             </div>
           </div>
@@ -343,8 +371,15 @@ export default function Home({ selectedCountry }) {
           <h2 className="section-h white" style={{ maxWidth: 540, margin: "0 auto 16px" }}>Ready to transform your school?</h2>
           <p className="section-p white" style={{ margin: "0 auto 40px" }}>Join pilot schools already running on Acadryx. Free trial, no card required.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link to="/signup" className="btn btn-blue btn-lg">Get Started →</Link>
-            <Link to="/demo"    className="btn btn-ghost btn-lg">Interactive demo</Link>
+            <a
+              href={waLink("Hi! I'd like to get started with Acadryx (Early Access).")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-blue btn-lg"
+            >
+              Get Started →
+            </a>
+            <Link to="/demo" className="btn btn-ghost btn-lg">Interactive demo</Link>
           </div>
         </div>
       </section>

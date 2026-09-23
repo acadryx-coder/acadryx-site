@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import Footer from "../components/Footer.jsx";
+import {
+  SchoolIcon, ShieldLockIcon, ChartIcon, BlocksIcon, LockIcon, BoltIcon,
+  UsersIcon, TeacherIcon, SettingsIcon, GraduationIcon, BuildingIcon,
+  SparkleIcon, TrendingIcon, WrenchIcon, GemIcon,
+} from "../components/Icons.jsx";
 
 // WhatsApp helper — international format, no '+', no leading 0
 const WHATSAPP_NUMBER = "2337062605268";
@@ -8,12 +13,30 @@ const waLink = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const FEATURES = [
-  { icon: "🏫", t: "Your Own School App",  b: "Every school gets a dedicated, branded web app. Students see your school, not us. You own the experience — we power the infrastructure." },
-  { icon: "🔐", t: "Unified Identity",            b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
-  { icon: "📊", t: "Results Engine",              b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
-  { icon: "🏗️", t: "Modular by Design",            b: "Activate only what you need. Turn on CBT, Alumni, or Staff Management as you grow. Features can be hidden per school." },
-  { icon: "🔒", t: "Permanent Records",           b: "Once a term closes, results are immutable and verifiable by any institution. Complete history, forever." },
-  { icon: "⚡", t: "Minimal Friction",            b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
+  { Icon: SchoolIcon,     t: "Your Own School App", b: "Every school gets a dedicated, branded web app. Students see your school, not us. You own the experience — we power the infrastructure." },
+  { Icon: ShieldLockIcon, t: "Unified Identity",    b: "A student's account follows them from Pre-KG to Senior Secondary. Alumni keep access forever. Nothing is ever lost." },
+  { Icon: ChartIcon,      t: "Results Engine",      b: "Teachers enter scores. Acadryx calculates weighted totals. Admin clicks publish. Every report card is live in seconds." },
+  { Icon: BlocksIcon,     t: "Modular by Design",   b: "Activate only what you need. Turn on CBT, Alumni, or Staff Management as you grow. Features can be hidden per school." },
+  { Icon: LockIcon,       t: "Permanent Records",   b: "Once a term closes, results are immutable and verifiable by any institution. Complete history, forever." },
+  { Icon: BoltIcon,       t: "Minimal Friction",    b: "Code login by default. Schools that used paper for 40 years go fully digital in one term." },
+];
+
+const STARTER_FEATURES = [
+  { Icon: SchoolIcon,     label: "Branded School App (your-school.acadryx.com)" },
+  { Icon: ChartIcon,      label: "Results Engine & Report Cards" },
+  { Icon: UsersIcon,      label: "Parent Portal" },
+  { Icon: TeacherIcon,    label: "Teacher Portal" },
+  { Icon: SettingsIcon,   label: "Admin Portal" },
+  { Icon: GraduationIcon, label: "Alumni Portal (Permanent Access)" },
+];
+
+const PRO_FEATURES = [
+  { Icon: BoltIcon,       label: "Unlimited Students & Staff" },
+  { Icon: BuildingIcon,   label: "Multi-Campus Support" },
+  { Icon: SparkleIcon,    label: "AI Migration Assistance" },
+  { Icon: TrendingIcon,   label: "Advanced Reporting & Analytics" },
+  { Icon: WrenchIcon,     label: "Dedicated Onboarding & Training" },
+  { Icon: GemIcon,        label: "Priority Support" },
 ];
 
 const QUOTES = [
@@ -26,23 +49,22 @@ const QUOTES = [
     author: "ACADRYX CTO"
   },
   {
-  	text: `It's very easy to use. No digital literacy needed. For example, as a teacher entering scores, all you do is open your scores page for a particular subject and enter scores for all the students there. Even an old man with no phone can borrow a computer from the computer lab or a friend's phone for one day and easily enter his scores seamlessly. Go to school web-app, enter code, login, go to score entry, enter scores, save, Go home."`,
-  	author: "..."
+    text: `It's very easy to use. No digital literacy needed. For example, as a teacher entering scores, all you do is open your scores page for a particular subject and enter scores for all the students there. Even an old man with no phone can borrow a computer from the computer lab or a friend's phone for one day and easily enter his scores seamlessly. Go to school web-app, enter code, login, go to score entry, enter scores, save, Go home.`,
+    author: "..."
   },
 ];
 
 export default function Home({ selectedCountry }) {
   const countryCode = selectedCountry?.code || "NG"
-  
+
   const [currentQuote, setCurrentQuote] = useState(0);
-  const [direction, setDirection]       = useState("next"); // "next" | "prev"
-  const [animKey, setAnimKey]           = useState(0);      // increment to re-trigger CSS anim
+  const [direction, setDirection]       = useState("next");
+  const [animKey, setAnimKey]           = useState(0);
   const [touchStart, setTouchStart]     = useState(0);
   const [touchEnd, setTouchEnd]         = useState(0);
-  const [hintVisible, setHintVisible]   = useState(true);   // swipe hint fades after first use
+  const [hintVisible, setHintVisible]   = useState(true);
   const hintTimer = useRef(null);
 
-  // Hide swipe hint after 4 s or after first real swipe
   useEffect(() => {
     hintTimer.current = setTimeout(() => setHintVisible(false), 4000);
     return () => clearTimeout(hintTimer.current);
@@ -86,18 +108,13 @@ export default function Home({ selectedCountry }) {
       <section className="hero">
         <div className="wrap">
           <div className="hero-content">
-            <div className="eyebrow-pill anim">
-              <span className="dot" />
-              School is More Than Classes 💯
-            </div>
-
             <h1 className="anim d1">
               The Infrastructure<br /><em>Schools Deserve</em>
             </h1>
 
             <p className="hero-sub anim d2">
-              <strong>Your school gets its own branded web app</strong> — not just another login. 
-              Students, teachers, parents, and alumni each get their own portal. 
+              <strong>Your school gets its own branded web app</strong> — not just another login.
+              Students, teachers, parents, and alumni each get their own portal.
               Your school runs on Acadryx the way businesses run on AWS.
             </p>
 
@@ -137,6 +154,8 @@ export default function Home({ selectedCountry }) {
         .swipe-hint-wrap  { transition: opacity 0.7s ease; }
         .quote-dot        { width:8px; height:8px; border-radius:50%; border:none; padding:0; cursor:pointer; transition: all 0.3s ease; }
         .quote-dot.active { width:20px; border-radius:4px; }
+        .price-list li    { display:flex; align-items:flex-start; gap:10px; }
+        .price-list li svg{ flex-shrink:0; margin-top:3px; opacity:0.85; }
       `}</style>
 
       <section style={{
@@ -161,7 +180,6 @@ export default function Home({ selectedCountry }) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Quote — re-keyed on every change to retrigger CSS animation */}
             <div
               key={animKey}
               className={direction === "next" ? "quote-slide-next" : "quote-slide-prev"}
@@ -174,7 +192,7 @@ export default function Home({ selectedCountry }) {
                 marginBottom: "16px",
                 userSelect: "none",
               }}>
-               ''
+                ''
               </div>
 
               <p style={{
@@ -199,7 +217,6 @@ export default function Home({ selectedCountry }) {
               </div>
             </div>
 
-            {/* Dot indicators — active dot stretches into a pill */}
             <div style={{ display:"flex", justifyContent:"center", gap:"7px", marginTop:"28px" }}>
               {QUOTES.map((_, index) => (
                 <button
@@ -215,7 +232,6 @@ export default function Home({ selectedCountry }) {
               ))}
             </div>
 
-            {/* Swipe hint — animated, no button, fades after 4s or first swipe */}
             <div
               className="swipe-hint-wrap"
               style={{
@@ -246,7 +262,6 @@ export default function Home({ selectedCountry }) {
                 <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-
           </div>
         </div>
       </section>
@@ -280,11 +295,13 @@ export default function Home({ selectedCountry }) {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "var(--border)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", overflow: "hidden" }}>
-            {FEATURES.map((f, i) => (
+            {FEATURES.map(({ Icon, t, b }, i) => (
               <div key={i} style={{ background: "var(--white)", padding: "28px 24px" }}>
-                <div style={{ fontSize: 26, marginBottom: 12 }}>{f.icon}</div>
-                <h3 style={{ fontSize: "1rem", color: "var(--text)", marginBottom: 8 }}>{f.t}</h3>
-                <p style={{ fontSize: ".88rem", color: "var(--text-3)", lineHeight: 1.75, margin: 0 }}>{f.b}</p>
+                <div style={{ color: "var(--blue)", marginBottom: 14 }}>
+                  <Icon size={26} />
+                </div>
+                <h3 style={{ fontSize: "1rem", color: "var(--text)", marginBottom: 8 }}>{t}</h3>
+                <p style={{ fontSize: ".88rem", color: "var(--text-3)", lineHeight: 1.75, margin: 0 }}>{b}</p>
               </div>
             ))}
           </div>
@@ -314,12 +331,12 @@ export default function Home({ selectedCountry }) {
                   For schools up to 200 students
                 </div>
                 <ul className="price-list">
-                  <li>🏫 Branded School App (your-school.acadryx.com)</li>
-                  <li>📊 Results Engine & Report Cards</li>
-                  <li>👨‍👩‍👧 Parent Portal</li>
-                  <li>👩‍🏫 Teacher Portal</li>
-                  <li>⚙️ Admin Portal</li>
-                  <li>🎓 Alumni Portal (Permanent Access)</li>
+                  {STARTER_FEATURES.map(({ Icon, label }, i) => (
+                    <li key={i}>
+                      <Icon size={18} />
+                      <span>{label}</span>
+                    </li>
+                  ))}
                 </ul>
                 <a
                   href={waLink("Hi! I'd like to start the Free plan (up to 200 students) on Acadryx.")}
@@ -342,12 +359,12 @@ export default function Home({ selectedCountry }) {
                   For schools with 1,000+ students or multiple campuses
                 </div>
                 <ul className="price-list">
-                  <li>⚡ Unlimited Students & Staff</li>
-                  <li>🏢 Multi-Campus Support</li>
-                  <li>🤖 AI Migration Assistance</li>
-                  <li>📈 Advanced Reporting & Analytics</li>
-                  <li>🔧 Dedicated Onboarding & Training</li>
-                  <li>💎 Priority Support</li>
+                  {PRO_FEATURES.map(({ Icon, label }, i) => (
+                    <li key={i}>
+                      <Icon size={18} />
+                      <span>{label}</span>
+                    </li>
+                  ))}
                 </ul>
                 <a
                   href={waLink("Hi! I'd like a custom quote for the Pro plan (1,000+ students / multi-campus).")}
